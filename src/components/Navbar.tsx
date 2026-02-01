@@ -19,7 +19,7 @@ export default function Navbar() {
           }
         }
       },
-      { rootMargin: "-50%% 0px -50%% 0px" }
+      { rootMargin: "-50% 0px -50% 0px" }
     );
 
     for (const link of navLinks) {
