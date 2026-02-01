@@ -1,19 +1,45 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Menu, X, Globe } from "lucide-react";
 
 const navLinks = ["about", "projects", "skills", "contact"] as const;
+const NAV_HEIGHT = 72;
 
 export default function Navbar() {
   const { t, i18n } = useTranslation();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeSection, setActiveSection] = useState("");
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id);
+          }
+        }
+      },
+      { rootMargin: "-50%% 0px -50%% 0px" }
+    );
+
+    for (const link of navLinks) {
+      const el = document.getElementById(link);
+      if (el) observer.observe(el);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   const toggleLang = () => {
     i18n.changeLanguage(i18n.language === "fr" ? "en" : "fr");
   };
 
   const scrollTo = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    const el = document.getElementById(id);
+    if (el) {
+      const top = el.getBoundingClientRect().top + window.scrollY - NAV_HEIGHT;
+      window.scrollTo({ top, behavior: "smooth" });
+    }
     setMenuOpen(false);
   };
 
@@ -33,9 +59,9 @@ export default function Navbar() {
             <button
               key={link}
               onClick={() => scrollTo(link)}
-              className="text-sm text-slate-400 transition-colors hover:text-white"
+              className={"text-sm transition-colors hover:text-white " + (activeSection === link ? "text-emerald-400" : "text-slate-400")}
             >
-              {t(`nav.${link}`)}
+              {t("nav." + link)}
             </button>
           ))}
           <button
@@ -63,9 +89,9 @@ export default function Navbar() {
             <button
               key={link}
               onClick={() => scrollTo(link)}
-              className="block w-full py-3 text-left text-slate-400 transition-colors hover:text-white"
+              className={"block w-full py-3 text-left transition-colors hover:text-white " + (activeSection === link ? "text-emerald-400" : "text-slate-400")}
             >
-              {t(`nav.${link}`)}
+              {t("nav." + link)}
             </button>
           ))}
           <button

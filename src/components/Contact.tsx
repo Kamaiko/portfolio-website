@@ -45,7 +45,7 @@ export default function Contact() {
             <Github size={22} />
           </a>
           <a
-            href="https://linkedin.com/in/"
+            href="https://www.linkedin.com/in/patrickpatenaude/"
             target="_blank"
             rel="noopener noreferrer"
             className="text-slate-500 transition-colors hover:text-white"
