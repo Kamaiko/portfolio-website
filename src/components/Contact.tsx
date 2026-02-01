@@ -15,7 +15,7 @@ export default function Contact() {
         transition={{ duration: 0.5, delay: 0.1 }}
         className="max-w-md"
       >
-        <p className="mb-8 text-slate-400">{t("contact.text")}</p>
+        <p className="mb-8 text-slate-300">{t("contact.text")}</p>
 
         <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap">
           <a
@@ -40,6 +40,7 @@ export default function Contact() {
             href="https://github.com/Kamaiko"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="GitHub"
             className="text-slate-500 transition-colors hover:text-white"
           >
             <Github size={22} />
@@ -48,6 +49,7 @@ export default function Contact() {
             href="https://www.linkedin.com/in/patrickpatenaude/"
             target="_blank"
             rel="noopener noreferrer"
+            aria-label="LinkedIn"
             className="text-slate-500 transition-colors hover:text-white"
           >
             <Linkedin size={22} />

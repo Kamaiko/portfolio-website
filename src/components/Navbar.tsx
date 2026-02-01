@@ -76,6 +76,7 @@ export default function Navbar() {
         {/* Mobile toggle */}
         <button
           onClick={() => setMenuOpen(!menuOpen)}
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
           className="text-slate-400 md:hidden"
         >
           {menuOpen ? <X size={24} /> : <Menu size={24} />}

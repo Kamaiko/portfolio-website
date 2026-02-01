@@ -12,7 +12,7 @@ export default function About() {
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: "-100px" }}
         transition={{ duration: 0.5, delay: 0.1 }}
-        className="max-w-2xl space-y-4 text-slate-400 leading-relaxed"
+        className="max-w-2xl space-y-4 text-slate-300 leading-relaxed"
       >
         <p>{t("about.p1")}</p>
         <p>{t("about.p2")}</p>

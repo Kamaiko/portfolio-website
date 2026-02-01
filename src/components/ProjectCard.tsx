@@ -31,7 +31,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         {t(`${project.translationKey}.name`)}
       </h3>
 
-      <p className="mb-4 text-sm leading-relaxed text-slate-400">
+      <p className="mb-4 text-sm leading-relaxed text-slate-300">
         {t(`${project.translationKey}.description`)}
       </p>
 
