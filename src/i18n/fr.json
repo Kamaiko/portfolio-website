@@ -31,18 +31,15 @@
     "title": "Projets",
     "halterofit": {
       "name": "Halterofit",
-      "description": "Application mobile de suivi d'entraînement musculaire. Logging rapide, bibliothèque de 1300+ exercices, fonctionne hors-ligne avec synchronisation cloud.",
-      "tech": "React Native, Expo, TypeScript, WatermelonDB, Supabase, NativeWind"
+      "description": "Application mobile de suivi d'entraînement musculaire. Logging rapide, bibliothèque de 1300+ exercices, fonctionne hors-ligne avec synchronisation cloud."
     },
     "blundermate": {
       "name": "BlunderMate",
-      "description": "Moteur d'échecs en Prolog avec interface ASCII en terminal. Évaluation de positions, génération de coups légaux et recherche minimax.",
-      "tech": "Prolog"
+      "description": "Moteur d'échecs en Prolog avec interface ASCII en terminal. Évaluation de positions, génération de coups légaux et recherche minimax."
     },
     "portfolio": {
       "name": "Portfolio",
-      "description": "Ce site web — construit avec React, Vite et Tailwind CSS. Bilingue, responsive, avec animations subtiles.",
-      "tech": "React, Vite, TypeScript, Tailwind CSS, Framer Motion, i18next"
+      "description": "Ce site web — construit avec React, Vite et Tailwind CSS. Bilingue, responsive, avec animations subtiles."
     },
     "view_code": "Voir le code",
     "view_demo": "Démo",

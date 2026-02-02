@@ -45,8 +45,8 @@ function MarqueeRow({
   return (
     <div className="group relative overflow-hidden py-2">
       {/* Fade edges */}
-      <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-16 bg-linear-to-r from-slate-950 to-transparent md:w-24" />
-      <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-16 bg-linear-to-l from-slate-950 to-transparent md:w-24" />
+      <div className="pointer-events-none absolute left-0 top-0 z-10 h-full w-32 bg-linear-to-r from-slate-950 to-transparent md:w-48" />
+      <div className="pointer-events-none absolute right-0 top-0 z-10 h-full w-32 bg-linear-to-l from-slate-950 to-transparent md:w-48" />
 
       <div
         className="flex w-max gap-4 group-hover:[animation-play-state:paused]"

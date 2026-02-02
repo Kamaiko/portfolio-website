@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
-import { Mail, FileDown, Github, Linkedin } from "lucide-react";
+import { Mail, FileDown, Github, Linkedin, Instagram } from "lucide-react";
 import Section from "./Section";
 
 export default function Contact() {
@@ -53,6 +53,15 @@ export default function Contact() {
             className="text-slate-500 transition-colors hover:text-white"
           >
             <Linkedin size={22} />
+          </a>
+          <a
+            href="https://www.instagram.com/patrickpatenaude/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Instagram"
+            className="text-slate-500 transition-colors hover:text-white"
+          >
+            <Instagram size={22} />
           </a>
         </div>
       </motion.div>

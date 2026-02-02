@@ -48,6 +48,7 @@ export default function Navbar() {
       <div className="mx-auto flex max-w-5xl items-center justify-between px-6 py-4">
         <button
           onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          aria-label="Scroll to top"
           className="text-lg font-bold text-white"
         >
           PP
@@ -59,9 +60,9 @@ export default function Navbar() {
             <button
               key={link}
               onClick={() => scrollTo(link)}
-              className={"text-sm transition-colors hover:text-white " + (activeSection === link ? "text-cyan-400" : "text-slate-400")}
+              className={`text-sm transition-colors hover:text-white ${activeSection === link ? "text-cyan-400" : "text-slate-400"}`}
             >
-              {t("nav." + link)}
+              {t(`nav.${link}`)}
             </button>
           ))}
           <button
@@ -90,9 +91,9 @@ export default function Navbar() {
             <button
               key={link}
               onClick={() => scrollTo(link)}
-              className={"block w-full py-3 text-left transition-colors hover:text-white " + (activeSection === link ? "text-cyan-400" : "text-slate-400")}
+              className={`block w-full py-3 text-left transition-colors hover:text-white ${activeSection === link ? "text-cyan-400" : "text-slate-400"}`}
             >
-              {t("nav." + link)}
+              {t(`nav.${link}`)}
             </button>
           ))}
           <button

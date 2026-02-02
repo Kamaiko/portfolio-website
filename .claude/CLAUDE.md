@@ -77,7 +77,7 @@ src/
 ## Design System
 
 - **Theme**: Dark mode (slate-950 background, slate-100 text)
-- **Accent color**: emerald-400 / emerald-500
+- **Accent color**: cyan-400 / cyan-500
 - **Font**: Inter (loaded from Google Fonts in index.html)
 - **Animations**: Framer Motion fade-in on scroll (`whileInView`), hover effects
 - **Layout**: Max-width 5xl (1024px), centered, generous padding

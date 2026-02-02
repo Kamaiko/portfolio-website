@@ -1,4 +1,3 @@
-import { useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 
@@ -27,55 +26,19 @@ const lineVariants = {
 
 export default function Hero() {
   const { t } = useTranslation();
-  const containerRef = useRef<HTMLElement>(null);
-
   const nameWords = t("hero.name").split(" ");
   const nameDelay = 0.3 + nameWords.length * 0.12 + 0.3;
 
   return (
     <section
-      ref={containerRef}
-      className="relative flex min-h-screen items-center justify-center overflow-hidden px-6"
+      className="relative flex min-h-screen items-center justify-center px-6"
     >
-      {/* Animated mesh gradient background */}
+      {/* Spotlight glow — blurred blobs, no overflow-hidden so they bleed naturally */}
       <div className="pointer-events-none absolute inset-0">
-        <motion.div
-          animate={{
-            x: [0, 30, -20, 0],
-            y: [0, -25, 15, 0],
-            scale: [1, 1.1, 0.95, 1],
-          }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute left-1/4 top-1/4 h-[600px] w-[600px] rounded-full bg-cyan-500/[0.07] blur-[120px]"
-        />
-        <motion.div
-          animate={{
-            x: [0, -40, 20, 0],
-            y: [0, 20, -30, 0],
-            scale: [1, 0.9, 1.15, 1],
-          }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute bottom-1/4 right-1/4 h-[500px] w-[500px] rounded-full bg-blue-500/[0.06] blur-[100px]"
-        />
-        <motion.div
-          animate={{
-            x: [0, 25, -15, 0],
-            y: [0, -20, 25, 0],
-          }}
-          transition={{ duration: 18, repeat: Infinity, ease: "linear" }}
-          className="absolute left-1/2 top-1/2 h-[400px] w-[400px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-400/[0.04] blur-[80px]"
-        />
+        <div className="absolute left-[48%] top-[42%] h-[350px] w-[450px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-500/[0.07] blur-[120px]" />
+        <div className="absolute left-[68%] top-[58%] h-[280px] w-[350px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-blue-500/5 blur-[100px]" />
+        <div className="absolute left-[28%] top-[30%] h-[250px] w-[320px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-cyan-400/4 blur-[90px]" />
       </div>
-
-      {/* Noise texture overlay */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-[0.03]"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
-          backgroundRepeat: "repeat",
-          backgroundSize: "256px 256px",
-        }}
-      />
 
       <div className="relative max-w-4xl text-center">
         {/* Greeting */}
@@ -111,7 +74,7 @@ export default function Hero() {
           initial="hidden"
           animate="visible"
           variants={lineVariants}
-          className="mb-6 bg-gradient-to-r from-slate-200 to-slate-400 bg-clip-text text-xl font-medium text-transparent md:text-2xl"
+          className="mb-6 bg-linear-to-r from-slate-200 to-slate-400 bg-clip-text text-xl font-medium text-transparent md:text-2xl"
         >
           {t("hero.title")}
         </motion.p>
@@ -134,7 +97,7 @@ export default function Hero() {
           transition={{ delay: nameDelay + 1, duration: 1 }}
           className="mt-20 flex flex-col items-center gap-2"
         >
-          <div className="relative flex flex-col items-center gap-1">
+          <div className="relative flex flex-col items-center gap-1" aria-hidden="true">
             {/* Animated chevrons */}
             {[0, 1, 2].map((i) => (
               <motion.svg

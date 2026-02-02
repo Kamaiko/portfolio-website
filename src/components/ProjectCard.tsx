@@ -11,7 +11,7 @@ interface ProjectCardProps {
 export default function ProjectCard({ project, index }: ProjectCardProps) {
   const { t } = useTranslation();
 
-  const techList = t(`${project.translationKey}.tech`).split(", ");
+  const projectName = t(`${project.translationKey}.name`);
 
   return (
     <motion.div
@@ -26,7 +26,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         {project.image ? (
           <img
             src={project.image}
-            alt=""
+            alt={projectName}
             className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
           />
         ) : (
@@ -44,7 +44,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         )}
 
         <h3 className="mb-2 text-xl font-semibold text-white">
-          {t(`${project.translationKey}.name`)}
+          {projectName}
         </h3>
 
         <p className="mb-4 text-sm leading-relaxed text-slate-300">
@@ -52,7 +52,7 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
         </p>
 
         <div className="mb-5 flex flex-wrap gap-2">
-          {techList.map((tech) => (
+          {project.tech.map((tech) => (
             <span
               key={tech}
               className="rounded-full bg-slate-800 px-3 py-1 text-xs text-slate-300"

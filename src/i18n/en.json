@@ -31,18 +31,15 @@
     "title": "Projects",
     "halterofit": {
       "name": "Halterofit",
-      "description": "Mobile workout tracking application. Fast logging, 1300+ exercise library, works offline with cloud sync.",
-      "tech": "React Native, Expo, TypeScript, WatermelonDB, Supabase, NativeWind"
+      "description": "Mobile workout tracking application. Fast logging, 1300+ exercise library, works offline with cloud sync."
     },
     "blundermate": {
       "name": "BlunderMate",
-      "description": "Chess engine in Prolog with ASCII terminal interface. Position evaluation, legal move generation and minimax search.",
-      "tech": "Prolog"
+      "description": "Chess engine in Prolog with ASCII terminal interface. Position evaluation, legal move generation and minimax search."
     },
     "portfolio": {
       "name": "Portfolio",
-      "description": "This website — built with React, Vite and Tailwind CSS. Bilingual, responsive, with subtle animations.",
-      "tech": "React, Vite, TypeScript, Tailwind CSS, Framer Motion, i18next"
+      "description": "This website — built with React, Vite and Tailwind CSS. Bilingual, responsive, with subtle animations."
     },
     "view_code": "View code",
     "view_demo": "Demo",
