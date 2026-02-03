@@ -16,9 +16,9 @@ export const projects: Project[] = [
     github: "https://github.com/Kamaiko/Halterofit",
     tech: ["React Native", "Expo", "TypeScript", "WatermelonDB", "Supabase", "NativeWind"],
     screenshots: [
-      "/images/projects/ExerciceID.png",
-      "/images/projects/DayDetails.png",
-      "/images/projects/Overview.png",
+      "/images/projects/ExerciceID.webp",
+      "/images/projects/DayDetails.webp",
+      "/images/projects/Overview.webp",
     ],
     featured: true,
   },
