@@ -41,7 +41,7 @@ const phoneConfig = [
     spreadX: "0%",
     spreadRotate: 0,
     spreadZ: 40,
-    spreadScale: 1.05,
+    spreadScale: 1.0,
     fadeDirection: "none" as const,
   },
   {
@@ -109,7 +109,7 @@ export default function ScreenshotFan({ screenshots, projectName }: ScreenshotFa
           return (
             <motion.div
               key={screenshot}
-              className="absolute w-[30%] max-w-[180px]"
+              className="absolute w-[26%] max-w-[160px]"
               style={{
                 transformStyle: "preserve-3d",
                 zIndex: config.zIndex,

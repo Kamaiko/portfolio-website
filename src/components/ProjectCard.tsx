@@ -24,7 +24,9 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
     >
       {/* Image / Screenshot fan */}
       {project.screenshots && project.screenshots.length === 3 ? (
-        <ScreenshotFan screenshots={project.screenshots} projectName={projectName} />
+        <div className="bg-slate-800/30">
+          <ScreenshotFan screenshots={project.screenshots} projectName={projectName} />
+        </div>
       ) : (
         <div className="relative h-48 w-full overflow-hidden bg-slate-800/30">
           {project.image ? (

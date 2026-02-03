@@ -8,23 +8,23 @@
   "hero": {
     "greeting": "Salut, je suis",
     "name": "Patrick Patenaude",
-    "title": "Développeur mobile & web",
-    "subtitle": "Autonome, rigoureux, et passionné par les technologies modernes et le code de qualité.",
+    "title": "Développeur web et mobile",
+    "subtitle": "Autonome, rigoureux, et passionné par les technologies modernes et l'expérience utilisateur.",
     "cta_projects": "Voir mes projets",
     "cta_cv": "Télécharger CV"
   },
   "about": {
     "title": "À propos",
-    "bio": "J'aime transformer des idées en applications concrètes — que ce soit sur mobile ou sur le web. Mon approche : fiabilité d'abord, code propre toujours.",
+    "bio": "Premier bac en psychologie, deuxième en informatique. J'ai découvert la programmation pendant la pandémie et j'ai jamais regardé en arrière. Je m'intéresse autant à comprendre les utilisateurs qu'à écrire du code solide — même si les ordinateurs sont plus faciles à debug que les humains.",
     "stack_title": "Stack favori",
     "interests_title": "Intérêts",
     "interests": {
       "fitness": "Musculation",
-      "fitness_fact": "6x par semaine, beau temps mauvais temps",
+      "fitness_fact": "Jamais skip leg day",
       "chess": "Échecs",
-      "chess_fact": "Adepte du gambit, allergique aux nulles",
+      "chess_fact": "Blitz à 3am, aucun regret",
       "gaming": "Gaming",
-      "gaming_fact": "Compétitif dans l'âme, casual dans la pratique"
+      "gaming_fact": "gg no re"
     }
   },
   "projects": {
@@ -43,7 +43,7 @@
     },
     "view_code": "Voir le code",
     "view_demo": "Démo",
-    "featured_badge": "En vedette"
+    "featured_badge": "En développement"
   },
   "skills": {
     "title": "Compétences"

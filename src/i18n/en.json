@@ -8,23 +8,23 @@
   "hero": {
     "greeting": "Hi, I'm",
     "name": "Patrick Patenaude",
-    "title": "Mobile & Web Developer",
-    "subtitle": "Self-driven, detail-oriented, and passionate about modern technologies and quality code.",
+    "title": "Web & Mobile Developer",
+    "subtitle": "Self-driven, detail-oriented, and passionate about modern technologies and user experience.",
     "cta_projects": "View my projects",
     "cta_cv": "Download CV"
   },
   "about": {
     "title": "About",
-    "bio": "I love turning ideas into real applications — whether on mobile or the web. My approach: reliability first, clean code always.",
+    "bio": "First degree in psychology, second in computer science. I discovered programming during the pandemic and never looked back. I care as much about understanding users as writing solid code — even if computers are easier to debug than humans.",
     "stack_title": "Favorite stack",
     "interests_title": "Interests",
     "interests": {
       "fitness": "Weightlifting",
-      "fitness_fact": "6x a week, rain or shine",
+      "fitness_fact": "Never skip leg day",
       "chess": "Chess",
-      "chess_fact": "Gambit enthusiast, draw allergic",
+      "chess_fact": "Blitz at 3am, no regrets",
       "gaming": "Gaming",
-      "gaming_fact": "Competitive at heart, casual in practice"
+      "gaming_fact": "gg no re"
     }
   },
   "projects": {
@@ -43,7 +43,7 @@
     },
     "view_code": "View code",
     "view_demo": "Demo",
-    "featured_badge": "Featured"
+    "featured_badge": "In Development"
   },
   "skills": {
     "title": "Skills"
