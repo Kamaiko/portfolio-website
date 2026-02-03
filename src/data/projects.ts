@@ -5,6 +5,7 @@ export interface Project {
   tech: string[];
   demo?: string;
   image?: string;
+  screenshots?: string[];
   featured?: boolean;
 }
 
@@ -14,7 +15,11 @@ export const projects: Project[] = [
     translationKey: "projects.halterofit",
     github: "https://github.com/Kamaiko/Halterofit",
     tech: ["React Native", "Expo", "TypeScript", "WatermelonDB", "Supabase", "NativeWind"],
-    image: "/images/projects/adaptive-icon-Halterofit.png",
+    screenshots: [
+      "/images/projects/ExerciceID.png",
+      "/images/projects/DayDetails.png",
+      "/images/projects/Overview.png",
+    ],
     featured: true,
   },
   {
