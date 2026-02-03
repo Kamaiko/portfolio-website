@@ -1,27 +1,20 @@
 import { useTranslation } from "react-i18next";
-import { motion } from "framer-motion";
 import { ExternalLink, Github, Code2 } from "lucide-react";
 import type { Project } from "../data/projects";
 import ScreenshotFan from "./ScreenshotFan";
-import { useIsMobile } from "../hooks/useIsMobile";
+import ScrollReveal from "./ScrollReveal";
 
 interface ProjectCardProps {
   project: Project;
-  index: number;
 }
 
-export default function ProjectCard({ project, index }: ProjectCardProps) {
+export default function ProjectCard({ project }: ProjectCardProps) {
   const { t } = useTranslation();
-  const isMobile = useIsMobile();
 
   const projectName = t(`${project.translationKey}.name`);
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: isMobile ? "-50px" : "-100px" }}
-      transition={{ duration: 0.5, delay: isMobile ? 0 : index * 0.1 }}
+    <ScrollReveal
       className={`group overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/50 transition-all duration-300 hover:border-cyan-400/30 hover:shadow-[0_0_30px_rgba(34,211,238,0.06)] hover:scale-[1.01] ${project.featured ? "md:col-span-2" : ""}`}
     >
       {/* Image / Screenshot fan */}
@@ -94,6 +87,6 @@ export default function ProjectCard({ project, index }: ProjectCardProps) {
           )}
         </div>
       </div>
-    </motion.div>
+    </ScrollReveal>
   );
 }

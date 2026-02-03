@@ -9,8 +9,8 @@ export default function Projects() {
   return (
     <Section id="projects" title={t("projects.title")}>
       <div className="grid gap-6 md:grid-cols-2">
-        {projects.map((project, i) => (
-          <ProjectCard key={project.id} project={project} index={i} />
+        {projects.map((project) => (
+          <ProjectCard key={project.id} project={project} />
         ))}
       </div>
     </Section>

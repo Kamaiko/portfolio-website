@@ -1,8 +1,7 @@
 import { useTranslation } from "react-i18next";
-import { motion } from "framer-motion";
 import { Dumbbell, Swords, Gamepad2 } from "lucide-react";
 import Section from "./Section";
-import { useIsMobile } from "../hooks/useIsMobile";
+import ScrollReveal from "./ScrollReveal";
 
 const stackItems = [
   { name: "React", color: "bg-cyan-400" },
@@ -24,32 +23,21 @@ const cardClass =
 
 export default function About() {
   const { t } = useTranslation();
-  const isMobile = useIsMobile();
 
   return (
     <Section id="about" title={t("about.title")}>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         {/* Bio card — spans 2 columns and 2 rows on desktop */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: isMobile ? "-50px" : "-100px" }}
-          transition={{ duration: 0.5, delay: isMobile ? 0 : 0.1 }}
+        <ScrollReveal
           className={`${cardClass} flex flex-col justify-center md:col-span-2 md:row-span-2`}
         >
           <p className="text-lg leading-relaxed text-slate-300">
             {t("about.bio")}
           </p>
-        </motion.div>
+        </ScrollReveal>
 
         {/* Stack card */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: isMobile ? "-50px" : "-100px" }}
-          transition={{ duration: 0.5, delay: isMobile ? 0 : 0.2 }}
-          className={cardClass}
-        >
+        <ScrollReveal className={cardClass}>
           <h3 className="mb-4 text-sm font-semibold tracking-widest text-cyan-400 uppercase">
             {t("about.stack_title")}
           </h3>
@@ -64,16 +52,10 @@ export default function About() {
               </span>
             ))}
           </div>
-        </motion.div>
+        </ScrollReveal>
 
         {/* Interests card */}
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: isMobile ? "-50px" : "-100px" }}
-          transition={{ duration: 0.5, delay: isMobile ? 0 : 0.3 }}
-          className={cardClass}
-        >
+        <ScrollReveal className={cardClass}>
           <h3 className="mb-4 text-sm font-semibold tracking-widest text-cyan-400 uppercase">
             {t("about.interests_title")}
           </h3>
@@ -92,7 +74,7 @@ export default function About() {
               </div>
             ))}
           </div>
-        </motion.div>
+        </ScrollReveal>
       </div>
     </Section>
   );

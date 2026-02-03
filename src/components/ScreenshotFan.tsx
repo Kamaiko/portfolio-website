@@ -20,10 +20,10 @@ const SIDE_CONFIG = {
   x: 34,
   z: -30,
   scale: 0.88,
-  spreadX: 58,
-  spreadRotate: 14,
+  spreadX: 80,
+  spreadRotate: 18,
   spreadZ: -40,
-  spreadScale: 0.9,
+  spreadScale: 0.92,
 } as const;
 
 const phoneConfig = [
@@ -181,18 +181,6 @@ export default function ScreenshotFan({ screenshots, projectName }: ScreenshotFa
                 zIndex: config.zIndex,
                 ...(isMobile ? scrollStyle : {}),
               }}
-              // Desktop only: fade-in + variant animation
-              {...(isMobile
-                ? {}
-                : {
-                    initial: { opacity: 0, y: 40 },
-                    whileInView: { opacity: 1, y: 0 },
-                    viewport: { once: true, margin: "-80px" as const },
-                    transition: {
-                      duration: prefersReducedMotion ? 0 : 0.6,
-                      delay: prefersReducedMotion ? 0 : index * 0.12,
-                    },
-                  })}
               variants={
                 isMobile
                   ? undefined

@@ -1,22 +1,14 @@
 import { useTranslation } from "react-i18next";
-import { motion } from "framer-motion";
 import { Mail, FileDown, Github, Linkedin, Instagram } from "lucide-react";
 import Section from "./Section";
-import { useIsMobile } from "../hooks/useIsMobile";
+import ScrollReveal from "./ScrollReveal";
 
 export default function Contact() {
   const { t } = useTranslation();
-  const isMobile = useIsMobile();
 
   return (
     <Section id="contact" title={t("contact.title")}>
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: isMobile ? "-50px" : "-100px" }}
-        transition={{ duration: 0.5, delay: isMobile ? 0 : 0.1 }}
-        className="max-w-lg rounded-2xl border border-slate-800 bg-slate-900/50 p-8"
-      >
+      <ScrollReveal className="max-w-lg rounded-2xl border border-slate-800 bg-slate-900/50 p-8">
         <p className="mb-8 text-slate-300">{t("contact.text")}</p>
 
         <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap">
@@ -66,7 +58,7 @@ export default function Contact() {
             <Instagram size={22} />
           </a>
         </div>
-      </motion.div>
+      </ScrollReveal>
     </Section>
   );
 }
