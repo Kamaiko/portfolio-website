@@ -1,4 +1,4 @@
-import { useRef, useEffect, useState } from "react";
+import { useRef, useEffect } from "react";
 import {
   motion,
   useReducedMotion,
@@ -6,6 +6,7 @@ import {
   useTransform,
   type MotionValue,
 } from "framer-motion";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 interface ScreenshotFanProps {
   screenshots: string[];
@@ -83,8 +84,6 @@ const phoneConfig = [
   },
 ];
 
-const MOBILE_QUERY = "(max-width: 767px)";
-
 function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
 }
@@ -114,16 +113,7 @@ export default function ScreenshotFan({ screenshots, projectName }: ScreenshotFa
   const prefersReducedMotion = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
   const scrollContainerRef = useRef<HTMLElement | null>(null);
-  const [isMobile, setIsMobile] = useState(
-    () => window.matchMedia(MOBILE_QUERY).matches,
-  );
-
-  useEffect(() => {
-    const mql = window.matchMedia(MOBILE_QUERY);
-    const onChange = (e: MediaQueryListEvent) => setIsMobile(e.matches);
-    mql.addEventListener("change", onChange);
-    return () => mql.removeEventListener("change", onChange);
-  }, []);
+  const isMobile = useIsMobile();
 
   // Resolve scroll container (document.documentElement for Lenis compatibility)
   useEffect(() => {

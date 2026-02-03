@@ -2,6 +2,7 @@ import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { Dumbbell, Swords, Gamepad2 } from "lucide-react";
 import Section from "./Section";
+import { useIsMobile } from "../hooks/useIsMobile";
 
 const stackItems = [
   { name: "React", color: "bg-cyan-400" },
@@ -23,6 +24,7 @@ const cardClass =
 
 export default function About() {
   const { t } = useTranslation();
+  const isMobile = useIsMobile();
 
   return (
     <Section id="about" title={t("about.title")}>
@@ -31,8 +33,8 @@ export default function About() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.5, delay: 0.1 }}
+          viewport={{ once: true, margin: isMobile ? "-50px" : "-100px" }}
+          transition={{ duration: 0.5, delay: isMobile ? 0 : 0.1 }}
           className={`${cardClass} flex flex-col justify-center md:col-span-2 md:row-span-2`}
         >
           <p className="text-lg leading-relaxed text-slate-300">
@@ -44,8 +46,8 @@ export default function About() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.5, delay: 0.2 }}
+          viewport={{ once: true, margin: isMobile ? "-50px" : "-100px" }}
+          transition={{ duration: 0.5, delay: isMobile ? 0 : 0.2 }}
           className={cardClass}
         >
           <h3 className="mb-4 text-sm font-semibold tracking-widest text-cyan-400 uppercase">
@@ -68,8 +70,8 @@ export default function About() {
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, margin: "-100px" }}
-          transition={{ duration: 0.5, delay: 0.3 }}
+          viewport={{ once: true, margin: isMobile ? "-50px" : "-100px" }}
+          transition={{ duration: 0.5, delay: isMobile ? 0 : 0.3 }}
           className={cardClass}
         >
           <h3 className="mb-4 text-sm font-semibold tracking-widest text-cyan-400 uppercase">
