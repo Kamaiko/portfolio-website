@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import Lenis from "lenis";
 import Navbar from "./components/Navbar";
@@ -10,7 +11,18 @@ import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
 export default function App() {
+  const { i18n } = useTranslation();
+
+  // Sync <html lang=""> and persist language choice
   useEffect(() => {
+    document.documentElement.lang = i18n.language;
+    localStorage.setItem("lng", i18n.language);
+  }, [i18n.language]);
+
+  // Smooth scrolling (skip for reduced-motion users)
+  useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+
     const lenis = new Lenis({
       duration: 1.2,
       easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),

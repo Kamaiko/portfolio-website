@@ -4,12 +4,12 @@ import { Dumbbell, Swords, Gamepad2 } from "lucide-react";
 import Section from "./Section";
 
 const stackItems = [
-  "React",
-  "React Native",
-  "TypeScript",
-  "Tailwind CSS",
-  "Expo",
-  "Supabase",
+  { name: "React", color: "bg-cyan-400" },
+  { name: "React Native", color: "bg-cyan-400" },
+  { name: "TypeScript", color: "bg-blue-500" },
+  { name: "Tailwind CSS", color: "bg-sky-400" },
+  { name: "Expo", color: "bg-slate-300" },
+  { name: "Supabase", color: "bg-emerald-500" },
 ];
 
 const interests = [
@@ -54,11 +54,11 @@ export default function About() {
           <div className="grid grid-cols-2 gap-2">
             {stackItems.map((tech) => (
               <span
-                key={tech}
+                key={tech.name}
                 className="flex items-center gap-1.5 text-xs text-slate-300"
               >
-                <span className="h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-400" />
-                {tech}
+                <span className={`h-1.5 w-1.5 shrink-0 rounded-full ${tech.color}`} />
+                {tech.name}
               </span>
             ))}
           </div>
