@@ -1,5 +1,11 @@
 import { useRef, useEffect, useState } from "react";
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import {
+  motion,
+  useReducedMotion,
+  useScroll,
+  useTransform,
+  type MotionValue,
+} from "framer-motion";
 
 interface ScreenshotFanProps {
   screenshots: string[];
@@ -10,10 +16,10 @@ const SPRING_TRANSITION = { type: "spring", stiffness: 260, damping: 22 } as con
 
 const SIDE_CONFIG = {
   rotate: 10,
-  x: "34%",
+  x: 34,
   z: -30,
   scale: 0.88,
-  spreadX: "58%",
+  spreadX: 58,
   spreadRotate: 14,
   spreadZ: -40,
   spreadScale: 0.9,
@@ -22,11 +28,11 @@ const SIDE_CONFIG = {
 const phoneConfig = [
   {
     rotate: -SIDE_CONFIG.rotate,
-    x: `-${SIDE_CONFIG.x.replace("-", "")}`,
+    x: -SIDE_CONFIG.x,
     z: SIDE_CONFIG.z,
     scale: SIDE_CONFIG.scale,
     zIndex: 10,
-    spreadX: `-${SIDE_CONFIG.spreadX.replace("-", "")}`,
+    spreadX: -SIDE_CONFIG.spreadX,
     spreadRotate: -SIDE_CONFIG.spreadRotate,
     spreadZ: SIDE_CONFIG.spreadZ,
     spreadScale: SIDE_CONFIG.spreadScale,
@@ -34,11 +40,11 @@ const phoneConfig = [
   },
   {
     rotate: 0,
-    x: "0%",
+    x: 0,
     z: 10,
     scale: 1,
     zIndex: 20,
-    spreadX: "0%",
+    spreadX: 0,
     spreadRotate: 0,
     spreadZ: 40,
     spreadScale: 1.0,
@@ -60,10 +66,24 @@ const phoneConfig = [
 
 const MOBILE_QUERY = "(max-width: 767px)";
 
+function lerp(a: number, b: number, t: number) {
+  return a + (b - a) * t;
+}
+
+type PhoneConfig = (typeof phoneConfig)[number];
+
+function useScrollPhoneStyle(progress: MotionValue<number>, config: PhoneConfig) {
+  return {
+    rotateY: useTransform(progress, (v) => lerp(config.rotate, config.spreadRotate, v)),
+    x: useTransform(progress, (v) => `${lerp(config.x, config.spreadX, v)}%`),
+    z: useTransform(progress, (v) => lerp(config.z, config.spreadZ, v)),
+    scale: useTransform(progress, (v) => lerp(config.scale, config.spreadScale, v)),
+  };
+}
+
 export default function ScreenshotFan({ screenshots, projectName }: ScreenshotFanProps) {
   const prefersReducedMotion = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
-  const isInView = useInView(containerRef, { once: true, margin: "-100px" });
   const [isMobile, setIsMobile] = useState(
     () => window.matchMedia(MOBILE_QUERY).matches,
   );
@@ -75,9 +95,24 @@ export default function ScreenshotFan({ screenshots, projectName }: ScreenshotFa
     return () => mql.removeEventListener("change", onChange);
   }, []);
 
-  if (screenshots.length !== 3) return null;
+  // Scroll-linked progress for mobile (0 = entering viewport, 1 = well into view)
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start 0.85", "start 0.35"],
+  });
+  const scrollProgress = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
-  const shouldSpread = isMobile && isInView;
+  // Scroll-driven styles (hooks called unconditionally, applied only on mobile)
+  const glowOpacity = useTransform(scrollProgress, (v) => lerp(0.4, 1, v));
+  const glowScale = useTransform(scrollProgress, (v) => lerp(0.9, 1.2, v));
+  const fadeOpacity = useTransform(scrollProgress, (v) => lerp(1, 0, v));
+
+  const phone0Style = useScrollPhoneStyle(scrollProgress, phoneConfig[0]);
+  const phone1Style = useScrollPhoneStyle(scrollProgress, phoneConfig[1]);
+  const phone2Style = useScrollPhoneStyle(scrollProgress, phoneConfig[2]);
+  const phoneScrollStyles = [phone0Style, phone1Style, phone2Style];
+
+  if (screenshots.length !== 3) return null;
 
   return (
     <motion.div
@@ -85,7 +120,6 @@ export default function ScreenshotFan({ screenshots, projectName }: ScreenshotFa
       className="relative h-96 w-full"
       style={{ perspective: "1200px" }}
       initial="rest"
-      animate={shouldSpread ? "spread" : undefined}
       whileHover={isMobile ? undefined : "spread"}
     >
       {/* Cyan glow background */}
@@ -93,17 +127,23 @@ export default function ScreenshotFan({ screenshots, projectName }: ScreenshotFa
         className="pointer-events-none absolute left-1/2 top-1/2 h-[90%] w-[80%] -translate-x-1/2 -translate-y-1/2 rounded-full"
         style={{
           background: "radial-gradient(ellipse at center, rgba(34,211,238,0.12) 0%, transparent 70%)",
+          ...(isMobile ? { opacity: glowOpacity, scale: glowScale } : {}),
         }}
-        variants={{
-          rest: { opacity: 0.4, scale: 0.9 },
-          spread: { opacity: 1, scale: 1.2 },
-        }}
+        variants={
+          isMobile
+            ? undefined
+            : {
+                rest: { opacity: 0.4, scale: 0.9 },
+                spread: { opacity: 1, scale: 1.2 },
+              }
+        }
         transition={{ duration: 0.5, ease: "easeOut" }}
       />
 
       <div className="absolute inset-0 flex items-center justify-center">
         {screenshots.map((screenshot, index) => {
           const config = phoneConfig[index];
+          const scrollStyle = phoneScrollStyles[index];
           const useSpreadValues = !prefersReducedMotion;
 
           return (
@@ -113,6 +153,7 @@ export default function ScreenshotFan({ screenshots, projectName }: ScreenshotFa
               style={{
                 transformStyle: "preserve-3d",
                 zIndex: config.zIndex,
+                ...(isMobile ? scrollStyle : {}),
               }}
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
@@ -121,25 +162,26 @@ export default function ScreenshotFan({ screenshots, projectName }: ScreenshotFa
                 duration: prefersReducedMotion ? 0 : 0.6,
                 delay: prefersReducedMotion ? 0 : index * 0.12,
               }}
-              variants={{
-                rest: {
-                  rotateY: config.rotate,
-                  x: config.x,
-                  z: config.z,
-                  scale: config.scale,
-                  transition: SPRING_TRANSITION,
-                },
-                spread: {
-                  rotateY: useSpreadValues ? config.spreadRotate : config.rotate,
-                  x: useSpreadValues ? config.spreadX : config.x,
-                  z: useSpreadValues ? config.spreadZ : config.z,
-                  scale: useSpreadValues ? config.spreadScale : config.scale,
-                  transition: {
-                    ...SPRING_TRANSITION,
-                    delay: isMobile ? 0.4 : 0,
-                  },
-                },
-              }}
+              variants={
+                isMobile
+                  ? undefined
+                  : {
+                      rest: {
+                        rotateY: config.rotate,
+                        x: `${config.x}%`,
+                        z: config.z,
+                        scale: config.scale,
+                        transition: SPRING_TRANSITION,
+                      },
+                      spread: {
+                        rotateY: useSpreadValues ? config.spreadRotate : config.rotate,
+                        x: useSpreadValues ? `${config.spreadX}%` : `${config.x}%`,
+                        z: useSpreadValues ? config.spreadZ : config.z,
+                        scale: useSpreadValues ? config.spreadScale : config.scale,
+                        transition: SPRING_TRANSITION,
+                      },
+                    }
+              }
             >
               {/* Phone device frame */}
               <div className="relative aspect-[9/19.5] w-full">
@@ -159,7 +201,7 @@ export default function ScreenshotFan({ screenshots, projectName }: ScreenshotFa
                 {/* Notch */}
                 <div className="absolute left-1/2 top-[2px] h-4 w-20 -translate-x-1/2 rounded-b-xl bg-slate-900" />
 
-                {/* Edge fade overlay for side phones (rest state) */}
+                {/* Edge fade overlay for side phones */}
                 {config.fadeDirection !== "none" && (
                   <motion.div
                     className={`pointer-events-none absolute inset-0 rounded-[1.6rem] ${
@@ -167,10 +209,15 @@ export default function ScreenshotFan({ screenshots, projectName }: ScreenshotFa
                         ? "bg-linear-to-l from-transparent via-transparent to-slate-900/70"
                         : "bg-linear-to-r from-transparent via-transparent to-slate-900/70"
                     }`}
-                    variants={{
-                      rest: { opacity: 1 },
-                      spread: { opacity: 0 },
-                    }}
+                    style={isMobile ? { opacity: fadeOpacity } : undefined}
+                    variants={
+                      isMobile
+                        ? undefined
+                        : {
+                            rest: { opacity: 1 },
+                            spread: { opacity: 0 },
+                          }
+                    }
                     transition={{ duration: 0.3 }}
                   />
                 )}
