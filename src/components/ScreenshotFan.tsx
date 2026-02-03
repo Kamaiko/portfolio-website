@@ -27,6 +27,7 @@ const SIDE_CONFIG = {
 
 const phoneConfig = [
   {
+    // Rest & spread (desktop hover)
     rotate: -SIDE_CONFIG.rotate,
     x: -SIDE_CONFIG.x,
     z: SIDE_CONFIG.z,
@@ -37,6 +38,13 @@ const phoneConfig = [
     spreadZ: SIDE_CONFIG.spreadZ,
     spreadScale: SIDE_CONFIG.spreadScale,
     fadeDirection: "left" as const,
+    // Compact (mobile scroll start)
+    compactX: 0,
+    compactRotate: 0,
+    compactZ: -10,
+    compactScale: 0.92,
+    // Staggered reveal: side phones appear after center
+    opacityRange: [0.15, 0.35] as [number, number],
   },
   {
     rotate: 0,
@@ -49,6 +57,12 @@ const phoneConfig = [
     spreadZ: 40,
     spreadScale: 1.0,
     fadeDirection: "none" as const,
+    compactX: 0,
+    compactRotate: 0,
+    compactZ: 10,
+    compactScale: 1,
+    // Center phone appears first
+    opacityRange: [0.0, 0.2] as [number, number],
   },
   {
     rotate: SIDE_CONFIG.rotate,
@@ -61,6 +75,11 @@ const phoneConfig = [
     spreadZ: SIDE_CONFIG.spreadZ,
     spreadScale: SIDE_CONFIG.spreadScale,
     fadeDirection: "right" as const,
+    compactX: 0,
+    compactRotate: 0,
+    compactZ: -10,
+    compactScale: 0.92,
+    opacityRange: [0.15, 0.35] as [number, number],
   },
 ];
 
@@ -70,20 +89,31 @@ function lerp(a: number, b: number, t: number) {
   return a + (b - a) * t;
 }
 
+function clamp(value: number, min: number, max: number) {
+  return Math.min(max, Math.max(min, value));
+}
+
 type PhoneConfig = (typeof phoneConfig)[number];
 
 function useScrollPhoneStyle(progress: MotionValue<number>, config: PhoneConfig) {
+  const [opacityStart, opacityEnd] = config.opacityRange;
+
   return {
-    rotateY: useTransform(progress, (v) => lerp(config.rotate, config.spreadRotate, v)),
-    x: useTransform(progress, (v) => `${lerp(config.x, config.spreadX, v)}%`),
-    z: useTransform(progress, (v) => lerp(config.z, config.spreadZ, v)),
-    scale: useTransform(progress, (v) => lerp(config.scale, config.spreadScale, v)),
+    rotateY: useTransform(progress, (v) => lerp(config.compactRotate, config.spreadRotate, v)),
+    x: useTransform(progress, (v) => `${lerp(config.compactX, config.spreadX, v)}%`),
+    z: useTransform(progress, (v) => lerp(config.compactZ, config.spreadZ, v)),
+    scale: useTransform(progress, (v) => lerp(config.compactScale, config.spreadScale, v)),
+    opacity: useTransform(progress, (v) =>
+      clamp((v - opacityStart) / (opacityEnd - opacityStart), 0, 1),
+    ),
+    y: useTransform(progress, (v) => lerp(40, 0, clamp(v / 0.3, 0, 1))),
   };
 }
 
 export default function ScreenshotFan({ screenshots, projectName }: ScreenshotFanProps) {
   const prefersReducedMotion = useReducedMotion();
   const containerRef = useRef<HTMLDivElement>(null);
+  const scrollContainerRef = useRef<HTMLElement | null>(null);
   const [isMobile, setIsMobile] = useState(
     () => window.matchMedia(MOBILE_QUERY).matches,
   );
@@ -95,16 +125,22 @@ export default function ScreenshotFan({ screenshots, projectName }: ScreenshotFa
     return () => mql.removeEventListener("change", onChange);
   }, []);
 
+  // Resolve scroll container (document.documentElement for Lenis compatibility)
+  useEffect(() => {
+    scrollContainerRef.current = document.documentElement;
+  }, []);
+
   // Scroll-linked progress for mobile (0 = entering viewport, 1 = well into view)
   const { scrollYProgress } = useScroll({
     target: containerRef,
+    container: scrollContainerRef as React.RefObject<HTMLElement>,
     offset: ["start 0.85", "start 0.35"],
   });
   const scrollProgress = useTransform(scrollYProgress, [0, 1], [0, 1]);
 
   // Scroll-driven styles (hooks called unconditionally, applied only on mobile)
-  const glowOpacity = useTransform(scrollProgress, (v) => lerp(0.4, 1, v));
-  const glowScale = useTransform(scrollProgress, (v) => lerp(0.9, 1.2, v));
+  const glowOpacity = useTransform(scrollProgress, (v) => lerp(0, 1, v));
+  const glowScale = useTransform(scrollProgress, (v) => lerp(0.8, 1.2, v));
   const fadeOpacity = useTransform(scrollProgress, (v) => lerp(1, 0, v));
 
   const phone0Style = useScrollPhoneStyle(scrollProgress, phoneConfig[0]);
@@ -155,13 +191,18 @@ export default function ScreenshotFan({ screenshots, projectName }: ScreenshotFa
                 zIndex: config.zIndex,
                 ...(isMobile ? scrollStyle : {}),
               }}
-              initial={{ opacity: 0, y: 40 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{
-                duration: prefersReducedMotion ? 0 : 0.6,
-                delay: prefersReducedMotion ? 0 : index * 0.12,
-              }}
+              // Desktop only: fade-in + variant animation
+              {...(isMobile
+                ? {}
+                : {
+                    initial: { opacity: 0, y: 40 },
+                    whileInView: { opacity: 1, y: 0 },
+                    viewport: { once: true, margin: "-80px" as const },
+                    transition: {
+                      duration: prefersReducedMotion ? 0 : 0.6,
+                      delay: prefersReducedMotion ? 0 : index * 0.12,
+                    },
+                  })}
               variants={
                 isMobile
                   ? undefined
@@ -193,7 +234,6 @@ export default function ScreenshotFan({ screenshots, projectName }: ScreenshotFa
                   <img
                     src={screenshot}
                     alt={`${projectName} – ${index + 1}`}
-                    loading="lazy"
                     className="h-full w-full object-cover"
                   />
                 </div>
