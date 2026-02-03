@@ -14,6 +14,7 @@ export const projects: Project[] = [
     translationKey: "projects.halterofit",
     github: "https://github.com/Kamaiko/Halterofit",
     tech: ["React Native", "Expo", "TypeScript", "WatermelonDB", "Supabase", "NativeWind"],
+    image: "/images/projects/adaptive-icon-Halterofit.png",
     featured: true,
   },
   {

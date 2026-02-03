@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>AVIS DE RECHERCHE — Simon</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Special+Elite&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #d4c9a8;
+            background-image:
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 50px,
+                    rgba(139, 119, 75, 0.03) 50px,
+                    rgba(139, 119, 75, 0.03) 51px
+                );
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 20px;
+            font-family: 'Libre Baskerville', Georgia, serif;
+        }
+
+        .poster {
+            background-color: #f5f0e1;
+            max-width: 650px;
+            width: 100%;
+            margin: 0 auto;
+            border: 3px solid #1a1a1a;
+            box-shadow:
+                0 0 0 6px #f5f0e1,
+                0 0 0 9px #1a1a1a,
+                8px 8px 24px rgba(0, 0, 0, 0.3);
+            position: relative;
+        }
+
+        .poster::before {
+            content: '';
+            position: absolute;
+            inset: 8px;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            pointer-events: none;
+        }
+
+        .banner {
+            background-color: #b91c1c;
+            padding: 18px 20px;
+            text-align: center;
+            border-bottom: 4px solid #1a1a1a;
+        }
+
+        .banner h1 {
+            font-family: 'Special Elite', 'Courier New', monospace;
+            color: #fff;
+            font-size: clamp(2rem, 6vw, 3rem);
+            letter-spacing: 6px;
+            text-transform: uppercase;
+            text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.3);
+        }
+
+        .content {
+            padding: 30px 35px;
+        }
+
+        .photo-container {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .photo-container img {
+            max-width: 280px;
+            width: 100%;
+            border: 3px solid #1a1a1a;
+            padding: 4px;
+            background: #fff;
+            box-shadow: 3px 3px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .photo-caption {
+            font-size: 0.8rem;
+            font-style: italic;
+            color: #666;
+            margin-top: 8px;
+        }
+
+        .text-body {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: #2a2a2a;
+            text-align: justify;
+        }
+
+        .text-body p {
+            margin-bottom: 16px;
+            text-indent: 2em;
+        }
+
+        .text-body p:first-child {
+            text-indent: 0;
+        }
+
+        .text-body p:first-child::first-letter {
+            font-size: 2.5em;
+            float: left;
+            line-height: 1;
+            margin-right: 6px;
+            margin-top: 4px;
+            color: #b91c1c;
+            font-weight: 700;
+        }
+
+        .indices-title {
+            font-family: 'Special Elite', 'Courier New', monospace;
+            text-align: center;
+            font-size: 1.15rem;
+            margin: 30px 0 15px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            border-top: 1px solid #999;
+            border-bottom: 1px solid #999;
+            padding: 8px 0;
+        }
+
+        .lieu {
+            margin-bottom: 14px;
+            padding-left: 1.5em;
+            position: relative;
+        }
+
+        .lieu::before {
+            content: '\25B6';
+            position: absolute;
+            left: 0;
+            color: #b91c1c;
+            font-size: 0.7em;
+            top: 5px;
+        }
+
+        .lieu strong {
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .reward-box {
+            margin-top: 30px;
+            border: 2px dashed #b91c1c;
+            padding: 15px 20px;
+            text-align: center;
+            background: rgba(185, 28, 28, 0.04);
+        }
+
+        .reward-box .label {
+            font-family: 'Special Elite', 'Courier New', monospace;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            font-size: 1rem;
+            color: #b91c1c;
+            margin-bottom: 6px;
+        }
+
+        .reward-box .amount {
+            font-size: 1.05rem;
+            font-style: italic;
+        }
+
+        .footer {
+            margin-top: 30px;
+            padding-top: 15px;
+            border-top: 1px solid #999;
+            text-align: center;
+            font-size: 0.85rem;
+            color: #555;
+            line-height: 1.6;
+        }
+
+        .footer .phone {
+            font-family: 'Special Elite', 'Courier New', monospace;
+            font-size: 1.3rem;
+            letter-spacing: 2px;
+            color: #1a1a1a;
+            display: block;
+            margin: 8px 0;
+        }
+
+        .footer .sig {
+            font-style: italic;
+            margin-top: 12px;
+            font-size: 0.9rem;
+            color: #444;
+        }
+
+        @media (max-width: 500px) {
+            .content {
+                padding: 20px 18px;
+            }
+            .photo-container img {
+                max-width: 220px;
+            }
+            .text-body {
+                font-size: 0.92rem;
+                text-align: left;
+            }
+            .text-body p {
+                text-indent: 1.5em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="poster">
+        <div class="banner">
+            <h1>Avis de recherche</h1>
+        </div>
+
+        <div class="content">
+            <div class="photo-container">
+                <img src="photo.png" alt="Simon">
+                <div class="photo-caption">Photo la plus r&eacute;cente qui existe</div>
+            </div>
+
+            <div class="text-body">
+                <p>Je m'adresse &agrave; la population en g&eacute;n&eacute;ral parce que je sais plus trop quoi faire. Mon ami s'appelle Simon. Certains le connaissent sous le nom de Sim. C'est un bon gars. Le meilleur gars que je connais, m&ecirc;me. Pis l&agrave;, y'er pas trouvable.</p>
+
+                <p>Je vais essayer de vous donner le plus d'informations possible pour aider &agrave; l'enqu&ecirc;te. Simon mesure &agrave; peu pr&egrave;s 5 pieds 11, peut-&ecirc;tre 6 pieds, je sais pas trop, j'pense pas qu'on s'est d&eacute;j&agrave; mesur&eacute; ensemble. Entk. Il a les cheveux bruns. Y'avait les dents croches, on va se le dire.</p>
+
+                <p>Simon &eacute;tait un homme simple. Un homme de go&ucirc;t. Le genre de gars &agrave; rentrer au d&eacute;p avec un pas d&eacute;termin&eacute;. Pis quand tu le voyais aller, tu savais exactement o&ugrave; il s'en allait. Tout le monde le savait. Il se dirigeait vers le 3e frigo &agrave; sa gauche. Regardait m&ecirc;me pas le menu. Yoink le 6-pack en un seul mouvement. Le genre de gars &agrave; sortir le vino blanco del todos los momentos un mardi soir comme si c'&eacute;tait normal. Pis &ccedil;a l'&eacute;tait, pour nous. C'&eacute;tait normal.</p>
+
+                <p>On a v&eacute;cu des affaires ensemble que m&ecirc;me le Seigneur veut pas se rappeler. Mais Simon, c'&eacute;tait pas rare de le retrouver sur St-Dominique en d&eacute;but de soir&eacute;e, bourr&eacute; comme une valise, en train de marcher tout croche entre le caf&eacute; campus pis la pizzeria. Une fois, y'a essay&eacute; de partir 3 bagarres. Trois. Dans la m&ecirc;me soir&eacute;e. Il en a gagn&eacute; aucune. Mais c'est pas le point. Le point c'est qu'il &eacute;tait l&agrave;. Il &eacute;tait pr&eacute;sent.</p>
+
+                <p>Je me souviens d'une fois, on revenait de Chez Par&eacute;. Simon avait les deux yeux dans le m&ecirc;me trou. Il m'a regard&eacute; pis il m'a dit quelque chose de profond. Je m'en rappelle plus c'&eacute;tait quoi, mais c'&eacute;tait profond. Je pense. En tout cas, sur le coup, &ccedil;a m'avait frapp&eacute;.</p>
+
+                <p>Simon c'est aussi le genre de gars qui dispara&icirc;t &agrave; Cancun pendant deux semaines pis qui revient bronz&eacute; comme une toast sans rien expliquer &agrave; personne. Genre il part. Il revient. Tu poses pas de questions. C'&eacute;tait son processus. Mais l&agrave;, c'est diff&eacute;rent. L&agrave;, &ccedil;a fait longtemps. Pis je suis pas mal s&ucirc;r qu'il est pas &agrave; Cancun parce que j'connais les lois.</p>
+
+                <p>J'ai entendu une rumeur qu'il aurait &eacute;t&eacute; aper&ccedil;u dans un Costco en Mont&eacute;r&eacute;gie. En train de s'acheter un poulet entier avec du lait 4L. Le Simon que je connais buvait juste du lait d'amande. Faque soit c'est un imposteur, soit il a chang&eacute;. Pis je sais pas c'est quoi qui est pire.</p>
+
+            </div>
+
+            <div class="indices-title">Indices pour la population</div>
+
+            <div class="text-body">
+                <div class="lieu">
+                    <strong>Le Rack</strong> &mdash; Ancien QG du sujet. C'est l&agrave; que Simon &eacute;tait le plus lui-m&ecirc;me. Si vous le voyez l&agrave;-bas, approchez doucement. Offrez-lui une grosse 50. Il devrait r&eacute;pondre.
+                </div>
+                <div class="lieu">
+                    <strong>Les Foufounes &Eacute;lectriques</strong> &mdash; On a pass&eacute; des nuits l&agrave;-dedans que m&ecirc;me ma m&egrave;re veut pas savoir. Possibilit&eacute; moyenne qu'il y soit encore. V&eacute;rifiez les toilettes.
+                </div>
+            </div>
+
+            <div class="footer">
+                <span>Pour toute information, veuillez appeler le&nbsp;:</span>
+                <span class="phone">1-800-RAMENE-SIMON</span>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
