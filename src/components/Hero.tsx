@@ -63,6 +63,7 @@ export default function Hero() {
               initial="hidden"
               animate="visible"
               variants={wordVariants}
+              style={{ willChange: "filter, transform, opacity" }}
               className="mr-[0.3em] inline-block last:mr-0"
             >
               {word}

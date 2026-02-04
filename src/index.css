@@ -43,3 +43,81 @@ body {
     transform: translateX(-800px);
   }
 }
+
+/* ═══════════════════════════════════════════════════════════════
+   CityScene — CSS animations (replaces per-element Framer Motion)
+   ═══════════════════════════════════════════════════════════════ */
+
+@keyframes star-twinkle {
+  0% { opacity: 0; }
+  25% { opacity: 0.9; }
+  50% { opacity: 0.25; }
+  75% { opacity: 0.9; }
+  100% { opacity: 0; }
+}
+
+@keyframes win-pulse {
+  0%, 100% { opacity: 0.2; }
+  50% { opacity: 0.85; }
+}
+
+@keyframes win-fade {
+  from { opacity: 0; }
+  to { opacity: 0.6; }
+}
+
+/* Layer & moon fade-in transitions */
+.city-layer {
+  opacity: 0;
+  transition: opacity 0.8s ease-out;
+}
+
+.city-moon {
+  opacity: 0;
+  transition: opacity 1.2s ease-out 0.8s;
+}
+
+/* All animations paused by default */
+.city-scene .star-twinkle,
+.city-scene .win-pulse,
+.city-scene .win-fade,
+.city-scene .city-scroll-layer {
+  animation-play-state: paused;
+}
+
+/* Trigger: isInView adds .animate */
+.city-scene.animate .star-twinkle,
+.city-scene.animate .win-pulse,
+.city-scene.animate .win-fade,
+.city-scene.animate .city-scroll-layer {
+  animation-play-state: running;
+}
+
+.city-scene.animate .city-layer,
+.city-scene.animate .city-moon {
+  opacity: 1;
+}
+
+/* ─── Reduced motion ─── */
+@media (prefers-reduced-motion: reduce) {
+  .star-twinkle {
+    animation: none !important;
+    opacity: 0.7 !important;
+  }
+
+  .win-pulse,
+  .win-fade {
+    animation: none !important;
+    opacity: 0.6 !important;
+  }
+
+  .city-layer,
+  .city-moon {
+    opacity: 1 !important;
+    transition: none !important;
+  }
+
+  .city-scroll-layer {
+    animation: none !important;
+  }
+}

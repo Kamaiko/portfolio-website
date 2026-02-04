@@ -1,17 +1,22 @@
-import { type ReactNode } from "react";
-import { motion, useInView, useReducedMotion } from "framer-motion";
-import { useRef } from "react";
+import { type ReactNode, useRef } from "react";
+import { useInView } from "framer-motion";
 
 /* ═══════════════════════════════════════════════════════════════════
    CityScene — Animated pixel-art city skyline
    3 scrolling layers (back → mid → front) + ground + sky elements
+
+   All animations are pure CSS (@keyframes + transitions).
+   Framer Motion is only used for useInView (lightweight IntersectionObserver).
+   Reduced-motion is handled entirely via CSS media query.
    ═══════════════════════════════════════════════════════════════════ */
 
 /* ─── Palette ─── */
 const SKY = "#0c1222";
 const BACK_CLR = "#1e293b"; // slate-800  — distant back layer (thin spires)
 const BACK_WIDE_CLR = "#182032"; // slightly darker — wide low blocks recede further
-const MID_CLR = "#283548"; // slate-700  — windowed mid layer
+const MID_CLR = "#283548"; // slate-700  — windowed mid layer (fallback)
+const MID_GRADS = ["url(#mid-grad-0)", "url(#mid-grad-1)", "url(#mid-grad-2)"];
+const MID_EDGE_CLR = "#4a6280"; // roof-edge highlight
 const FRONT_CLR = "#0a1018"; // near-black — closest silhouettes
 const CYAN = "#22d3ee"; // cyan-400   — windows, accents
 const STAR_CLR = "#e2e8f0"; // slate-200  — stars, moon
@@ -174,7 +179,8 @@ function generateMidWindows(): MidWin[] {
     const cols = Math.floor((b.w - g.pad) / g.gap);
     const rows = Math.floor((b.h - g.pad) / g.rowGap);
     const order = MID_BLDG_DELAY.get(bIdx) ?? bIdx;
-    const baseDelay = 0.5 + order * 0.25;
+    const baseDelay = 0.5 + order * 0.15;
+    const startIdx = wins.length;
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
         const seed = (bIdx * 100 + r * 10 + c) * HASH_A;
@@ -187,6 +193,27 @@ function generateMidWindows(): MidWin[] {
           delay: baseDelay + r * 0.05,
         });
       }
+    }
+    // Guarantee at least 2 pulsing windows per building
+    const bWins = wins.slice(startIdx);
+    const pulseCount = bWins.filter((w) => w.pulse).length;
+    for (let p = pulseCount; p < 2 && startIdx + p < wins.length; p++) {
+      wins[startIdx + p].pulse = true;
+    }
+    // Sparse buildings (< 4 windows): add 2 guaranteed windows
+    if (bWins.length < 4) {
+      wins.push({
+        x: b.x + Math.floor(b.w / 2) - 2,
+        y: H - b.h + Math.floor(b.h / 3),
+        pulse: true,
+        delay: baseDelay,
+      });
+      wins.push({
+        x: b.x + Math.floor(b.w / 2) + 3,
+        y: H - b.h + Math.floor((b.h * 2) / 3),
+        pulse: false,
+        delay: baseDelay + 0.1,
+      });
     }
   });
   return wins;
@@ -238,6 +265,28 @@ const BACK_THIN_WINDOWS = generateBackThinWindows();
    Sub-components
    ═══════════════════════════════════════════════════════════════════ */
 
+/** Render mid buildings with per-building gradient fills */
+function MidBuildingRects() {
+  return (
+    <>
+      {MID_BUILDINGS.map((b, i) => (
+        <rect key={i} x={b.x} y={H - b.h} width={b.w} height={b.h} fill={MID_GRADS[i % 3]} />
+      ))}
+    </>
+  );
+}
+
+/** Render a subtle roof-edge highlight on each mid building */
+function MidRoofEdges() {
+  return (
+    <>
+      {MID_BUILDINGS.map((b, i) => (
+        <rect key={i} x={b.x} y={H - b.h} width={b.w} height={1} fill={MID_EDGE_CLR} opacity={0.6} />
+      ))}
+    </>
+  );
+}
+
 /** Render Bldg[] as simple <rect> elements */
 function Rects({ items, fill }: { items: Bldg[]; fill: string }) {
   return (
@@ -287,65 +336,47 @@ function BackWindows({ items }: { items: BackWin[] }) {
 function ScrollLayer({
   speed,
   children,
-  scroll,
 }: {
   speed: number;
   children: ReactNode;
-  scroll: (s: number) => React.CSSProperties | undefined;
 }) {
   return (
-    <g style={scroll(speed)}>
+    <g
+      className="city-scroll-layer"
+      style={{ animation: `city-scroll ${speed}s linear infinite` }}
+    >
       {children}
       <g transform={`translate(${W}, 0)`}>{children}</g>
     </g>
   );
 }
 
-/** Twinkling star field — respects reduced motion */
-function StarField({ shouldAnimate }: { shouldAnimate: boolean }) {
-  const reduced = useReducedMotion();
+/** Twinkling star field — CSS animated */
+function StarField() {
   return (
     <>
       {STARS.map((s, i) => (
-        <motion.circle
+        <circle
           key={i}
           cx={s.cx}
           cy={s.cy}
           r={s.r}
           fill={STAR_CLR}
-          initial={{ opacity: reduced ? 0.7 : 0 }}
-          animate={
-            shouldAnimate
-              ? { opacity: [0, 0.9, 0.25, 0.9] }
-              : reduced
-                ? { opacity: 0.7 }
-                : undefined
-          }
-          transition={
-            shouldAnimate
-              ? {
-                  delay: 0.3 + i * 0.12,
-                  duration: 2.5 + (i % 4),
-                  repeat: Infinity,
-                  repeatType: "mirror" as const,
-                  ease: "easeInOut",
-                }
-              : undefined
-          }
+          className="star-twinkle"
+          style={{
+            animation: `star-twinkle ${2.5 + (i % 4)}s ease-in-out infinite`,
+            animationDelay: `${0.3 + i * 0.12}s`,
+          }}
         />
       ))}
     </>
   );
 }
 
-/** Crescent moon with double cyan halo — uses SVG mask for transparent cutout */
-function CrescentMoon({ shouldAnimate }: { shouldAnimate: boolean }) {
+/** Crescent moon with double cyan halo — CSS transition fade-in */
+function CrescentMoon() {
   return (
-    <motion.g
-      initial={{ opacity: 0 }}
-      animate={shouldAnimate ? { opacity: 1 } : undefined}
-      transition={shouldAnimate ? { delay: 0.8, duration: 1.2, ease: "easeOut" } : undefined}
-    >
+    <g className="city-moon">
       <circle cx={MOON.cx} cy={MOON.cy} r={60} fill="url(#moon-outer-halo)" />
       <circle cx={MOON.cx} cy={MOON.cy} r={38} fill="url(#moon-halo)" />
       <circle
@@ -356,7 +387,7 @@ function CrescentMoon({ shouldAnimate }: { shouldAnimate: boolean }) {
         opacity={0.85}
         mask="url(#crescent-mask)"
       />
-    </motion.g>
+    </g>
   );
 }
 
@@ -390,31 +421,12 @@ interface CitySceneProps {
 export default function CityScene({ className }: CitySceneProps) {
   const ref = useRef<SVGSVGElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-40px" });
-  const prefersReducedMotion = useReducedMotion();
-  const shouldAnimate = isInView && !prefersReducedMotion;
-  const showStatic = !!prefersReducedMotion;
-
-  const scroll = (seconds: number) =>
-    shouldAnimate
-      ? { animation: `city-scroll ${seconds}s linear infinite` }
-      : undefined;
-
-  /** Fade-in wrapper for each layer */
-  const fadeIn = (delay: number, children: ReactNode) => (
-    <motion.g
-      initial={{ opacity: showStatic ? 1 : 0 }}
-      animate={shouldAnimate || showStatic ? { opacity: 1 } : undefined}
-      transition={shouldAnimate ? { delay, duration: 0.8 } : undefined}
-    >
-      {children}
-    </motion.g>
-  );
 
   return (
     <svg
       ref={ref}
       viewBox={`0 0 ${W} ${H}`}
-      className={className}
+      className={`city-scene${isInView ? " animate" : ""}${className ? ` ${className}` : ""}`}
       preserveAspectRatio="xMidYMax slice"
       overflow="hidden"
       aria-hidden="true"
@@ -439,6 +451,19 @@ export default function CityScene({ className }: CitySceneProps) {
           <stop offset="0%" stopColor={CYAN} stopOpacity="0.06" />
           <stop offset="100%" stopColor={CYAN} stopOpacity="0" />
         </linearGradient>
+        {/* Mid building gradients — 3 tonal variants (dark bottom → lighter top) */}
+        <linearGradient id="mid-grad-0" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0%" stopColor="#172232" />
+          <stop offset="100%" stopColor="#37495e" />
+        </linearGradient>
+        <linearGradient id="mid-grad-1" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0%" stopColor="#152030" />
+          <stop offset="100%" stopColor="#35475c" />
+        </linearGradient>
+        <linearGradient id="mid-grad-2" x1="0" y1="1" x2="0" y2="0">
+          <stop offset="0%" stopColor="#1a2636" />
+          <stop offset="100%" stopColor="#3a4e64" />
+        </linearGradient>
         <mask id="crescent-mask">
           <circle cx={MOON.cx} cy={MOON.cy} r={MOON.r} fill="white" />
           <circle cx={MOON.cutCx} cy={MOON.cutCy} r={MOON.cutR} fill="black" />
@@ -449,31 +474,35 @@ export default function CityScene({ className }: CitySceneProps) {
       <rect width={W} height={H} fill={SKY} />
 
       {/* ─── Sky elements (static, no scroll) ─── */}
-      <StarField shouldAnimate={shouldAnimate} />
-      <CrescentMoon shouldAnimate={shouldAnimate} />
+      <StarField />
+      <CrescentMoon />
 
       {/* ─── BACK layer — 300s scroll ─── */}
-      {fadeIn(0.2,
-        <ScrollLayer speed={SPEED_BACK} scroll={scroll}>
+      <g className="city-layer" style={{ transitionDelay: "0.2s" }}>
+        <ScrollLayer speed={SPEED_BACK}>
           <Rects items={BACK_WIDE} fill={BACK_WIDE_CLR} />
           <Rects items={BACK_THIN} fill={BACK_CLR} />
           <BackWindows items={BACK_WIDE_WINDOWS} />
           <BackWindows items={BACK_THIN_WINDOWS} />
-        </ScrollLayer>,
-      )}
+        </ScrollLayer>
+      </g>
 
       {/* ─── Atmospheric fog between back and mid layers ─── */}
       <rect x={0} y={85} width={W} height={50} fill="url(#back-fog)" />
 
       {/* ─── MID layer — 240s scroll, buildings + windows + antennas ─── */}
-      {fadeIn(0.4,
-        <g style={scroll(SPEED_MID)}>
-          {/* Primary set — animated windows */}
-          <Rects items={MID_BUILDINGS} fill={MID_CLR} />
+      <g className="city-layer" style={{ transitionDelay: "0.4s" }}>
+        <g
+          className="city-scroll-layer"
+          style={{ animation: `city-scroll ${SPEED_MID}s linear infinite` }}
+        >
+          {/* Primary set — gradient buildings + roof edges + animated windows */}
+          <MidBuildingRects />
+          <MidRoofEdges />
           <Antennas />
           {MID_WINDOWS.map((win, i) =>
             win.pulse ? (
-              <motion.rect
+              <rect
                 key={i}
                 x={win.x}
                 y={win.y}
@@ -481,25 +510,14 @@ export default function CityScene({ className }: CitySceneProps) {
                 height={WIN.mid.h}
                 rx={0.5}
                 fill={CYAN}
-                initial={{ opacity: showStatic ? 0.6 : 0 }}
-                animate={
-                  shouldAnimate || showStatic
-                    ? { opacity: [0.2, 0.85, 0.2] }
-                    : undefined
-                }
-                transition={
-                  shouldAnimate
-                    ? {
-                        delay: win.delay + 0.5,
-                        duration: 2.5 + (i % 3) * 0.8,
-                        repeat: Infinity,
-                        ease: "easeInOut",
-                      }
-                    : undefined
-                }
+                className="win-pulse"
+                style={{
+                  animation: `win-pulse ${2.5 + (i % 3) * 0.8}s ease-in-out infinite`,
+                  animationDelay: `${win.delay + 0.5}s`,
+                }}
               />
             ) : (
-              <motion.rect
+              <rect
                 key={i}
                 x={win.x}
                 y={win.y}
@@ -507,24 +525,19 @@ export default function CityScene({ className }: CitySceneProps) {
                 height={WIN.mid.h}
                 rx={0.5}
                 fill={CYAN}
-                initial={{ opacity: showStatic ? 0.6 : 0 }}
-                animate={
-                  shouldAnimate
-                    ? { opacity: 0.6 }
-                    : showStatic
-                      ? { opacity: 0.6 }
-                      : undefined
-                }
-                transition={
-                  shouldAnimate ? { delay: win.delay, duration: 0.4 } : undefined
-                }
+                className="win-fade"
+                style={{
+                  animation: `win-fade 0.4s ease-out forwards`,
+                  animationDelay: `${win.delay}s`,
+                }}
               />
             ),
           )}
 
           {/* Duplicate set — static windows for seamless loop */}
           <g transform={`translate(${W}, 0)`}>
-            <Rects items={MID_BUILDINGS} fill={MID_CLR} />
+            <MidBuildingRects />
+            <MidRoofEdges />
             <Antennas />
             {MID_WINDOWS.map((win, i) => (
               <rect
@@ -539,11 +552,11 @@ export default function CityScene({ className }: CitySceneProps) {
               />
             ))}
           </g>
-        </g>,
-      )}
+        </g>
+      </g>
 
       {/* ─── FRONT layer — 55s scroll, low silhouettes ─── */}
-      <ScrollLayer speed={SPEED_FRONT} scroll={scroll}>
+      <ScrollLayer speed={SPEED_FRONT}>
         <Paths items={FRONT_PATHS} fill={FRONT_CLR} />
       </ScrollLayer>
 
