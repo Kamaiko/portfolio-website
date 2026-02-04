@@ -13,17 +13,25 @@
   },
   "about": {
     "title": "About",
-    "bio": "First degree in psychology, second in computer science. I discovered programming during the pandemic and never looked back. I care as much about understanding users as writing solid code — even if computers are easier to debug than humans.",
+    "tagline": "<hl>Psych</hl> grad turned <hl>dev</hl>. I build apps designed for their <hl>users</hl>.",
+    "journey_title": "Journey",
+    "journey": {
+      "step1": "Psychology",
+      "step2": "Computer Science",
+      "step3": "Fullstack Dev"
+    },
     "stack_title": "Favorite stack",
     "interests_title": "Interests",
     "interests": {
       "fitness": "Weightlifting",
-      "fitness_fact": "Never skip leg day",
+      "fitness_fact": "Never always skip leg day",
       "chess": "Chess",
       "chess_fact": "Blitz at 3am, no regrets",
       "gaming": "Gaming",
       "gaming_fact": "gg no re"
-    }
+    },
+    "fun_snippet": "while(alive) { code(); lift(); }",
+    "closing": "Understand people. Build solutions."
   },
   "projects": {
     "title": "Projects",

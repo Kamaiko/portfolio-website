@@ -7,8 +7,10 @@ interface ScrollRevealProps {
   className?: string;
   /** Lock at final state after first reveal (default: true) */
   once?: boolean;
-  /** Vertical offset in px to slide up from (default: 20, use 0 for opacity-only) */
+  /** Vertical offset in px to slide up from (default: 60, use 0 for opacity-only) */
   yOffset?: number;
+  /** Delay in seconds before the reveal animation starts (default: 0) */
+  delay?: number;
 }
 
 export default function ScrollReveal({
@@ -16,6 +18,7 @@ export default function ScrollReveal({
   className,
   once = true,
   yOffset = 60,
+  delay = 0,
 }: ScrollRevealProps) {
   const prefersReducedMotion = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
@@ -33,7 +36,7 @@ export default function ScrollReveal({
         transform: revealed ? undefined : `translateY(${yOffset}px)`,
         transition: revealed
           ? undefined // After reveal, remove inline transition so Tailwind classes work
-          : "opacity 0.8s ease-out, transform 0.8s ease-out",
+          : `opacity 0.8s ease-out ${delay}s, transform 0.8s ease-out ${delay}s`,
       }}
     >
       {children}

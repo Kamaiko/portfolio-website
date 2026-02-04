@@ -13,17 +13,25 @@
   },
   "about": {
     "title": "À propos",
-    "bio": "Premier bac en psychologie, deuxième en informatique. J'ai découvert la programmation pendant la pandémie et j'ai jamais regardé en arrière. Je m'intéresse autant à comprendre les utilisateurs qu'à écrire du code solide — même si les ordinateurs sont plus faciles à debug que les humains.",
+    "tagline": "Diplômé en <hl>psycho</hl>, reconverti en <hl>dev</hl>. Je build des apps pensées pour leurs <hl>utilisateurs</hl>.",
+    "journey_title": "Parcours",
+    "journey": {
+      "step1": "Psychologie",
+      "step2": "Informatique",
+      "step3": "Dev fullstack"
+    },
     "stack_title": "Stack favori",
     "interests_title": "Intérêts",
     "interests": {
       "fitness": "Musculation",
-      "fitness_fact": "Jamais skip leg day",
+      "fitness_fact": "Jamais toujours skip leg day",
       "chess": "Échecs",
       "chess_fact": "Blitz à 3am, aucun regret",
       "gaming": "Gaming",
       "gaming_fact": "gg no re"
-    }
+    },
+    "fun_snippet": "while(alive) { code(); lift(); }",
+    "closing": "Comprendre les gens. Construire des solutions."
   },
   "projects": {
     "title": "Projets",
