@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Menu, X, Globe } from "lucide-react";
-import { useLenis } from "../contexts/LenisContext";
+import { useLenis } from "lenis/react";
 
 const navLinks = ["about", "projects", "skills", "contact"] as const;
 const NAV_HEIGHT = 72;

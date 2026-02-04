@@ -1,8 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
-import Lenis from "lenis";
-import { LenisContext } from "./contexts/LenisContext";
+import { ReactLenis } from "lenis/react";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import About from "./components/About";
@@ -11,9 +10,14 @@ import Skills from "./components/Skills";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 
+const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const lenisOptions = {
+  duration: 1.2,
+  easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+};
+
 export default function App() {
   const { i18n } = useTranslation();
-  const [lenis, setLenis] = useState<Lenis | null>(null);
 
   // Sync <html lang=""> and persist language choice
   useEffect(() => {
@@ -21,35 +25,7 @@ export default function App() {
     localStorage.setItem("lng", i18n.language);
   }, [i18n.language]);
 
-  // Smooth scrolling (skip for reduced-motion users)
-  useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
-
-    const instance = new Lenis({
-      duration: 1.2,
-      easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    });
-
-    setLenis(instance);
-
-    let rafId: number;
-
-    function raf(time: number) {
-      instance.raf(time);
-      rafId = requestAnimationFrame(raf);
-    }
-
-    rafId = requestAnimationFrame(raf);
-
-    return () => {
-      cancelAnimationFrame(rafId);
-      instance.destroy();
-      setLenis(null);
-    };
-  }, []);
-
-  return (
-    <LenisContext.Provider value={lenis}>
+  const content = (
       <div className="relative min-h-screen overflow-x-hidden bg-slate-950 text-slate-100">
       {/* Animated ambient blobs — slow-moving background glow */}
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-[200vh]">
@@ -101,6 +77,13 @@ export default function App() {
       </main>
       <Footer />
       </div>
-    </LenisContext.Provider>
+  );
+
+  if (reducedMotion) return content;
+
+  return (
+    <ReactLenis root options={lenisOptions}>
+      {content}
+    </ReactLenis>
   );
 }
