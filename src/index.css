@@ -57,15 +57,15 @@ body {
 }
 
 @keyframes win-pulse {
-  /* Short pause at dim */
-  0%, 10% { opacity: var(--min-opacity, 0.2); }
-  /* Fade to bright */
-  25% { opacity: var(--max-opacity, 0.85); }
-  /* Longer pause at bright (30% of cycle) */
-  55% { opacity: var(--max-opacity, 0.85); }
+  /* Very short dim rest */
+  0%, 5% { opacity: var(--min-opacity, 0.2); }
+  /* Fast rise to bright */
+  15% { opacity: var(--max-opacity, 0.85); }
+  /* Long bright plateau (30%) */
+  45% { opacity: var(--max-opacity, 0.85); }
   /* Fade to dim */
-  70% { opacity: var(--min-opacity, 0.2); }
-  /* Rest at dim (30% of cycle) */
+  60% { opacity: var(--min-opacity, 0.2); }
+  /* Dim rest until next cycle */
   100% { opacity: var(--min-opacity, 0.2); }
 }
 

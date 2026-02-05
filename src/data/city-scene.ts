@@ -21,9 +21,9 @@ export interface MidWin {
   delay: number;
   /** Staggered delay before pulse cycle starts */
   cycleDelay: number;
-  /** Window's dim opacity (0.20-0.60 range) */
+  /** Window's dim opacity (0.10-0.30 range) */
   minOpacity: number;
-  /** Window's bright opacity (0.60-0.90 range) */
+  /** Window's bright opacity (0.75-0.95 range) */
   maxOpacity: number;
 }
 
@@ -74,21 +74,21 @@ export const WIN = {
 /** Window animation timing configuration */
 export const WIN_ANIM = {
   /** Fade-in duration for initial window reveal */
-  fadeIn_S: 0.8,
+  fadeIn_S: 0.4,
   /** Pulsing window configuration */
   pulse: {
     /** Base animation cycle (includes pause + fade phases) */
-    baseCycle_S: 8.0,
+    baseCycle_S: 5.0,
     /** Number of timing variants for desynchronization */
     variants: 7,
     /** Time offset between consecutive variants */
-    variantStep_S: 0.6,
+    variantStep_S: 0.4,
   },
   /** Staggered reveal timing */
   delay: {
-    base_S: 1.0,
-    perBuilding_S: 0.2,
-    perRow_S: 0.08,
+    base_S: 0.3,
+    perBuilding_S: 0.15,
+    perRow_S: 0.05,
   },
   /** Roll threshold for window density (0-100 scale) */
   roll: {

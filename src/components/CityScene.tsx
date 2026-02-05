@@ -59,9 +59,9 @@ function generateMidWindows(): MidWin[] {
         const roll = (seed >>> 0) % 100;
         if (roll > WIN_ANIM.roll.skip) continue;
         // Generate varied opacity ranges and positive cycle delay
-        const cycleDelay = ((seed % 1000) / 1000) * WIN_ANIM.pulse.baseCycle_S;
-        const minOpacity = 0.20 + ((seed % 40) / 100); // 0.20 to 0.60
-        const maxOpacity = 0.60 + (((seed >> 8) % 30) / 100); // 0.60 to 0.90
+        const cycleDelay = ((seed % 1000) / 1000) * 2.0; // 0 to 2s max
+        const minOpacity = 0.10 + ((seed % 20) / 100); // 0.10 to 0.30
+        const maxOpacity = 0.75 + (((seed >> 8) % 20) / 100); // 0.75 to 0.95
         wins.push({
           x: b.x + 6 + c * g.gap,
           y: H - b.h + topPad + r * g.rowGap,
@@ -85,9 +85,9 @@ function generateMidWindows(): MidWin[] {
           x: fallbackX1,
           y: H - b.h + topPad + Math.floor((b.h - topPad) / 3),
           delay: baseDelay,
-          cycleDelay: ((fallbackSeed1 % 1000) / 1000) * WIN_ANIM.pulse.baseCycle_S,
-          minOpacity: 0.20 + ((fallbackSeed1 % 40) / 100),
-          maxOpacity: 0.60 + (((fallbackSeed1 >> 8) % 30) / 100),
+          cycleDelay: ((fallbackSeed1 % 1000) / 1000) * 2.0,
+          minOpacity: 0.10 + ((fallbackSeed1 % 20) / 100),
+          maxOpacity: 0.75 + (((fallbackSeed1 >> 8) % 20) / 100),
         });
       }
       if (!hasOverlap(fallbackX2)) {
@@ -95,9 +95,9 @@ function generateMidWindows(): MidWin[] {
           x: fallbackX2,
           y: H - b.h + topPad + Math.floor(((b.h - topPad) * 2) / 3),
           delay: baseDelay + 0.1,
-          cycleDelay: ((fallbackSeed2 % 1000) / 1000) * WIN_ANIM.pulse.baseCycle_S,
-          minOpacity: 0.20 + ((fallbackSeed2 % 40) / 100),
-          maxOpacity: 0.60 + (((fallbackSeed2 >> 8) % 30) / 100),
+          cycleDelay: ((fallbackSeed2 % 1000) / 1000) * 2.0,
+          minOpacity: 0.10 + ((fallbackSeed2 % 20) / 100),
+          maxOpacity: 0.75 + (((fallbackSeed2 >> 8) % 20) / 100),
         });
       }
     }
