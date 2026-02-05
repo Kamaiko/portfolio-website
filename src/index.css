@@ -74,12 +74,12 @@ body {
 /* Layer & moon fade-in transitions */
 .city-layer {
   opacity: 0;
-  transition: opacity 1.2s ease-out;
+  transition: opacity 0.7s ease-out;
 }
 
 .city-moon {
   opacity: 0;
-  transition: opacity 1.2s ease-out 0.8s;
+  transition: opacity 0.7s ease-out 0.8s;
 }
 
 /* Animations paused until reveal */

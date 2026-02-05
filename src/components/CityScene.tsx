@@ -74,19 +74,19 @@ const BACK_BUILDINGS: Bldg[] = [
   { x: 10, w: 12, h: 65 },
   { x: 55, w: 10, h: 52 },
   { x: 90, w: 26, h: 30 },
-  { x: 148, w: 10, h: 70 },  // new tall thin tower
+  { x: 148, w: 10, h: 70 },
   { x: 195, w: 14, h: 50 },
   { x: 240, w: 22, h: 16 },
   { x: 330, w: 11, h: 58 },
   { x: 355, w: 13, h: 38 },
   { x: 400, w: 28, h: 26 },
-  { x: 458, w: 13, h: 58 },  // new tall thin tower
+  { x: 458, w: 13, h: 58 },
   { x: 500, w: 12, h: 62 },
   { x: 545, w: 24, h: 14 },
-  { x: 580, w: 11, h: 75 },  // new tall thin tower
+  { x: 580, w: 11, h: 75 },
   { x: 640, w: 14, h: 55 },
   { x: 685, w: 25, h: 22 },
-  { x: 725, w: 12, h: 63 },  // new tall thin tower
+  { x: 725, w: 12, h: 63 },
   { x: 760, w: 11, h: 60 },
 ];
 
@@ -116,15 +116,15 @@ const ANTENNA_INDICES = [1, 3, 5, 7, 9];
 
 /* ─── FRONT layer — low silhouettes with varied rooflines (55s scroll) ─── */
 const FRONT_PATHS: string[] = [
-  "M-5,160 V138 H10 V132 L22,125 L34,132 V138 H48 V160 Z",
-  "M95,160 V140 H110 V135 H114 V140 H155 V160 Z",
-  "M205,160 V142 H230 V148 H255 V160 Z",
-  "M308,160 V144 H328 V160 Z M311,144 V136 H325 V144 Z M314,136 V131 H322 V136 Z",
-  "M390,160 V145 H405 V140 H418 V135 H432 V140 H445 V160 Z",
-  "M505,160 V148 H540 V160 Z M518,148 V138 H524 V148 Z",
-  "M595,160 V140 L615,130 L635,140 V160 Z",
-  "M695,160 V146 H720 V160 Z M732,160 V142 H752 V160 Z",
-  "M790,160 V144 H808 V138 H815 V144 H830 V160 Z",
+  "M-5,160 V138 H10 V132 L22,125 L34,132 V138 H48 V160 Z",                                       // h35
+  "M80,160 V148 H90 V144 L100,138 L110,144 V148 H120 V152 H125 V146 H130 V152 H140 V160 Z",      // h22
+  "M212,160 V141 H222 V136 H226 V141 H232 V138 L247,130 L257,138 V160 Z",                         // h30
+  "M293,160 V144 H313 V160 Z M296,144 V136 H310 V144 Z M299,136 V131 H307 V136 Z",                // h29
+  "M395,160 V150 H405 V143 H409 V150 H415 V147 L430,140 L445,147 V160 Z",                         // h20
+  "M500,160 V144 H510 V138 L516,132 L522,138 V144 H540 V160 Z",                                   // h28
+  "M575,160 V136 L595,126 L615,136 V160 Z",                                                        // h34
+  "M700,160 V150 H710 V144 H714 V150 H725 V156 H733 V146 H740 V142 H744 V146 H757 V160 Z",       // h18
+  "M790,160 V142 H808 V136 H815 V142 H830 V160 Z",                                                // h24
 ];
 
 /* ─── Stars ─── */
@@ -183,7 +183,7 @@ function generateMidWindows(): MidWin[] {
     const cols = Math.floor((b.w - g.pad) / g.gap);
     const rows = Math.floor((b.h - g.pad) / g.rowGap);
     const order = MID_BLDG_DELAY.get(bIdx) ?? bIdx;
-    const baseDelay = 1.5 + order * 0.25;
+    const baseDelay = 1.0 + order * 0.2;
     const startIdx = wins.length;
     for (let r = 0; r < rows; r++) {
       for (let c = 0; c < cols; c++) {
@@ -495,7 +495,7 @@ export default function CityScene({ className }: CitySceneProps) {
       <rect x={0} y={85} width={W} height={50} fill="url(#back-fog)" />
 
       {/* ─── MID layer — 240s scroll, buildings + windows + antennas ─── */}
-      <g className="city-layer" style={{ transitionDelay: "0.9s" }}>
+      <g className="city-layer" style={{ transitionDelay: "0.7s" }}>
         <g
           className="city-scroll-layer"
           style={{ animation: `city-scroll ${SPEED_MID}s linear infinite` }}
@@ -529,7 +529,7 @@ export default function CityScene({ className }: CitySceneProps) {
                 fill={CYAN}
                 className="win-pulse"
                 style={{
-                  animation: `win-fade-in 0.8s ease-out ${win.delay}s both, win-pulse ${3.5 + (i % 3) * 0.8}s ease-in-out ${win.delay + 0.8}s infinite`,
+                  animation: `win-fade-in 0.8s ease-out ${win.delay}s both, win-pulse ${2.5 + (i % 3) * 0.5}s ease-in-out ${win.delay + 0.8}s infinite`,
                 }}
               />
             ) : (
