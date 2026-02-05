@@ -40,7 +40,7 @@ body {
     transform: translateX(0);
   }
   to {
-    transform: translateX(-800px);
+    transform: translateX(-800px); /* W from src/data/city-scene.ts */
   }
 }
 
