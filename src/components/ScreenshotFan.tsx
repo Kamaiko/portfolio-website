@@ -7,6 +7,7 @@ import {
   type MotionValue,
 } from "framer-motion";
 import { useIsMobile } from "../hooks/useIsMobile";
+import { GRADIENT } from "../constants/visual-effects";
 
 interface ScreenshotFanProps {
   screenshots: string[];
@@ -152,7 +153,7 @@ export default function ScreenshotFan({ screenshots, projectName }: ScreenshotFa
       <motion.div
         className="pointer-events-none absolute left-1/2 top-1/2 h-[90%] w-[80%] -translate-x-1/2 -translate-y-1/2 rounded-full"
         style={{
-          background: "radial-gradient(ellipse at center, rgba(34,211,238,0.12) 0%, transparent 70%)",
+          background: GRADIENT.fanGlow,
           ...(isMobile ? { opacity: glowOpacity, scale: glowScale } : {}),
         }}
         variants={

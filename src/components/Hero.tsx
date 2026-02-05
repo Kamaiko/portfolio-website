@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
+import { GRADIENT } from "../constants/visual-effects";
 
 const EASE_OUT_EXPO = [0.25, 0.46, 0.45, 0.94] as const;
 
@@ -39,15 +40,15 @@ export default function Hero() {
       <div className="pointer-events-none absolute inset-0">
         <div
           className="absolute left-[48%] top-[42%] h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(6,182,212,0.07) 0%, rgba(6,182,212,0.02) 45%, transparent 70%)" }}
+          style={{ background: GRADIENT.spotlightCyan }}
         />
         <div
           className="absolute left-[68%] top-[58%] h-[480px] w-[480px] -translate-x-1/2 -translate-y-1/2 rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(59,130,246,0.05) 0%, rgba(59,130,246,0.015) 45%, transparent 70%)" }}
+          style={{ background: GRADIENT.spotlightBlue }}
         />
         <div
           className="absolute left-[28%] top-[30%] h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(34,211,238,0.04) 0%, rgba(34,211,238,0.012) 45%, transparent 70%)" }}
+          style={{ background: GRADIENT.spotlightTeal }}
         />
       </div>
 

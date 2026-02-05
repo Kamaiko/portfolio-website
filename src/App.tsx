@@ -8,6 +8,7 @@ import Projects from "./components/Projects";
 import Skills from "./components/Skills";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import { GRADIENT, NOISE_SVG } from "./constants/visual-effects";
 
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 const lenisOptions = {
@@ -30,15 +31,15 @@ export default function App() {
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-screen">
         <div
           className="absolute left-1/4 top-[12%] h-[600px] w-[600px] rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(6,182,212,0.07) 0%, rgba(6,182,212,0.02) 45%, transparent 70%)" }}
+          style={{ background: GRADIENT.ambientCyan }}
         />
         <div
           className="absolute right-1/4 top-[35%] h-[500px] w-[500px] rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(59,130,246,0.06) 0%, rgba(59,130,246,0.018) 45%, transparent 70%)" }}
+          style={{ background: GRADIENT.ambientBlue }}
         />
         <div
           className="absolute left-1/2 top-1/4 h-[400px] w-[400px] -translate-x-1/2 rounded-full"
-          style={{ background: "radial-gradient(circle, rgba(34,211,238,0.04) 0%, rgba(34,211,238,0.012) 45%, transparent 70%)" }}
+          style={{ background: GRADIENT.ambientTeal }}
         />
       </div>
 
@@ -46,7 +47,7 @@ export default function App() {
       <div
         className="pointer-events-none absolute inset-0 -z-10 opacity-[0.03]"
         style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
+          backgroundImage: `url("${NOISE_SVG}")`,
           backgroundRepeat: "repeat",
           backgroundSize: "256px 256px",
         }}
