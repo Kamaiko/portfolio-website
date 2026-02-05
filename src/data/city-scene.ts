@@ -18,8 +18,13 @@ export interface Bldg {
 export interface MidWin {
   x: number;
   y: number;
-  pulse: boolean;
   delay: number;
+  /** Staggered delay before pulse cycle starts */
+  cycleDelay: number;
+  /** Window's dim opacity (0.20-0.60 range) */
+  minOpacity: number;
+  /** Window's bright opacity (0.60-0.90 range) */
+  maxOpacity: number;
 }
 
 export interface BackWin {
@@ -79,20 +84,16 @@ export const WIN_ANIM = {
     /** Time offset between consecutive variants */
     variantStep_S: 0.6,
   },
-  /** Static (non-pulsing) window opacity */
-  static: { opacity: 0.6 },
   /** Staggered reveal timing */
   delay: {
     base_S: 1.0,
     perBuilding_S: 0.2,
     perRow_S: 0.08,
   },
-  /** Roll thresholds for window generation (0-100 scale) */
+  /** Roll threshold for window density (0-100 scale) */
   roll: {
     /** Windows with roll > skip are not rendered */
     skip: 30,
-    /** Windows with roll < pulse are pulsing; otherwise static */
-    pulse: 12,
   },
   /** Base glow windows (every 2nd window, very faint) */
   baseGlow: { opacity: 0.08 },

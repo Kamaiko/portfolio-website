@@ -57,26 +57,21 @@ body {
 }
 
 @keyframes win-pulse {
-  /* Pause at dim */
-  0%, 20% { opacity: 0.2; }
+  /* Short pause at dim */
+  0%, 10% { opacity: var(--min-opacity, 0.2); }
   /* Fade to bright */
-  35% { opacity: 0.85; }
-  /* Pause at bright */
-  55% { opacity: 0.85; }
+  25% { opacity: var(--max-opacity, 0.85); }
+  /* Longer pause at bright (30% of cycle) */
+  55% { opacity: var(--max-opacity, 0.85); }
   /* Fade to dim */
-  70% { opacity: 0.2; }
-  /* Rest at dim until next cycle */
-  100% { opacity: 0.2; }
-}
-
-@keyframes win-fade {
-  from { opacity: 0; }
-  to { opacity: 0.6; }
+  70% { opacity: var(--min-opacity, 0.2); }
+  /* Rest at dim (30% of cycle) */
+  100% { opacity: var(--min-opacity, 0.2); }
 }
 
 @keyframes win-fade-in {
   from { opacity: 0; }
-  to { opacity: 0.2; }
+  to { opacity: var(--min-opacity, 0.2); }
 }
 
 /* Layer & moon fade-in transitions */
@@ -93,7 +88,6 @@ body {
 /* Animations paused until reveal */
 .city-scene .star-twinkle,
 .city-scene .win-pulse,
-.city-scene .win-fade,
 .city-scene .city-scroll-layer {
   animation-play-state: paused !important;
 }
@@ -106,7 +100,6 @@ body {
 
 .city-scene.faded-in .star-twinkle,
 .city-scene.faded-in .win-pulse,
-.city-scene.faded-in .win-fade,
 .city-scene.faded-in .city-scroll-layer {
   animation-play-state: running !important;
 }
@@ -118,8 +111,7 @@ body {
     opacity: 0.7 !important;
   }
 
-  .win-pulse,
-  .win-fade {
+  .win-pulse {
     animation: none !important;
     opacity: 0.6 !important;
   }

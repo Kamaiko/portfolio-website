@@ -58,38 +58,46 @@ function generateMidWindows(): MidWin[] {
         const seed = (bIdx * 100 + r * 10 + c) * HASH_A;
         const roll = (seed >>> 0) % 100;
         if (roll > WIN_ANIM.roll.skip) continue;
+        // Generate varied opacity ranges and positive cycle delay
+        const cycleDelay = ((seed % 1000) / 1000) * WIN_ANIM.pulse.baseCycle_S;
+        const minOpacity = 0.20 + ((seed % 40) / 100); // 0.20 to 0.60
+        const maxOpacity = 0.60 + (((seed >> 8) % 30) / 100); // 0.60 to 0.90
         wins.push({
           x: b.x + 6 + c * g.gap,
           y: H - b.h + topPad + r * g.rowGap,
-          pulse: roll < WIN_ANIM.roll.pulse,
           delay: baseDelay + r * WIN_ANIM.delay.perRow_S,
+          cycleDelay,
+          minOpacity,
+          maxOpacity,
         });
       }
     }
     const bWins = wins.slice(startIdx);
-    const pulseCount = bWins.filter((w) => w.pulse).length;
-    for (let p = pulseCount; p < 2 && startIdx + p < wins.length; p++) {
-      wins[startIdx + p].pulse = true;
-    }
     if (bWins.length < 4) {
       const fallbackX1 = b.x + Math.floor(b.w / 2) - 2;
       const fallbackX2 = b.x + Math.floor(b.w / 2) + 3;
       const hasOverlap = (fx: number) => bWins.some((w) => Math.abs(w.x - fx) < 4);
+      const fallbackSeed1 = (bIdx * 200 + 50) * HASH_A;
+      const fallbackSeed2 = (bIdx * 200 + 75) * HASH_A;
 
       if (!hasOverlap(fallbackX1)) {
         wins.push({
           x: fallbackX1,
           y: H - b.h + topPad + Math.floor((b.h - topPad) / 3),
-          pulse: true,
           delay: baseDelay,
+          cycleDelay: ((fallbackSeed1 % 1000) / 1000) * WIN_ANIM.pulse.baseCycle_S,
+          minOpacity: 0.20 + ((fallbackSeed1 % 40) / 100),
+          maxOpacity: 0.60 + (((fallbackSeed1 >> 8) % 30) / 100),
         });
       }
       if (!hasOverlap(fallbackX2)) {
         wins.push({
           x: fallbackX2,
           y: H - b.h + topPad + Math.floor(((b.h - topPad) * 2) / 3),
-          pulse: false,
           delay: baseDelay + 0.1,
+          cycleDelay: ((fallbackSeed2 % 1000) / 1000) * WIN_ANIM.pulse.baseCycle_S,
+          minOpacity: 0.20 + ((fallbackSeed2 % 40) / 100),
+          maxOpacity: 0.60 + (((fallbackSeed2 >> 8) % 30) / 100),
         });
       }
     }
@@ -295,40 +303,26 @@ function MidWindowLayer() {
           opacity={WIN_ANIM.baseGlow.opacity}
         />
       ))}
-      {/* Animated windows (pulse or static) */}
-      {MID_WINDOWS.map((win, i) =>
-        win.pulse ? (
-          <rect
-            key={i}
-            x={win.x}
-            y={win.y}
-            width={WIN.mid.w}
-            height={WIN.mid.h}
-            rx={0.5}
-            fill={CYAN}
-            className="win-pulse"
-            style={{
-              animation: `win-fade-in ${WIN_ANIM.fadeIn_S}s ease-out ${win.delay}s both, win-pulse ${
-                WIN_ANIM.pulse.baseCycle_S + (i % WIN_ANIM.pulse.variants) * WIN_ANIM.pulse.variantStep_S
-              }s ease-in-out ${win.delay + WIN_ANIM.fadeIn_S}s infinite`,
-            }}
-          />
-        ) : (
-          <rect
-            key={i}
-            x={win.x}
-            y={win.y}
-            width={WIN.mid.w}
-            height={WIN.mid.h}
-            rx={0.5}
-            fill={CYAN}
-            className="win-fade"
-            style={{
-              animation: `win-fade ${WIN_ANIM.fadeIn_S}s ease-out ${win.delay}s both`,
-            }}
-          />
-        ),
-      )}
+      {/* Animated windows — all pulse with varied opacity ranges */}
+      {MID_WINDOWS.map((win, i) => (
+        <rect
+          key={i}
+          x={win.x}
+          y={win.y}
+          width={WIN.mid.w}
+          height={WIN.mid.h}
+          rx={0.5}
+          fill={CYAN}
+          className="win-pulse"
+          style={{
+            '--min-opacity': win.minOpacity,
+            '--max-opacity': win.maxOpacity,
+            animation: `win-fade-in ${WIN_ANIM.fadeIn_S}s ease-out ${win.delay}s both, win-pulse ${
+              WIN_ANIM.pulse.baseCycle_S + (i % WIN_ANIM.pulse.variants) * WIN_ANIM.pulse.variantStep_S
+            }s ease-in-out ${win.delay + WIN_ANIM.fadeIn_S + win.cycleDelay}s infinite`,
+          } as React.CSSProperties}
+        />
+      ))}
     </>
   );
 }
