@@ -1,7 +1,8 @@
 import { useTranslation } from "react-i18next";
-import { Mail, FileDown, Github, Linkedin, Instagram } from "lucide-react";
+import { Mail, FileDown } from "lucide-react";
 import Section from "./Section";
 import ScrollReveal from "./ScrollReveal";
+import { socialLinks, CONTACT_EMAIL, CV_PATH } from "../data/contact";
 
 export default function Contact() {
   const { t } = useTranslation();
@@ -13,14 +14,14 @@ export default function Contact() {
 
         <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap">
           <a
-            href="mailto:contact@halterofit.ca"
+            href={`mailto:${CONTACT_EMAIL}`}
             className="flex items-center gap-2 rounded-lg bg-cyan-500 px-5 py-3 font-medium text-slate-950 transition-colors hover:bg-cyan-400"
           >
             <Mail size={18} />
             {t("contact.email_btn")}
           </a>
           <a
-            href="/cv-patrick-patenaude.pdf"
+            href={CV_PATH}
             download
             className="flex items-center gap-2 rounded-lg border border-slate-700 px-5 py-3 font-medium text-slate-300 transition-colors hover:border-slate-500 hover:text-white"
           >
@@ -30,33 +31,18 @@ export default function Contact() {
         </div>
 
         <div className="mt-8 flex gap-5">
-          <a
-            href="https://github.com/Kamaiko"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="GitHub"
-            className="text-slate-500 transition-colors hover:text-white"
-          >
-            <Github size={22} />
-          </a>
-          <a
-            href="https://www.linkedin.com/in/patrickpatenaude/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="LinkedIn"
-            className="text-slate-500 transition-colors hover:text-white"
-          >
-            <Linkedin size={22} />
-          </a>
-          <a
-            href="https://www.instagram.com/patrickpatenaude/"
-            target="_blank"
-            rel="noopener noreferrer"
-            aria-label="Instagram"
-            className="text-slate-500 transition-colors hover:text-white"
-          >
-            <Instagram size={22} />
-          </a>
+          {socialLinks.map(({ href, icon: Icon, label }) => (
+            <a
+              key={label}
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={label}
+              className="text-slate-500 transition-colors hover:text-white"
+            >
+              <Icon size={22} />
+            </a>
+          ))}
         </div>
       </ScrollReveal>
     </Section>
