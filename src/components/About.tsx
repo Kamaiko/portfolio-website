@@ -3,12 +3,12 @@ import Section from "./Section";
 import ScrollReveal from "./ScrollReveal";
 import CityScene from "./CityScene";
 import { stackItems, interests, journeySteps } from "../data/about";
+import { CARD_BASE, CARD_SHADOW_LIGHT } from "../constants/styles";
 import { cn } from "../utils/cn";
 
 const STAGGER_MS = 0.1;
 
-const cardClass =
-  "rounded-2xl border border-slate-800 bg-slate-900/50 p-6 transition-all duration-300 hover:border-cyan-400/30 hover:shadow-[0_0_20px_rgba(34,211,238,0.05)] hover:scale-[1.01]";
+const cardClass = cn(CARD_BASE, CARD_SHADOW_LIGHT, "p-6");
 
 /** Inline highlight used inside <Trans> for cyan-accented keywords */
 function Highlight({ children }: { children?: React.ReactNode }) {
