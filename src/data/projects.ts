@@ -4,7 +4,6 @@ export interface Project {
   github: string;
   tech: string[];
   demo?: string;
-  image?: string;
   screenshots?: string[];
   featured?: boolean;
 }

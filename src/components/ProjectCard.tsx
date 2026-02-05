@@ -17,25 +17,16 @@ export default function ProjectCard({ project }: ProjectCardProps) {
     <ScrollReveal
       className={`group overflow-hidden rounded-2xl border border-slate-800 bg-slate-900/50 transition-all duration-300 hover:border-cyan-400/30 hover:shadow-[0_0_30px_rgba(34,211,238,0.06)] hover:scale-[1.01] ${project.featured ? "md:col-span-2" : ""}`}
     >
-      {/* Image / Screenshot fan */}
+      {/* Screenshot fan or placeholder */}
       {project.screenshots && project.screenshots.length === 3 ? (
         <div className="bg-slate-800/30">
           <ScreenshotFan screenshots={project.screenshots} projectName={projectName} />
         </div>
       ) : (
         <div className="relative h-48 w-full overflow-hidden bg-slate-800/30">
-          {project.image ? (
-            <img
-              src={project.image}
-              alt={projectName}
-              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-105"
-              loading="lazy"
-            />
-          ) : (
-            <div className="flex h-full items-center justify-center">
-              <Code2 size={48} className="text-slate-700" />
-            </div>
-          )}
+          <div className="flex h-full items-center justify-center">
+            <Code2 size={48} className="text-slate-700" />
+          </div>
         </div>
       )}
 
