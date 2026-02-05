@@ -2,9 +2,9 @@ import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { Menu, X, Globe } from "lucide-react";
 import { useLenis } from "lenis/react";
+import { NAV_HEIGHT, SECTION_PROXIMITY_PX, SCROLL_BOTTOM_MARGIN_PX } from "../constants/layout";
 
 const navLinks = ["about", "projects", "skills", "contact"] as const;
-const NAV_HEIGHT = 72;
 
 export default function Navbar() {
   const { t, i18n } = useTranslation();
@@ -20,7 +20,7 @@ export default function Navbar() {
       requestAnimationFrame(() => {
         const atBottom =
           window.innerHeight + window.scrollY >=
-          document.body.scrollHeight - 2;
+          document.body.scrollHeight - SCROLL_BOTTOM_MARGIN_PX;
         if (atBottom) {
           setActiveSection("contact");
           ticking = false;
@@ -33,7 +33,7 @@ export default function Navbar() {
           const el = document.getElementById(id);
           if (!el) continue;
           const top = el.getBoundingClientRect().top - NAV_HEIGHT;
-          if (top <= 10 && top > closest) {
+          if (top <= SECTION_PROXIMITY_PX && top > closest) {
             closest = top;
             current = id;
           }

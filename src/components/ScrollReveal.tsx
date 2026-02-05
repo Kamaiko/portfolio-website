@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { useInView, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
+import { REVEAL_DURATION_S, REVEAL_CLEANUP_MS } from "../constants/layout";
 
 interface ScrollRevealProps {
   children: ReactNode;
@@ -32,7 +33,7 @@ export default function ScrollReveal({
     if (revealed && !transitionDone) {
       const timer = setTimeout(
         () => setTransitionDone(true),
-        (delay + 0.8) * 1000 + 100,
+        (delay + REVEAL_DURATION_S) * 1000 + REVEAL_CLEANUP_MS,
       );
       return () => clearTimeout(timer);
     }
@@ -47,7 +48,7 @@ export default function ScrollReveal({
         transform: revealed ? undefined : `translateY(${yOffset}px)`,
         transition: transitionDone
           ? undefined
-          : `opacity 0.8s ease-out ${delay}s, transform 0.8s ease-out ${delay}s`,
+          : `opacity ${REVEAL_DURATION_S}s ease-out ${delay}s, transform ${REVEAL_DURATION_S}s ease-out ${delay}s`,
       }}
     >
       {children}
