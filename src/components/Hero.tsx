@@ -2,6 +2,7 @@ import { lazy, Suspense } from "react";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { GRADIENT } from "../constants/visual-effects";
+import ErrorBoundary from "./ErrorBoundary";
 
 const HeroParticles = lazy(() => import("./effects/HeroParticles"));
 
@@ -56,9 +57,11 @@ export default function Hero() {
       </div>
 
       {/* Particle constellation behind text */}
-      <Suspense fallback={null}>
-        <HeroParticles />
-      </Suspense>
+      <ErrorBoundary fallback={null}>
+        <Suspense fallback={null}>
+          <HeroParticles />
+        </Suspense>
+      </ErrorBoundary>
 
       <div className="relative max-w-4xl text-center">
         {/* Greeting */}

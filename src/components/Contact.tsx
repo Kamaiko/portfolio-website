@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
-import { Mail, FileDown } from "lucide-react";
+import Mail from "lucide-react/dist/esm/icons/mail";
+import FileDown from "lucide-react/dist/esm/icons/file-down";
 import Section from "./Section";
 import ScrollReveal from "./ScrollReveal";
 import { socialLinks, CONTACT_EMAIL, CV_PATH } from "../data/contact";

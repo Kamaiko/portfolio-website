@@ -1,6 +1,8 @@
 import { useState, useEffect } from "react";
 import { useTranslation } from "react-i18next";
-import { Menu, X, Globe } from "lucide-react";
+import Menu from "lucide-react/dist/esm/icons/menu";
+import X from "lucide-react/dist/esm/icons/x";
+import Globe from "lucide-react/dist/esm/icons/globe";
 import { useLenis } from "lenis/react";
 import { NAV_HEIGHT, SECTION_PROXIMITY_PX, SCROLL_BOTTOM_MARGIN_PX } from "../constants/layout";
 import { cn } from "../utils/cn";

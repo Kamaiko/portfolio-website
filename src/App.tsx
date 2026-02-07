@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { ReactLenis } from "lenis/react";
 import Navbar from "./components/Navbar";
@@ -8,11 +8,14 @@ import Projects from "./components/Projects";
 import Skills from "./components/Skills";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-import Playground from "./components/playground/Playground";
 import CursorTrail from "./components/effects/CursorTrail";
+import NotFound from "./components/NotFound";
+
+const Playground = lazy(() => import("./components/playground/Playground"));
 import { GRADIENT, NOISE_SVG } from "./constants/visual-effects";
 import { REDUCED_MOTION } from "./constants/accessibility";
 const isPlayground = new URLSearchParams(window.location.search).has("playground");
+const isNotFound = window.location.pathname !== "/";
 const lenisOptions = {
   duration: 1.2,
   easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -29,7 +32,8 @@ export default function App() {
     }
   }, [i18n.language]);
 
-  if (isPlayground) return <Playground />;
+  if (isPlayground) return <Suspense fallback={null}><Playground /></Suspense>;
+  if (isNotFound) return <NotFound />;
 
   const content = (
       <div className="relative min-h-screen overflow-x-hidden bg-slate-950 text-slate-100">

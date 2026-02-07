@@ -1,5 +1,7 @@
 import type { LucideIcon } from "lucide-react";
-import { Github, Linkedin, Instagram } from "lucide-react";
+import Github from "lucide-react/dist/esm/icons/github";
+import Linkedin from "lucide-react/dist/esm/icons/linkedin";
+import Instagram from "lucide-react/dist/esm/icons/instagram";
 
 export interface SocialLink {
   href: string;

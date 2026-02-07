@@ -61,5 +61,9 @@
   "footer": {
     "name": "Patrick Patenaude",
     "rights": "Tous droits réservés."
+  },
+  "notFound": {
+    "message": "Cette page n'existe pas.",
+    "back": "Retour à l'accueil"
   }
 }

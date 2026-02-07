@@ -1,4 +1,9 @@
-import { Dumbbell, Swords, Gamepad2, Brain, Code, Rocket } from "lucide-react";
+import Dumbbell from "lucide-react/dist/esm/icons/dumbbell";
+import Swords from "lucide-react/dist/esm/icons/swords";
+import Gamepad2 from "lucide-react/dist/esm/icons/gamepad-2";
+import Brain from "lucide-react/dist/esm/icons/brain";
+import Code from "lucide-react/dist/esm/icons/code";
+import Rocket from "lucide-react/dist/esm/icons/rocket";
 
 /** Tech stack items with Tailwind color-dot classes */
 export const stackItems = [
