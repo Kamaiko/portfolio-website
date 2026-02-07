@@ -2,10 +2,7 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { useRef, useMemo, useEffect, useState } from "react";
 import * as THREE from "three";
 import { useIsMobile } from "../../hooks/useIsMobile";
-
-const REDUCED_MOTION = window.matchMedia(
-  "(prefers-reduced-motion: reduce)",
-).matches;
+import { REDUCED_MOTION } from "../../constants/accessibility";
 
 /* ─── Tuning constants ─── */
 
@@ -28,7 +25,7 @@ const _mouseLocal = new THREE.Vector3();
 
 /** Programmatic circle texture with soft glow */
 function useCircleTexture() {
-  return useMemo(() => {
+  const texture = useMemo(() => {
     const canvas = document.createElement("canvas");
     canvas.width = 32;
     canvas.height = 32;
@@ -41,11 +38,14 @@ function useCircleTexture() {
     ctx.fillRect(0, 0, 32, 32);
     return new THREE.CanvasTexture(canvas);
   }, []);
+
+  useEffect(() => () => texture.dispose(), [texture]);
+  return texture;
 }
 
 /** Brighter texture for star layer — broader white core */
 function useBrightStarTexture() {
-  return useMemo(() => {
+  const texture = useMemo(() => {
     const canvas = document.createElement("canvas");
     canvas.width = 32;
     canvas.height = 32;
@@ -59,6 +59,9 @@ function useBrightStarTexture() {
     ctx.fillRect(0, 0, 32, 32);
     return new THREE.CanvasTexture(canvas);
   }, []);
+
+  useEffect(() => () => texture.dispose(), [texture]);
+  return texture;
 }
 
 /** Subtle center bias — pow(0.7) */

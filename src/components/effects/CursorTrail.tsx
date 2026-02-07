@@ -1,10 +1,10 @@
 import { useEffect, useRef } from "react";
 import { motion, useMotionValue, useSpring } from "framer-motion";
 import { useIsMobile } from "../../hooks/useIsMobile";
+import { REDUCED_MOTION } from "../../constants/accessibility";
 
-const REDUCED_MOTION = window.matchMedia(
-  "(prefers-reduced-motion: reduce)",
-).matches;
+const DOT_SIZE_PX = 6; // Tailwind w-1.5 = 6px
+const DOT_OFFSET = DOT_SIZE_PX / 2;
 
 export default function CursorTrail() {
   const isMobile = useIsMobile();
@@ -25,7 +25,7 @@ export default function CursorTrail() {
       // Direct DOM update for the dot — zero latency
       if (dotRef.current) {
         dotRef.current.style.transform =
-          `translate(${e.clientX - 3}px, ${e.clientY - 3}px)`;
+          `translate(${e.clientX - DOT_OFFSET}px, ${e.clientY - DOT_OFFSET}px)`;
       }
     };
     window.addEventListener("mousemove", onMove);

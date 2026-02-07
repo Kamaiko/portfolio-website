@@ -11,8 +11,7 @@ import Footer from "./components/Footer";
 import Playground from "./components/playground/Playground";
 import CursorTrail from "./components/effects/CursorTrail";
 import { GRADIENT, NOISE_SVG } from "./constants/visual-effects";
-
-const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+import { REDUCED_MOTION } from "./constants/accessibility";
 const isPlayground = new URLSearchParams(window.location.search).has("playground");
 const lenisOptions = {
   duration: 1.2,
@@ -74,7 +73,7 @@ export default function App() {
       </div>
   );
 
-  if (reducedMotion) return content;
+  if (REDUCED_MOTION) return content;
 
   return (
     <ReactLenis root options={lenisOptions}>
