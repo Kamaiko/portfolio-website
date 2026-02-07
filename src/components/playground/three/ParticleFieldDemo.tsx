@@ -67,6 +67,15 @@ function ParticleField() {
     const mouseY = pointer.y * halfH;
     const mouseZ = 0;
 
+    // Transform mouse from world space to group's local space
+    // (the group rotates on Y, so mouse coords must follow)
+    const rotY = pointsRef.current.rotation.y;
+    const cosR = Math.cos(rotY);
+    const sinR = Math.sin(rotY);
+    const localMouseX = mouseX * cosR + mouseZ * sinR;
+    const localMouseY = mouseY;
+    const localMouseZ = -mouseX * sinR + mouseZ * cosR;
+
     const interactionRadius = 4;
     const repulsionStrength = 0.3;
 
@@ -84,10 +93,10 @@ function ParticleField() {
       const driftY = Math.cos(time * 0.4 + i * 0.02) * 0.02;
       const driftZ = Math.sin(time * 0.5 + i * 0.015) * 0.02;
 
-      // Calculate distance to mouse
-      const dx = baseX - mouseX;
-      const dy = baseY - mouseY;
-      const dz = baseZ - mouseZ;
+      // Calculate distance to mouse (in local space)
+      const dx = baseX - localMouseX;
+      const dy = baseY - localMouseY;
+      const dz = baseZ - localMouseZ;
       const distance = Math.sqrt(dx * dx + dy * dy + dz * dz);
 
       // Repulsion effect
