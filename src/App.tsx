@@ -8,9 +8,11 @@ import Projects from "./components/Projects";
 import Skills from "./components/Skills";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
+import Playground from "./components/playground/Playground";
 import { GRADIENT, NOISE_SVG } from "./constants/visual-effects";
 
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+const isPlayground = new URLSearchParams(window.location.search).has("playground");
 const lenisOptions = {
   duration: 1.2,
   easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -21,9 +23,13 @@ export default function App() {
 
   // Sync <html lang=""> and persist language choice
   useEffect(() => {
-    document.documentElement.lang = i18n.language;
-    localStorage.setItem("lng", i18n.language);
+    if (!isPlayground) {
+      document.documentElement.lang = i18n.language;
+      localStorage.setItem("lng", i18n.language);
+    }
   }, [i18n.language]);
+
+  if (isPlayground) return <Playground />;
 
   const content = (
       <div className="relative min-h-screen overflow-x-hidden bg-slate-950 text-slate-100">

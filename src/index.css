@@ -104,6 +104,24 @@ body {
   animation-play-state: running !important;
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   Glow pulse — breathing highlight effect for text keywords
+   ═══════════════════════════════════════════════════════════════ */
+
+@keyframes glow-pulse {
+  0%, 100% {
+    filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.3));
+  }
+  50% {
+    filter: drop-shadow(0 0 12px rgba(34, 211, 238, 0.6));
+  }
+}
+
+.glow-pulse {
+  animation: glow-pulse 4s ease-in-out infinite;
+  filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.3));
+}
+
 /* ─── Reduced motion ─── */
 @media (prefers-reduced-motion: reduce) {
   .star-twinkle {
@@ -123,6 +141,10 @@ body {
   }
 
   .city-scroll-layer {
+    animation: none !important;
+  }
+
+  .glow-pulse {
     animation: none !important;
   }
 }
