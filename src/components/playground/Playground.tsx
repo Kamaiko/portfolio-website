@@ -1,6 +1,5 @@
-import { lazy, Suspense, useEffect } from "react";
-import { motion, useMotionValue, useSpring } from "framer-motion";
-import { useIsMobile } from "../../hooks/useIsMobile";
+import { lazy, Suspense } from "react";
+import CursorTrail from "../effects/CursorTrail";
 
 /* ═══════════════════════════════════════════════════════════════════
    Playground — Framer Motion + Three.js animation demos
@@ -40,65 +39,6 @@ function ThreeJsLoader() {
 
 function ThreeDemo({ children }: { children: React.ReactNode }) {
   return <Suspense fallback={<ThreeJsLoader />}>{children}</Suspense>;
-}
-
-/* ═══════════════════════════════════════════════════════════════════
-   Cursor Trail — global dot + ring following the cursor
-   ═══════════════════════════════════════════════════════════════════ */
-
-function CursorTrail() {
-  const isMobile = useIsMobile();
-  const mouseX = useMotionValue(-100);
-  const mouseY = useMotionValue(-100);
-
-  // Dot: barely trails behind cursor
-  const dotX = useSpring(mouseX, { stiffness: 600, damping: 40 });
-  const dotY = useSpring(mouseY, { stiffness: 600, damping: 40 });
-
-  // Ring: slightly more trail than dot, but not much
-  const ringX = useSpring(mouseX, { stiffness: 300, damping: 30 });
-  const ringY = useSpring(mouseY, { stiffness: 300, damping: 30 });
-
-  useEffect(() => {
-    if (isMobile) return;
-    const onMove = (e: MouseEvent) => {
-      mouseX.set(e.clientX);
-      mouseY.set(e.clientY);
-    };
-    window.addEventListener("mousemove", onMove);
-    return () => window.removeEventListener("mousemove", onMove);
-  }, [isMobile, mouseX, mouseY]);
-
-  if (isMobile) return null;
-
-  return (
-    <>
-      {/* Outer ring */}
-      <motion.div
-        className="pointer-events-none fixed z-9999 rounded-full border border-cyan-400/50"
-        style={{
-          x: ringX,
-          y: ringY,
-          width: 32,
-          height: 32,
-          translateX: "-50%",
-          translateY: "-50%",
-        }}
-      />
-      {/* Inner dot */}
-      <motion.div
-        className="pointer-events-none fixed z-9999 rounded-full bg-cyan-400"
-        style={{
-          x: dotX,
-          y: dotY,
-          width: 6,
-          height: 6,
-          translateX: "-50%",
-          translateY: "-50%",
-        }}
-      />
-    </>
-  );
 }
 
 /* ═══════════════════════════════════════════════════════════════════

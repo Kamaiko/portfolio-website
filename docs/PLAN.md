@@ -5,10 +5,10 @@
 
 ---
 
-## Current Phase: Phase 0D — CityScene 3D fixes applied, awaiting Patrick's review
+## Current Phase: Phase 1 — Fondations globales (en cours)
 
 ### What we're doing
-Fixed CityScene 3D demos (parallax bug + lighting). Hero particles winner decided (Demo 11). Patrick re-evaluates CityScene demos after fix.
+Phase 1A + 1D done: cursor trailing global + particules Hero integrees dans le portfolio de production. Architecture `effects/` creee.
 
 ### Direction
 - **Style**: Subtil, minimaliste, premium feel. Pas de flashy.
@@ -27,7 +27,7 @@ Fixed CityScene 3D demos (parallax bug + lighting). Hero particles winner decide
 | Bloc Parcours | Garder tel quel pour l'instant | Pas de remplacement decide |
 | Code snippet content | **Fonction solve()** (`while (!done) { focus(); iterate(); }`) | Reflete le grind mindset de Patrick |
 | Chess Board 3D | PAS dans le portfolio | Garde dans le playground mais pas integre |
-| Particules Hero | **Demo 11 (ParticleFieldDemo) GAGNANTE** — sphere, drift, rotation, repulsion curseur subtile | Effet WOW sans casser la constellation |
+| Particules Hero | **Demo 11** — glow texture, galaxie dense, tilt diagonal 10h→4h, twinkle, bright stars, fade-in 1.5s | Premium constellation |
 | Demos 14-16 Hero | Gardees dans playground, PAS candidates pour integration | Patrick prefere Demo 11 |
 | CityScene 3D | **EXPLORER** — parallax + lighting fixes appliques (Phase 0D) | Patrick re-evalue apres fix |
 | Fun facts interets | Desktop: hover reveal / Mobile: toujours visibles | `useIsMobile()` existe |
@@ -35,6 +35,8 @@ Fixed CityScene 3D demos (parallax bug + lighting). Hero particles winner decide
 | Trailing curseur | Point cyan + anneau, actifs sur TOUTE la page | Plus tight que la demo actuelle |
 | Spotlight fond | UNIQUEMENT dans les blocs/cards | Eviter le spotlight fige au scroll |
 | Playground access | URL param `?playground=true` | Zero deps, temporary |
+| Architecture effects | `src/components/effects/` | Dossier dedie aux effets visuels (layers) |
+| CityScene 3D | OUBLIER demos 17-18 | Patrick a perdu interet |
 
 ## Decisions Pending
 
@@ -70,10 +72,10 @@ Fixed CityScene 3D demos (parallax bug + lighting). Hero particles winner decide
 
 | Improvement | Status | Description |
 |---|---|---|
-| Cursor trailing | Phase 1A | Point cyan (6px) + anneau (36px), toute la page, desktop only |
+| Cursor trailing | **DONE** (Phase 1A) | `effects/CursorTrail.tsx` — dot 6px + ring 28px, springs tight, desktop only |
 | Card spotlight hover | Phase 1B | Inner radial gradient tracking mouse in cards |
 | Spring scroll reveals | Phase 1C | Replace CSS ease-out with FM spring physics |
-| Hero particles | Phase 1D | Particules interactives derriere le prenom |
+| Hero particles | **DONE** (Phase 1D) | `effects/HeroParticles.tsx` — 2050 particules (2000+50 stars), glow texture, galaxie dense, tilt diagonal, twinkle, fade-in 1.5s |
 | Grid stagger | Phase 3 | FM staggerChildren for organic reveal |
 
 ---
@@ -113,6 +115,10 @@ Access: `localhost:5173?playground=true`
 ## File Architecture
 
 ```
+src/components/effects/                ← NOUVEAU — effets visuels de production
+├── CursorTrail.tsx                    ← Dot + ring FM springs (App-level)
+└── HeroParticles.tsx                  ← Constellation Three.js (Hero, lazy-loaded)
+
 src/components/playground/
 ├── Playground.tsx              ← Layout shell (header, nav, footer)
 ├── DemoSection.tsx             ← Shared demo wrapper
@@ -138,7 +144,7 @@ src/components/playground/
     └── CityScene3DIsometricDemo.tsx
 ```
 
-Three.js demos are lazy-loaded (React.lazy + Suspense). Main bundle: ~458KB. Three.js chunk: ~874KB (loaded only for playground).
+Three.js demos are lazy-loaded (React.lazy + Suspense). Main bundle: ~460KB. Three.js chunk: ~874KB (loaded for playground + Hero particles).
 
 ---
 
@@ -157,11 +163,11 @@ Three.js demos are lazy-loaded (React.lazy + Suspense). Main bundle: ~458KB. Thr
 - [x] Fix CityScene3D parallax (parent group wrapping) + lighting isometric
 - [ ] **Patrick re-evalue CityScene 3D apres fix**
 
-### Phase 1: Fondations globales
-- [ ] 1A — Cursor trailing global (point + anneau, curseur natif visible, TOUTE la page)
+### Phase 1: Fondations globales — EN COURS
+- [x] 1A — Cursor trailing global → `src/components/effects/CursorTrail.tsx`
 - [ ] 1B — Card spotlight hover / SpotlightCard (spotlight seulement dans les cartes)
 - [ ] 1C — Upgrade ScrollReveal vers spring physics
-- [ ] 1D — Particules interactives dans le Hero (behind name)
+- [x] 1D — Particules Hero → `src/components/effects/HeroParticles.tsx` (lazy-loaded)
 
 ### Phase 2: Blocs du bento — un par un
 - [ ] 2A — Tagline: glow pulse sur les highlights

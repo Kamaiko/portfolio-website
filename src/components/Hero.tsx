@@ -1,6 +1,9 @@
+import { lazy, Suspense } from "react";
 import { useTranslation } from "react-i18next";
 import { motion } from "framer-motion";
 import { GRADIENT } from "../constants/visual-effects";
+
+const HeroParticles = lazy(() => import("./effects/HeroParticles"));
 
 const EASE_OUT_EXPO = [0.25, 0.46, 0.45, 0.94] as const;
 
@@ -51,6 +54,11 @@ export default function Hero() {
           style={{ background: GRADIENT.spotlightTeal }}
         />
       </div>
+
+      {/* Particle constellation behind text */}
+      <Suspense fallback={null}>
+        <HeroParticles />
+      </Suspense>
 
       <div className="relative max-w-4xl text-center">
         {/* Greeting */}

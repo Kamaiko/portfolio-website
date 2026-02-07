@@ -9,6 +9,7 @@ import Skills from "./components/Skills";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
 import Playground from "./components/playground/Playground";
+import CursorTrail from "./components/effects/CursorTrail";
 import { GRADIENT, NOISE_SVG } from "./constants/visual-effects";
 
 const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -33,6 +34,8 @@ export default function App() {
 
   const content = (
       <div className="relative min-h-screen overflow-x-hidden bg-slate-950 text-slate-100">
+      <CursorTrail />
+
       {/* Ambient background glow — static radial gradients (no blur filters) */}
       <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-screen">
         <div
