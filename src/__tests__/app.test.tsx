@@ -4,8 +4,27 @@ import { renderHook } from "@testing-library/react";
 import i18n from "../i18n";
 import { useIsMobile } from "../hooks/useIsMobile";
 
-// Mock Three.js — jsdom has no WebGL
-vi.mock("three", () => ({}));
+// Mock Three.js — jsdom has no WebGL.
+// HeroParticles creates THREE.Euler/Matrix4/Vector3 at module scope,
+// so we must provide constructible stubs (not an empty object).
+vi.mock("three", () => {
+  const noop = () => {};
+  const MockObj = class {
+    r = 0; g = 0; b = 0;
+    set() { return this; }
+    applyMatrix4() { return this; }
+    makeRotationFromEuler() { return this; }
+    dispose = noop;
+  };
+  return {
+    Euler: MockObj,
+    Matrix4: MockObj,
+    Vector3: MockObj,
+    Color: MockObj,
+    CanvasTexture: class { dispose = noop; },
+    AdditiveBlending: 1,
+  };
+});
 vi.mock("@react-three/fiber", () => ({ Canvas: () => null }));
 
 describe("Smoke tests", () => {

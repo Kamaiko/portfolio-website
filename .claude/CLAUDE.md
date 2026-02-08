@@ -132,8 +132,8 @@ src/
 
 ## Testing
 
-- Vitest 4 + @testing-library/react + jsdom
-- Three.js mocked in tests (`vi.mock("three", () => ({}))`)
+- Vitest 3 + @testing-library/react + jsdom (vitest 4.0.x has a suite context bug on Windows/Node 22)
+- Three.js mocked in tests with constructible stubs (Euler, Matrix4, Vector3, Color, CanvasTexture)
 - Setup polyfills: matchMedia, IntersectionObserver, ResizeObserver
 
 ## Development Standards

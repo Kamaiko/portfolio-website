@@ -28,6 +28,9 @@ const HeroParticlesZoneDemo = lazy(() => import("./three/HeroParticlesZoneDemo")
 const HeroParticlesNebulaDemo = lazy(() => import("./three/HeroParticlesNebulaDemo"));
 const CityScene3DFlatDemo = lazy(() => import("./three/CityScene3DFlatDemo"));
 const CityScene3DIsometricDemo = lazy(() => import("./three/CityScene3DIsometricDemo"));
+const HeroParticlesHaloADemo = lazy(() => import("./three/HeroParticlesHaloADemo"));
+const HeroParticlesHaloBDemo = lazy(() => import("./three/HeroParticlesHaloBDemo"));
+const HeroParticlesHaloCDemo = lazy(() => import("./three/HeroParticlesHaloCDemo"));
 
 function ThreeJsLoader() {
   return (
@@ -129,6 +132,21 @@ export default function Playground() {
 
         <ThreeDemo><CityScene3DFlatDemo /></ThreeDemo>
         <ThreeDemo><CityScene3DIsometricDemo /></ThreeDemo>
+
+        {/* ─── Hero Particles Halo Variants (19-21) ─── */}
+        <div className="mb-12 mt-16 border-t border-slate-800 pt-8">
+          <h2 className="text-lg font-bold text-slate-100">
+            Hero Particles — Halo / Centre
+          </h2>
+          <p className="mt-1 text-sm text-slate-400">
+            3 approches pour la concentration au centre: bias renforce,
+            double distribution, et couche de glow.
+          </p>
+        </div>
+
+        <ThreeDemo><HeroParticlesHaloADemo /></ThreeDemo>
+        <ThreeDemo><HeroParticlesHaloBDemo /></ThreeDemo>
+        <ThreeDemo><HeroParticlesHaloCDemo /></ThreeDemo>
 
         {/* Footer note */}
         <div className="mt-12 border-t border-slate-800 pt-8 text-center">

@@ -10,10 +10,15 @@ const DOT_HOVER_OPACITY = 0.6;
 const CLICKABLE_SELECTOR = "a, button, [role='button'], input[type='submit']";
 const HOVER_CHECK_INTERVAL_MS = 100;
 
+/** True only when primary input is a precise pointer (mouse/trackpad) */
+const HAS_FINE_POINTER = window.matchMedia("(pointer: fine)").matches;
+
 export default function CursorTrail() {
   const isMobile = useIsMobile();
   const dotRef = useRef<HTMLDivElement>(null);
+  const ringRef = useRef<HTMLDivElement>(null);
   const isHoveringRef = useRef(false);
+  const cursorVisibleRef = useRef(true);
   const lastHoverCheckRef = useRef(0);
   const mouseX = useMotionValue(-100);
   const mouseY = useMotionValue(-100);
@@ -23,7 +28,8 @@ export default function CursorTrail() {
   const ringY = useSpring(mouseY, { stiffness: 4000, damping: 120 });
 
   useEffect(() => {
-    if (isMobile || REDUCED_MOTION) return;
+    if (isMobile || !HAS_FINE_POINTER || REDUCED_MOTION) return;
+
     const onMove = (e: MouseEvent) => {
       // Feed FM spring for the ring
       mouseX.set(e.clientX);
@@ -32,6 +38,15 @@ export default function CursorTrail() {
       if (dotRef.current) {
         dotRef.current.style.translate =
           `${e.clientX - DOT_OFFSET}px ${e.clientY - DOT_OFFSET}px`;
+
+        // Restore visibility on re-entry (mouseenter may fire after mousemove)
+        if (!cursorVisibleRef.current) {
+          cursorVisibleRef.current = true;
+          dotRef.current.style.opacity = isHoveringRef.current
+            ? String(DOT_HOVER_OPACITY)
+            : "1";
+          if (ringRef.current) ringRef.current.style.opacity = "1";
+        }
 
         // Throttled hover detection — elementFromPoint is expensive
         const now = performance.now();
@@ -48,16 +63,40 @@ export default function CursorTrail() {
         }
       }
     };
+
+    const onLeave = () => {
+      cursorVisibleRef.current = false;
+      if (dotRef.current) dotRef.current.style.opacity = "0";
+      if (ringRef.current) ringRef.current.style.opacity = "0";
+    };
+
+    const onEnter = () => {
+      cursorVisibleRef.current = true;
+      if (dotRef.current) {
+        dotRef.current.style.opacity = isHoveringRef.current
+          ? String(DOT_HOVER_OPACITY)
+          : "1";
+      }
+      if (ringRef.current) ringRef.current.style.opacity = "1";
+    };
+
     window.addEventListener("mousemove", onMove);
-    return () => window.removeEventListener("mousemove", onMove);
+    document.documentElement.addEventListener("mouseleave", onLeave);
+    document.documentElement.addEventListener("mouseenter", onEnter);
+    return () => {
+      window.removeEventListener("mousemove", onMove);
+      document.documentElement.removeEventListener("mouseleave", onLeave);
+      document.documentElement.removeEventListener("mouseenter", onEnter);
+    };
   }, [isMobile, mouseX, mouseY]);
 
-  if (isMobile || REDUCED_MOTION) return null;
+  if (isMobile || !HAS_FINE_POINTER || REDUCED_MOTION) return null;
 
   return (
     <>
       {/* Ring: FM spring for trailing effect */}
       <motion.div
+        ref={ringRef}
         className="pointer-events-none fixed left-0 top-0 z-40 rounded-full border border-cyan-400/50"
         style={{
           x: ringX,
@@ -67,6 +106,7 @@ export default function CursorTrail() {
           translateX: "-50%",
           translateY: "-50%",
           willChange: "transform",
+          transition: "opacity 0.3s ease-out",
         }}
       />
       {/* Dot: raw DOM — zero lag */}
