@@ -1,5 +1,6 @@
 import { useTranslation } from "react-i18next";
 import Section from "../layout/Section";
+import ScrollReveal from "../ui/ScrollReveal";
 import { row1Skills, row2Skills } from "../../data/skills";
 
 interface MarqueeRowProps {
@@ -45,10 +46,12 @@ export default function Skills() {
 
   return (
     <Section id="skills" title={t("skills.title")} className="pb-40">
-      <div className="flex flex-col gap-4">
-        <MarqueeRow skills={row1Skills} duration={35} />
-        <MarqueeRow skills={row2Skills} reverse duration={40} />
-      </div>
+      <ScrollReveal>
+        <div className="flex flex-col gap-4">
+          <MarqueeRow skills={row1Skills} duration={35} />
+          <MarqueeRow skills={row2Skills} reverse duration={40} />
+        </div>
+      </ScrollReveal>
     </Section>
   );
 }
