@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/purity -- intentional one-time random seed in useMemo */
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useRef, useMemo, useEffect, useState } from "react";
 import * as THREE from "three";
@@ -15,6 +16,10 @@ const ROTATION_RAD_PER_S = 0.08; // ~78s per full rotation — frame-rate-indepe
 const DELTA_CAP_S = 1 / 30; // cap delta — prevents tab-switch / lazy-load spikes
 const TILT_X = Math.PI * 0.083; // ~15° static forward lean
 const TILT_Z = -Math.PI / 6; // ~30° diagonal rotation axis (10h→4h)
+const CORE_FRACTION = 0.7; // 70% particles in tight Gaussian core
+const CORE_STD_DEV = 1.2; // Gaussian spread (tighter = denser core)
+const CORE_BRIGHTNESS = 1.3; // Core particles 30% brighter
+const SCATTER_BRIGHTNESS = 0.7; // Scatter particles 30% dimmer
 
 type MouseRef = React.RefObject<{ x: number; y: number }>;
 
@@ -64,6 +69,13 @@ const STAR_GLOW_STOPS = [
 /** Subtle center bias — pow(0.7) */
 function randomRadius() {
   return Math.pow(Math.random(), 0.7) * SPHERE_RADIUS;
+}
+
+/** Box-Muller transform for Gaussian distribution */
+function gaussianRandom(stdDev: number) {
+  const u1 = Math.random();
+  const u2 = Math.random();
+  return Math.sqrt(-2 * Math.log(u1)) * Math.cos(2 * Math.PI * u2) * stdDev;
 }
 
 function randomSpherePoint(radius: number) {
@@ -142,23 +154,33 @@ function ParticleConstellation({ mouseRef }: { mouseRef: MouseRef }) {
 
     const cyan = new THREE.Color("#22d3ee");
     const white = new THREE.Color("#f1f5f9");
+    const coreCount = Math.floor(PARTICLE_COUNT * CORE_FRACTION);
 
     for (let i = 0; i < PARTICLE_COUNT; i++) {
-      const { x, y, z } = randomSpherePoint(randomRadius());
       const i3 = i * 3;
+      let x: number, y: number, z: number;
+      let brightnessFactor: number;
 
-      pos[i3] = x;
-      pos[i3 + 1] = y;
-      pos[i3 + 2] = z;
-      base[i3] = x;
-      base[i3 + 1] = y;
-      base[i3 + 2] = z;
+      if (i < coreCount) {
+        // Tight Gaussian core — dense, bright
+        x = gaussianRandom(CORE_STD_DEV);
+        y = gaussianRandom(CORE_STD_DEV);
+        z = gaussianRandom(CORE_STD_DEV);
+        brightnessFactor = CORE_BRIGHTNESS;
+      } else {
+        // Uniform scatter — sparse, deliberately dim
+        const point = randomSpherePoint(randomRadius());
+        x = point.x; y = point.y; z = point.z;
+        brightnessFactor = SCATTER_BRIGHTNESS;
+      }
 
-      // eslint-disable-next-line react-hooks/purity -- intentional one-time random seed
+      pos[i3] = x; pos[i3 + 1] = y; pos[i3 + 2] = z;
+      base[i3] = x; base[i3 + 1] = y; base[i3 + 2] = z;
+
       const color = Math.random() < 0.7 ? cyan : white;
-      col[i3] = color.r;
-      col[i3 + 1] = color.g;
-      col[i3 + 2] = color.b;
+      col[i3] = Math.min(1, color.r * brightnessFactor);
+      col[i3 + 1] = Math.min(1, color.g * brightnessFactor);
+      col[i3 + 2] = Math.min(1, color.b * brightnessFactor);
     }
 
     return { positions: pos, colors: col, basePositions: base };
