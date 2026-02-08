@@ -122,7 +122,7 @@ function ParticleField() {
 export default function HeroParticlesZoneDemo() {
   return (
     <DemoSection
-      number={15}
+      number={8}
       title="Hero Particles — Zone Centrée"
       description="1500 particles in a centered zone with radial fade-out edges. Tighter camera view for a focused effect."
     >

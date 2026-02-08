@@ -82,7 +82,7 @@ export default function TypingEffectDemo() {
 
   return (
     <DemoSection
-      number={6}
+      number={1}
       title="Typing Effect"
       description="Code qui s'ecrit caractere par caractere avec syntax highlighting. Cursor clignotant a la fin. Se joue une seule fois."
     >

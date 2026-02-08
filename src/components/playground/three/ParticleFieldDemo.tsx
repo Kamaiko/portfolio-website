@@ -156,7 +156,7 @@ function ParticleField() {
 export default function ParticleFieldDemo() {
   return (
     <DemoSection
-      number={11}
+      number={6}
       title="Particules Interactives"
       description="Champ de 2000 particules 3D réagissant au mouvement de la souris avec effet de répulsion et animation cosmique. Les particules dérivent doucement dans l'espace tout en s'écartant du curseur."
     >

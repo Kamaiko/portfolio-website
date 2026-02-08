@@ -37,7 +37,7 @@ export default function ExpandCollapseDemo() {
 
   return (
     <DemoSection
-      number={8}
+      number={3}
       title="AnimatePresence (expand/collapse)"
       description="Les fun facts sont caches par defaut. Au hover, ils apparaissent avec une transition smooth. Sur mobile, ils seraient toujours visibles."
     >

@@ -351,7 +351,7 @@ function ChessBoard() {
 export default function ChessBoardDemo() {
   return (
     <DemoSection
-      number={10}
+      number={5}
       title="Echiquier 3D"
       description="Un échiquier 3D interactif avec des pièces procédurales en Three.js. Observez le cavalier cyan effectuer ses déplacements caractéristiques en L. Utilisez la souris pour explorer la scène."
     >

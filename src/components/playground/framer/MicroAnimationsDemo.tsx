@@ -31,7 +31,7 @@ export default function MicroAnimationsDemo() {
 
   return (
     <DemoSection
-      number={7}
+      number={2}
       title="Micro-animations Hover"
       description="Icones qui reagissent au hover: bounce, rotate, vibrate. Tres subtil (2-3px max). Survolez chaque interet."
     >

@@ -50,7 +50,7 @@ export default function CreativeZoneDemo() {
 
   return (
     <DemoSection
-      number={9}
+      number={4}
       title="Creative Zone — Terminal"
       description="Mini terminal avec typing anime. Une option pour le bloc fun/snippet. Se joue une seule fois."
     >
