@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion
 import ScrollReveal from "../ui/ScrollReveal";
 import { cn } from "../../utils/cn";
 
-const TITLE_PARALLAX_PX = 40;
+const TITLE_PARALLAX_PX = 70;
 
 interface SectionProps {
   id: string;
