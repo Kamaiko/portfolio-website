@@ -374,31 +374,14 @@ function ConstellationScene({ scrollRef }: { scrollRef?: ScrollRef }) {
 
 /* ─── Wrapper: lazy-loadable, fade-in, radial mask ─── */
 
-/** Scroll progress beyond which particles are fully invisible (opacity hits 0 at 0.55) */
-const PAUSE_THRESHOLD = 0.6;
-
-export default function HeroParticles({ scrollRef }: { scrollRef?: ScrollRef }) {
+export default function HeroParticles({ scrollRef, paused }: { scrollRef?: ScrollRef; paused?: boolean }) {
   const [visible, setVisible] = useState(false);
-  const [paused, setPaused] = useState(false);
   const isMobile = useIsMobile();
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), 100);
     return () => clearTimeout(timer);
   }, []);
-
-  // Pause/resume Canvas based on scroll position
-  useEffect(() => {
-    if (!scrollRef) return;
-    let rafId: number;
-    const check = () => {
-      const shouldPause = scrollRef.current > PAUSE_THRESHOLD;
-      setPaused((prev) => (prev !== shouldPause ? shouldPause : prev));
-      rafId = requestAnimationFrame(check);
-    };
-    rafId = requestAnimationFrame(check);
-    return () => cancelAnimationFrame(rafId);
-  }, [scrollRef]);
 
   if (REDUCED_MOTION) return null;
 
