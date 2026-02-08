@@ -1,8 +1,8 @@
 import { useRef } from "react";
 import type { ReactNode } from "react";
 import { motion, useScroll, useTransform, useReducedMotion } from "framer-motion";
-import ScrollReveal from "./ScrollReveal";
-import { cn } from "../utils/cn";
+import ScrollReveal from "../ui/ScrollReveal";
+import { cn } from "../../utils/cn";
 
 const TITLE_PARALLAX_PX = 40;
 

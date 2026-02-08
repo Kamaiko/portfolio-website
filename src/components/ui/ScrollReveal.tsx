@@ -1,7 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { useInView, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
-import { REVEAL_DURATION_S, REVEAL_CLEANUP_MS } from "../constants/layout";
+import { REVEAL_DURATION_S, REVEAL_CLEANUP_MS } from "../../constants/layout";
 
 interface ScrollRevealProps {
   children: ReactNode;

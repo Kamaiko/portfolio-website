@@ -6,9 +6,9 @@ import {
   useTransform,
   type MotionValue,
 } from "framer-motion";
-import { useIsMobile } from "../hooks/useIsMobile";
-import { GRADIENT } from "../constants/visual-effects";
-import { cn } from "../utils/cn";
+import { useIsMobile } from "../../hooks/useIsMobile";
+import { GRADIENT } from "../../constants/visual-effects";
+import { cn } from "../../utils/cn";
 
 interface ScreenshotFanProps {
   screenshots: string[];

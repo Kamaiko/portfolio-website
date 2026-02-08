@@ -45,20 +45,26 @@ src/
 │   ├── fr.json                      # French translations
 │   └── en.json                      # English — MUST mirror fr.json key structure
 ├── components/
-│   ├── effects/
+│   ├── layout/                      # Page structure
+│   │   ├── Navbar.tsx               # Fixed nav + scroll spy + FR/EN toggle
+│   │   ├── Footer.tsx               # Copyright
+│   │   ├── Section.tsx              # Reusable section wrapper (title parallax)
+│   │   └── NotFound.tsx             # 404 page
+│   ├── sections/                    # Full-page content sections
+│   │   ├── Hero.tsx                 # Sticky pinned hero + blur recession + camera dive
+│   │   ├── About.tsx                # Bento grid (tagline, journey, stack, interests, code, city)
+│   │   ├── Projects.tsx             # Project card grid
+│   │   ├── Skills.tsx               # Dual marquee rows (CSS animation)
+│   │   └── Contact.tsx              # Email, CV, social links
+│   ├── ui/                          # Reusable UI components
+│   │   ├── ProjectCard.tsx          # Individual project card
+│   │   ├── ScreenshotFan.tsx        # 3-image fan hover/scroll effect
+│   │   ├── ScrollReveal.tsx         # IntersectionObserver fade-in
+│   │   ├── ErrorBoundary.tsx        # Class component — wraps HeroParticles
+│   │   └── CityScene.tsx            # Animated SVG city (pure CSS, 3 scroll layers)
+│   ├── effects/                     # Visual effect layers
 │   │   ├── CursorTrail.tsx          # Dual-element cursor (dot=direct DOM, ring=FM spring)
 │   │   └── HeroParticles.tsx        # Three.js galaxy (2050 particles, lazy-loaded)
-│   ├── ErrorBoundary.tsx            # Class component — wraps HeroParticles in Hero.tsx
-│   ├── NotFound.tsx                 # 404 page
-│   ├── Navbar.tsx                   # Fixed nav + scroll spy + FR/EN toggle
-│   ├── Hero.tsx                     # Word-by-word blur reveal + lazy HeroParticles
-│   ├── Section.tsx                  # Reusable section wrapper
-│   ├── About.tsx                    # Bento grid (tagline, journey, stack, interests, code, city)
-│   ├── Projects.tsx / ProjectCard.tsx / ScreenshotFan.tsx
-│   ├── ScrollReveal.tsx             # IntersectionObserver fade-in (cleans up inline styles)
-│   ├── Skills.tsx                   # Dual marquee rows (CSS animation)
-│   ├── CityScene.tsx                # Animated SVG city (pure CSS, 3 scroll layers)
-│   ├── Contact.tsx / Footer.tsx
 │   └── playground/                  # Dev-only demos (?playground=true), lazy-loaded
 └── __tests__/
     ├── setup.ts                     # jsdom polyfills (matchMedia, IntersectionObserver, ResizeObserver)

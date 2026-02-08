@@ -1,10 +1,10 @@
 import { Trans, useTranslation } from "react-i18next";
-import Section from "./Section";
-import ScrollReveal from "./ScrollReveal";
-import CityScene from "./CityScene";
-import { stackItems, interests, journeySteps } from "../data/about";
-import { CARD_BASE, CARD_SHADOW_LIGHT } from "../constants/styles";
-import { cn } from "../utils/cn";
+import Section from "../layout/Section";
+import ScrollReveal from "../ui/ScrollReveal";
+import CityScene from "../ui/CityScene";
+import { stackItems, interests, journeySteps } from "../../data/about";
+import { CARD_BASE, CARD_SHADOW_LIGHT } from "../../constants/styles";
+import { cn } from "../../utils/cn";
 
 const STAGGER_MS = 0.1;
 

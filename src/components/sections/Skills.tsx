@@ -1,6 +1,6 @@
 import { useTranslation } from "react-i18next";
-import Section from "./Section";
-import { row1Skills, row2Skills } from "../data/skills";
+import Section from "../layout/Section";
+import { row1Skills, row2Skills } from "../../data/skills";
 
 interface MarqueeRowProps {
   skills: readonly string[];

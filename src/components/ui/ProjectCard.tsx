@@ -2,11 +2,11 @@ import { useTranslation } from "react-i18next";
 import ExternalLink from "lucide-react/dist/esm/icons/external-link";
 import Github from "lucide-react/dist/esm/icons/github";
 import Code2 from "lucide-react/dist/esm/icons/code-2";
-import type { Project } from "../data/projects";
+import type { Project } from "../../data/projects";
 import ScreenshotFan from "./ScreenshotFan";
 import ScrollReveal from "./ScrollReveal";
-import { CARD_BASE, CARD_SHADOW } from "../constants/styles";
-import { cn } from "../utils/cn";
+import { CARD_BASE, CARD_SHADOW } from "../../constants/styles";
+import { cn } from "../../utils/cn";
 
 interface ProjectCardProps {
   project: Project;

@@ -1,6 +1,6 @@
 import { type ReactNode, useRef } from "react";
 import { useInView } from "framer-motion";
-import { cn } from "../utils/cn";
+import { cn } from "../../utils/cn";
 import {
   type Bldg, type MidWin, type BackWin,
   SKY, BACK_CLR, BACK_WIDE_CLR, MID_CLR, MID_GRADS, MID_EDGE_CLR,
@@ -12,7 +12,7 @@ import {
   BACK_WIDE, BACK_THIN,
   MID_BUILDINGS, ANTENNA_INDICES,
   FRONT_PATHS, STARS,
-} from "../data/city-scene";
+} from "../../data/city-scene";
 
 /* ═══════════════════════════════════════════════════════════════════
    CityScene — Animated pixel-art city skyline
