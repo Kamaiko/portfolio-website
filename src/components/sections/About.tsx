@@ -47,6 +47,15 @@ function Highlight({ children }: { children?: React.ReactNode }) {
   );
 }
 
+/** Muted second-line wrapper used inside <Trans> for the tagline subtitle */
+function Subtitle({ children }: { children?: React.ReactNode }) {
+  return (
+    <span className="mt-2 block text-base font-light text-slate-400 md:text-lg">
+      {children}
+    </span>
+  );
+}
+
 function StackCard({ title, delay }: { title: string; delay: number }) {
   const ref = useRef<HTMLDivElement>(null);
   const isInView = useInView(ref, { once: true, margin: "-80px" });
@@ -170,7 +179,7 @@ export default function About() {
                 taglineInView && "glow-active",
               )}
             >
-              <Trans i18nKey="about.tagline" components={{ hl: <Highlight /> }} />
+              <Trans i18nKey="about.tagline" components={{ hl: <Highlight />, br: <br />, sub: <Subtitle /> }} />
             </p>
           </SpotlightCard>
         </ScrollReveal>

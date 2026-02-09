@@ -6,19 +6,20 @@ import CursorTrail from "../effects/CursorTrail";
    Access: ?playground=true
    ═══════════════════════════════════════════════════════════════════ */
 
-// Framer Motion demos — lazy loaded (1-4)
+// Framer Motion demos — lazy loaded (1-5)
 const TypingEffectDemo = lazy(() => import("./framer/TypingEffectDemo"));
 const MicroAnimationsDemo = lazy(() => import("./framer/MicroAnimationsDemo"));
 const ExpandCollapseDemo = lazy(() => import("./framer/ExpandCollapseDemo"));
 const TerminalDemo = lazy(() => import("./framer/TerminalDemo"));
+const TaglineStylingDemo = lazy(() => import("./framer/TaglineStylingDemo"));
 
-// Three.js demos — lazy loaded (5-8)
+// Three.js demos — lazy loaded (6-9)
 const ChessBoardDemo = lazy(() => import("./three/ChessBoardDemo"));
 const ParticleFieldDemo = lazy(() => import("./three/ParticleFieldDemo"));
 const AbstractGeometryDemo = lazy(() => import("./three/AbstractGeometryDemo"));
 const HeroParticlesZoneDemo = lazy(() => import("./three/HeroParticlesZoneDemo"));
 
-// 404 Easter Egg prototypes — lazy loaded (9-11)
+// 404 Easter Egg prototypes — lazy loaded (10-12)
 const RunnerDemo = lazy(() => import("./canvas/RunnerDemo"));
 const Particles404Demo = lazy(() => import("./three/Particles404Demo"));
 const Destruction404Demo = lazy(() => import("./three/Destruction404Demo"));
@@ -52,7 +53,7 @@ export default function Playground() {
                 Animation Playground
               </h1>
               <p className="mt-1 text-sm text-slate-400">
-                11 demos — Framer Motion, Three.js, et prototypes 404 Easter Egg.
+                12 demos — Framer Motion, Three.js, et prototypes 404 Easter Egg.
               </p>
             </div>
             <a
@@ -67,13 +68,14 @@ export default function Playground() {
 
       {/* Demos */}
       <div className="mx-auto max-w-4xl px-6 py-12">
-        {/* ─── Framer Motion Demos (1-4) ─── */}
+        {/* ─── Framer Motion Demos (1-5) ─── */}
         <LazyDemo><TypingEffectDemo /></LazyDemo>
         <LazyDemo><MicroAnimationsDemo /></LazyDemo>
         <LazyDemo><ExpandCollapseDemo /></LazyDemo>
         <LazyDemo><TerminalDemo /></LazyDemo>
+        <LazyDemo><TaglineStylingDemo /></LazyDemo>
 
-        {/* ─── Three.js Demos (5-8) ─── */}
+        {/* ─── Three.js Demos (6-9) ─── */}
         <div className="mb-12 mt-16 border-t border-slate-800 pt-8">
           <h2 className="text-lg font-bold text-slate-100">
             Three.js / WebGL
@@ -88,7 +90,7 @@ export default function Playground() {
         <LazyDemo><AbstractGeometryDemo /></LazyDemo>
         <LazyDemo><HeroParticlesZoneDemo /></LazyDemo>
 
-        {/* ─── 404 Easter Egg Prototypes (9-11) ─── */}
+        {/* ─── 404 Easter Egg Prototypes (10-12) ─── */}
         <div className="mb-12 mt-16 border-t border-slate-800 pt-8">
           <h2 className="text-lg font-bold text-slate-100">
             404 Easter Egg — 3 prototypes

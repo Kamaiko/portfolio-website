@@ -45,7 +45,7 @@ export default function AbstractGeometryDemo() {
 
   return (
     <DemoSection
-      number={7}
+      number={8}
       title="Geometrie Abstraite"
       description="Icosaedre filaire avec animation de rotation fluide. Survolez pour accelerer la rotation et agrandir la forme."
     >

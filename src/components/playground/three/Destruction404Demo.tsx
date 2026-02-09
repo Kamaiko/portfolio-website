@@ -376,7 +376,7 @@ export default function Destruction404Demo() {
 
   return (
     <DemoSection
-      number={11}
+      number={12}
       title="Destruction 404 — Physics Cubes"
       description="Le '404' est construit en cubes 3D. Cliquez pour tirer une boule et tout casser. Double-cliquez pour reset. Physics maison — zero dependances."
     >

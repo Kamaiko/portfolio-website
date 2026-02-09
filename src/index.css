@@ -107,7 +107,7 @@ body {
 /* ═══════════════════════════════════════════════════════════════
    Glow pulse — breathing highlight effect for tagline keywords
    Activated by .tagline-glow.glow-active on the parent container.
-   Each word breathes at a unique rhythm (4s / 4.7s / 5.3s).
+   Each word breathes at a unique rhythm (4s / 4.7s).
    ═══════════════════════════════════════════════════════════════ */
 
 @keyframes glow-pulse {
@@ -117,9 +117,9 @@ body {
             drop-shadow(0 0 24px rgba(34, 211, 238, 0.1));
   }
   50% {
-    filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.7))
-            drop-shadow(0 0 20px rgba(34, 211, 238, 0.4))
-            drop-shadow(0 0 40px rgba(34, 211, 238, 0.2));
+    filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.5))
+            drop-shadow(0 0 16px rgba(34, 211, 238, 0.3))
+            drop-shadow(0 0 32px rgba(34, 211, 238, 0.15));
   }
 }
 
@@ -129,9 +129,6 @@ body {
 }
 .tagline-glow.glow-active .glow-pulse:nth-of-type(2) {
   animation: glow-pulse 4.7s ease-in-out 0.72s infinite both;
-}
-.tagline-glow.glow-active .glow-pulse:nth-of-type(3) {
-  animation: glow-pulse 5.3s ease-in-out 0.84s infinite both;
 }
 
 /* ─── Reduced motion ─── */

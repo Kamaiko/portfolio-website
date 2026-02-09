@@ -13,7 +13,7 @@
   },
   "about": {
     "title": "About",
-    "tagline": "<hl>Psych</hl> grad turned <hl>dev</hl>. I build apps designed for their <hl>users</hl>.",
+    "tagline": "<hl>Psych</hl> grad turned <hl>dev</hl>.<br/><sub>I build products designed for their users.</sub>",
     "journey_title": "Journey",
     "journey": {
       "step1": "Psychology",
@@ -22,7 +22,7 @@
     "stack_title": "Favorite Stacks",
     "interests_title": "Interests",
     "interests": {
-      "fitness": "Weightlifting",
+      "fitness": "Fitness",
       "fitness_fact": "Never always skip leg day",
       "chess": "Chess",
       "chess_fact": "Blitz at 3am, no regrets",

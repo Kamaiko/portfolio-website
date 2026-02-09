@@ -727,7 +727,7 @@ export default function RunnerDemo() {
 
   return (
     <DemoSection
-      number={9}
+      number={10}
       title="Runner Pixel — 404 Game"
       description="Infinite runner arcade. Space pour sauter, \u2193 pour esquiver les drones. High score sauvegard\u00e9. La vitesse monte... bonne chance."
     >

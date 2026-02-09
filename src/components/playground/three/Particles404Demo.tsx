@@ -226,7 +226,7 @@ function Particles404Scene() {
 export default function Particles404Demo() {
   return (
     <DemoSection
-      number={10}
+      number={11}
       title="Particules 404 — Texte Magnetique"
       description="Des particules forment '404'. La souris les repousse, elles reviennent en spring. Cliquez pour une explosion — elles se reforment toutes seules."
     >

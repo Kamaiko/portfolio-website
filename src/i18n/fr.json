@@ -13,7 +13,7 @@
   },
   "about": {
     "title": "À propos",
-    "tagline": "Diplômé en <hl>psycho</hl>, reconverti en <hl>dev</hl>. Je build des apps pensées pour leurs <hl>utilisateurs</hl>.",
+    "tagline": "Diplômé en <hl>psycho</hl>, reconverti en <hl>dev</hl>.<br/><sub>Je construis des produits pensés pour les utilisateurs.</sub>",
     "journey_title": "Parcours",
     "journey": {
       "step1": "Psychologie",
