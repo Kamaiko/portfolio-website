@@ -130,6 +130,9 @@ body {
 .tagline-glow.glow-active .glow-pulse:nth-of-type(2) {
   animation: glow-pulse 4.7s ease-in-out 0.72s infinite both;
 }
+.tagline-glow.glow-active .glow-pulse:nth-of-type(3) {
+  animation: glow-pulse 5.2s ease-in-out 0.85s infinite both;
+}
 
 /* ─── Reduced motion ─── */
 @media (prefers-reduced-motion: reduce) {
