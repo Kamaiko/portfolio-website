@@ -1,7 +1,8 @@
 import { useRef, useState, useEffect } from "react";
 import { useInView, useReducedMotion } from "framer-motion";
 import type { ReactNode } from "react";
-import { REVEAL_DURATION_S, REVEAL_CLEANUP_MS } from "../../constants/layout";
+import { REVEAL_DURATION_S, REVEAL_CLEANUP_MS } from "../../constants/animation";
+import { INVIEW_MARGIN } from "../../constants/layout";
 
 interface ScrollRevealProps {
   children: ReactNode;
@@ -23,7 +24,7 @@ export default function ScrollReveal({
 }: ScrollRevealProps) {
   const prefersReducedMotion = useReducedMotion();
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once, margin: "-80px" });
+  const isInView = useInView(ref, { once, margin: INVIEW_MARGIN });
   const [transitionDone, setTransitionDone] = useState(false);
 
   const skip = prefersReducedMotion;

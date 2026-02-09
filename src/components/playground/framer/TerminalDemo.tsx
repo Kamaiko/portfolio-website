@@ -1,6 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import { useInView } from "framer-motion";
 import DemoSection from "../DemoSection";
+import { INVIEW_MARGIN } from "../../../constants/layout";
 
 /* ═══════════════════════════════════════════════════════════════════
    Demo 9: Creative Zone — Terminal variant
@@ -15,7 +16,7 @@ const TERMINAL_LINES = [
 
 export default function CreativeZoneDemo() {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: true, margin: INVIEW_MARGIN });
   const [lineIdx, setLineIdx] = useState(0);
   const [charIdx, setCharIdx] = useState(0);
   const [lines, setLines] = useState<string[]>([]);

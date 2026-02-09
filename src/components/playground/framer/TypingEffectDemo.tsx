@@ -2,6 +2,7 @@ import { useRef, useState, useEffect } from "react";
 import { useInView } from "framer-motion";
 import DemoSection from "../DemoSection";
 import { cn } from "../../../utils/cn";
+import { INVIEW_MARGIN } from "../../../constants/layout";
 
 /* ═══════════════════════════════════════════════════════════════════
    Demo 6: Typing Effect
@@ -50,7 +51,7 @@ const CODE_LINES: CodeToken[][] = [
 
 export default function TypingEffectDemo() {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: true, margin: INVIEW_MARGIN });
   const [charIndex, setCharIndex] = useState(0);
 
   // Flatten all characters

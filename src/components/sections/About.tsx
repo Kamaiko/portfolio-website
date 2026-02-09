@@ -7,6 +7,7 @@ import SpotlightCard from "../ui/SpotlightCard";
 import CityScene from "../ui/CityScene";
 import { stackItems, interests, journeySteps, SNIPPET_LINES, SNIPPET_CHAR_DELAY_MS } from "../../data/about";
 import { CARD_BASE, CARD_SHADOW_LIGHT } from "../../constants/styles";
+import { INVIEW_MARGIN } from "../../constants/layout";
 import { cn } from "../../utils/cn";
 
 const STAGGER_MS = 0.1;
@@ -67,7 +68,7 @@ function Accent({ children }: { children?: React.ReactNode }) {
 
 function StackCard({ title, delay }: { title: string; delay: number }) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: true, margin: INVIEW_MARGIN });
   const skip = !!useReducedMotion();
 
   return (
@@ -103,7 +104,7 @@ function StackCard({ title, delay }: { title: string; delay: number }) {
 
 function SnippetCard({ delay }: { delay: number }) {
   const ref = useRef<HTMLDivElement>(null);
-  const isInView = useInView(ref, { once: true, margin: "-80px" });
+  const isInView = useInView(ref, { once: true, margin: INVIEW_MARGIN });
   const skip = !!useReducedMotion();
 
   // Flatten tokens into individual characters
@@ -173,7 +174,7 @@ export default function About() {
   const { t } = useTranslation();
   const skip = !!useReducedMotion();
   const taglineRef = useRef<HTMLParagraphElement>(null);
-  const taglineInView = useInView(taglineRef, { once: true, margin: "-80px" });
+  const taglineInView = useInView(taglineRef, { once: true, margin: INVIEW_MARGIN });
 
   return (
     <Section id="about" title={t("about.title")}>

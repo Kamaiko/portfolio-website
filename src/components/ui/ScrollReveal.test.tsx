@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, act } from "@testing-library/react";
-import { REVEAL_DURATION_S, REVEAL_CLEANUP_MS } from "../../constants/layout";
+import { REVEAL_DURATION_S, REVEAL_CLEANUP_MS } from "../../constants/animation";
 
 // Module-scope mock state — reset in beforeEach
 let mockInView = false;
