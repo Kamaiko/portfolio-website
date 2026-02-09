@@ -1,6 +1,6 @@
 import { Suspense, useEffect } from "react";
 import { Canvas } from "@react-three/fiber";
-import { Text3D, Center, Float } from "@react-three/drei";
+import { Text3D, Center, Float, Environment, ContactShadows, Sparkles } from "@react-three/drei";
 
 const FONT_URL = "/fonts/helvetiker-bold.typeface.json";
 
@@ -17,7 +17,8 @@ function Scene({ onReady }: Props) {
   return (
     <>
       <ReadySignal onReady={onReady} />
-      <Float speed={1.5} rotationIntensity={0.2} floatIntensity={0.5}>
+
+      <Float speed={2} rotationIntensity={0.6} floatIntensity={0.8}>
         <Center>
           <Text3D
             font={FONT_URL}
@@ -30,17 +31,34 @@ function Scene({ onReady }: Props) {
           >
             404
             <meshStandardMaterial
-              color="#22d3ee"
-              metalness={0.3}
-              roughness={0.4}
+              color="#38bdf8"
+              metalness={0.6}
+              roughness={0.25}
+              envMapIntensity={0.6}
+              emissive="#38bdf8"
+              emissiveIntensity={0.02}
             />
           </Text3D>
         </Center>
       </Float>
 
-      <ambientLight intensity={0.4} />
-      <directionalLight position={[5, 5, 5]} intensity={0.8} />
-      <pointLight position={[-3, -2, 4]} intensity={0.4} color="#22d3ee" />
+      <Sparkles count={40} scale={6} size={2} speed={0.4} color="#60a5fa" opacity={0.3} />
+
+      <ContactShadows
+        position={[0, -1.8, 0]}
+        opacity={0.4}
+        scale={10}
+        blur={2.5}
+        far={4}
+        color="#38bdf8"
+      />
+
+      <Environment preset="night" />
+
+      <ambientLight intensity={0.15} />
+      <directionalLight position={[5, 8, 5]} intensity={0.9} />
+      <pointLight position={[-3, -2, 4]} intensity={0.4} color="#38bdf8" />
+      <pointLight position={[3, 2, -3]} intensity={0.2} color="#3b82f6" />
     </>
   );
 }
