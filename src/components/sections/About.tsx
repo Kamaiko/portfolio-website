@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Trans, useTranslation } from "react-i18next";
-import { motion, useInView, useReducedMotion } from "framer-motion";
+import { motion, useInView, useReducedMotion, type Variant } from "framer-motion";
 import Section from "../layout/Section";
 import ScrollReveal from "../ui/ScrollReveal";
 import SpotlightCard from "../ui/SpotlightCard";
@@ -17,7 +17,7 @@ const stackContainerVariants = {
   hidden: { opacity: 1 },
   visible: {
     opacity: 1,
-    transition: { staggerChildren: 0.08, when: "beforeChildren" as const },
+    transition: { delayChildren: 0.5, staggerChildren: 0.08, when: "beforeChildren" as const },
   },
 };
 
@@ -29,6 +29,13 @@ const stackItemVariants = {
     scale: 1,
     transition: { type: "spring" as const, stiffness: 150, damping: 18 },
   },
+};
+
+/** Hover micro-animations for each interest icon (keyed by i18n key) */
+const INTEREST_HOVER: Record<string, Variant> = {
+  fitness: { y: [-4, 0, -2, 0], transition: { duration: 0.4 } },
+  chess: { rotate: [0, -15, 5, 0], transition: { duration: 0.4 } },
+  gaming: { x: [0, 3, -3, 2, -1, 0], transition: { duration: 0.4 } },
 };
 
 /** Inline highlight used inside <Trans> for cyan-accented keywords */
@@ -78,14 +85,23 @@ function StackCard({ title, delay }: { title: string; delay: number }) {
 
 export default function About() {
   const { t } = useTranslation();
+  const skip = !!useReducedMotion();
+  const taglineRef = useRef<HTMLParagraphElement>(null);
+  const taglineInView = useInView(taglineRef, { once: true, margin: "-80px" });
 
   return (
     <Section id="about" title={t("about.title")}>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-3">
         {/* ── Tagline card — 2 cols ── */}
-        <ScrollReveal delay={0 * STAGGER_MS} className="md:col-span-2">
+        <ScrollReveal delay={0} className="md:col-span-2">
           <SpotlightCard className={cn(cardClass, "flex items-center")}>
-            <p className="text-xl leading-relaxed text-slate-300 md:text-2xl">
+            <p
+              ref={taglineRef}
+              className={cn(
+                "tagline-glow text-xl leading-relaxed text-slate-300 md:text-2xl",
+                taglineInView && "glow-active",
+              )}
+            >
               <Trans i18nKey="about.tagline" components={{ hl: <Highlight /> }} />
             </p>
           </SpotlightCard>
@@ -139,8 +155,17 @@ export default function About() {
             </h3>
             <div className="flex flex-col gap-4">
               {interests.map(({ key, icon: Icon }) => (
-                <div key={key} className="flex items-start gap-3">
-                  <Icon size={18} className="mt-0.5 shrink-0 text-slate-400" />
+                <motion.div
+                  key={key}
+                  className="flex items-start gap-3 cursor-default"
+                  whileHover={skip ? undefined : "hover"}
+                >
+                  <motion.div
+                    variants={skip ? undefined : { hover: INTEREST_HOVER[key] }}
+                    className="mt-0.5 shrink-0 text-slate-400"
+                  >
+                    <Icon size={18} />
+                  </motion.div>
                   <div>
                     <p className="text-sm font-medium text-slate-200">
                       {t(`about.interests.${key}`)}
@@ -149,7 +174,7 @@ export default function About() {
                       {t(`about.interests.${key}_fact`)}
                     </p>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </SpotlightCard>

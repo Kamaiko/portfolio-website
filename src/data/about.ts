@@ -1,5 +1,5 @@
 import Dumbbell from "lucide-react/dist/esm/icons/dumbbell";
-import Swords from "lucide-react/dist/esm/icons/swords";
+import ChessPawn from "lucide-react/dist/esm/icons/chess-pawn";
 import Gamepad2 from "lucide-react/dist/esm/icons/gamepad-2";
 import Brain from "lucide-react/dist/esm/icons/brain";
 import Code from "lucide-react/dist/esm/icons/code";
@@ -20,7 +20,7 @@ export const stackItems = [
 /** Personal interests with i18n keys and Lucide icons */
 export const interests = [
   { key: "fitness", icon: Dumbbell },
-  { key: "chess", icon: Swords },
+  { key: "chess", icon: ChessPawn },
   { key: "gaming", icon: Gamepad2 },
 ] as const;
 

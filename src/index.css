@@ -105,7 +105,9 @@ body {
 }
 
 /* ═══════════════════════════════════════════════════════════════
-   Glow pulse — breathing highlight effect for text keywords
+   Glow pulse — breathing highlight effect for tagline keywords
+   Activated by .tagline-glow.glow-active on the parent container.
+   Each word breathes at a unique rhythm (4s / 4.7s / 5.3s).
    ═══════════════════════════════════════════════════════════════ */
 
 @keyframes glow-pulse {
@@ -115,17 +117,21 @@ body {
             drop-shadow(0 0 24px rgba(34, 211, 238, 0.1));
   }
   50% {
-    filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.6))
-            drop-shadow(0 0 16px rgba(34, 211, 238, 0.35))
-            drop-shadow(0 0 32px rgba(34, 211, 238, 0.15));
+    filter: drop-shadow(0 0 8px rgba(34, 211, 238, 0.7))
+            drop-shadow(0 0 20px rgba(34, 211, 238, 0.4))
+            drop-shadow(0 0 40px rgba(34, 211, 238, 0.2));
   }
 }
 
-.glow-pulse {
-  animation: glow-pulse 4s ease-in-out infinite;
-  filter: drop-shadow(0 0 4px rgba(34, 211, 238, 0.4))
-          drop-shadow(0 0 12px rgba(34, 211, 238, 0.2))
-          drop-shadow(0 0 24px rgba(34, 211, 238, 0.1));
+/* Staggered breathing — scoped to tagline */
+.tagline-glow.glow-active .glow-pulse:nth-of-type(1) {
+  animation: glow-pulse 4s ease-in-out 0.6s infinite both;
+}
+.tagline-glow.glow-active .glow-pulse:nth-of-type(2) {
+  animation: glow-pulse 4.7s ease-in-out 0.72s infinite both;
+}
+.tagline-glow.glow-active .glow-pulse:nth-of-type(3) {
+  animation: glow-pulse 5.3s ease-in-out 0.84s infinite both;
 }
 
 /* ─── Reduced motion ─── */
@@ -152,6 +158,9 @@ body {
 
   .glow-pulse {
     animation: none !important;
+    filter: drop-shadow(0 0 4px rgba(34, 211, 238, 0.4))
+            drop-shadow(0 0 12px rgba(34, 211, 238, 0.2))
+            drop-shadow(0 0 24px rgba(34, 211, 238, 0.1));
   }
 
   .marquee-track {
