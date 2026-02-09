@@ -5,15 +5,18 @@ import Section from "../layout/Section";
 import ScrollReveal from "../ui/ScrollReveal";
 import SpotlightCard from "../ui/SpotlightCard";
 import CityScene from "../ui/CityScene";
-import { stackItems, interests, journeySteps, SNIPPET_LINES, SNIPPET_CHAR_DELAY_MS } from "../../data/about";
+import { stackItems, interests, journeySteps, SNIPPET_LINES } from "../../data/about";
 import { CARD_BASE, CARD_SHADOW_LIGHT } from "../../constants/styles";
 import { INVIEW_MARGIN } from "../../constants/layout";
+import { SNIPPET_CHAR_DELAY_MS } from "../../constants/animation";
 import { cn } from "../../utils/cn";
 
-const STAGGER_MS = 0.1;
+const STAGGER_DELAY_S = 0.1;
 const SEGMENT_DELAY_S = 0.6;
 
 const cardClass = cn(CARD_BASE, CARD_SHADOW_LIGHT, "p-6");
+const sectionHeadingClass = "mb-4 text-sm font-semibold tracking-widest text-cyan-400 uppercase";
+const cursorClass = "ml-px inline-block h-[1.1em] w-[2px] bg-cyan-400 align-text-bottom animate-pulse";
 
 const blurReveal = {
   hidden: { filter: "blur(8px)", opacity: 0, y: 12 },
@@ -87,7 +90,7 @@ function StackCard({ title, delay }: { title: string; delay: number }) {
   return (
     <ScrollReveal delay={delay}>
       <SpotlightCard className={cardClass}>
-        <h3 className="mb-4 text-sm font-semibold tracking-widest text-cyan-400 uppercase">
+        <h3 className={sectionHeadingClass}>
           {title}
         </h3>
         <motion.div
@@ -160,7 +163,7 @@ function SnippetCard({ delay }: { delay: number }) {
                 ) : i === charIndex && !skip ? (
                   <span key={i}>
                     <span
-                      className="ml-px inline-block h-[1.1em] w-[2px] bg-cyan-400 align-text-bottom animate-pulse"
+                      className={cursorClass}
                     />
                     <span className={cn(c.color, "invisible")}>{c.char}</span>
                   </span>
@@ -172,7 +175,7 @@ function SnippetCard({ delay }: { delay: number }) {
               )}
               {isDone && !skip && (
                 <span
-                  className="ml-px inline-block h-[1.1em] w-[2px] bg-cyan-400 align-text-bottom animate-pulse"
+                  className={cursorClass}
                 />
               )}
             </code>
@@ -218,9 +221,9 @@ export default function About() {
         </ScrollReveal>
 
         {/* ── Journey card — 1 col ── */}
-        <ScrollReveal delay={1 * STAGGER_MS}>
+        <ScrollReveal delay={1 * STAGGER_DELAY_S}>
           <SpotlightCard className={cardClass}>
-            <h3 className="mb-4 text-sm font-semibold tracking-widest text-cyan-400 uppercase">
+            <h3 className={sectionHeadingClass}>
               {t("about.journey_title")}
             </h3>
             <div className="flex flex-col gap-3">
@@ -260,12 +263,12 @@ export default function About() {
         </ScrollReveal>
 
         {/* ── Stack card ── */}
-        <StackCard title={t("about.stack_title")} delay={2 * STAGGER_MS} />
+        <StackCard title={t("about.stack_title")} delay={2 * STAGGER_DELAY_S} />
 
         {/* ── Interests card ── */}
-        <ScrollReveal delay={3 * STAGGER_MS}>
+        <ScrollReveal delay={3 * STAGGER_DELAY_S}>
           <SpotlightCard className={cardClass}>
-            <h3 className="mb-4 text-sm font-semibold tracking-widest text-cyan-400 uppercase">
+            <h3 className={sectionHeadingClass}>
               {t("about.interests_title")}
             </h3>
             <div className="flex flex-col gap-4">
@@ -297,11 +300,11 @@ export default function About() {
         </ScrollReveal>
 
         {/* ── Code snippet card ── */}
-        <SnippetCard delay={4 * STAGGER_MS} />
+        <SnippetCard delay={4 * STAGGER_DELAY_S} />
 
         {/* ── Pixel landscape — decorative closing card ── */}
         <ScrollReveal
-          delay={5 * STAGGER_MS}
+          delay={5 * STAGGER_DELAY_S}
           className={cn(cardClass, "md:col-span-3 overflow-hidden p-0")}
         >
           <CityScene className="h-28 w-full md:h-40" />

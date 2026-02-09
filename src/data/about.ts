@@ -34,8 +34,6 @@ export interface CodeToken {
   color: string;
 }
 
-/** Delay between each character in the typing effect (ms) */
-export const SNIPPET_CHAR_DELAY_MS = 22;
 
 /** Typing snippet — assert grind (syntax-highlighted token lines) */
 export const SNIPPET_LINES: CodeToken[][] = [

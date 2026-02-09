@@ -108,8 +108,9 @@ body {
    Glow flash + punch + breathing — tagline keyword effects
    Activated by .tagline-glow.glow-active on the <p> container.
    Each keyword gets: (1) scale punch, (2) text-shadow flash,
-   (3) infinite filter breathing. Delays synced with blur-reveal
-   segments (0s / 0.45s / 0.9s stagger).
+   (3) infinite filter breathing. CSS delays (0.4s / 1s / 1.6s)
+   are offset from JS blur-reveal segments (0 / 0.6s / 1.2s)
+   so the glow fires mid-reveal.
    ═══════════════════════════════════════════════════════════════ */
 
 @keyframes glow-flash {

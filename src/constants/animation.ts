@@ -6,3 +6,6 @@ export const REVEAL_DURATION_S = 0.8;
 
 /** Extra buffer (ms) after reveal transition before removing inline styles */
 export const REVEAL_CLEANUP_MS = 100;
+
+/** Delay between each character in the typing snippet (ms) */
+export const SNIPPET_CHAR_DELAY_MS = 22;
