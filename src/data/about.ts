@@ -75,7 +75,7 @@ export const SNIPPET_LINES: CodeToken[][] = [
     { text: "();", color: "text-slate-500" },
   ],
   [
-    { text: "  // trust the process", color: "text-slate-500" },
+    { text: "  // clean as you code", color: "text-slate-500" },
   ],
   [
     { text: "}", color: "text-slate-500" },
