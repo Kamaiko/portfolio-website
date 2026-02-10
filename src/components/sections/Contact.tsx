@@ -43,7 +43,7 @@ export default function Contact() {
               target="_blank"
               rel="noopener noreferrer"
               aria-label={label}
-              className="text-slate-500 transition-colors hover:text-white"
+              className="text-slate-400 transition-colors hover:text-white"
             >
               <Icon size={22} />
             </a>

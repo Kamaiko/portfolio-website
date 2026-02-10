@@ -253,7 +253,7 @@ export default function About() {
                       >
                         {t(`about.journey.${key}`)}
                       </p>
-                      <p className="text-xs text-slate-500">{t(`about.journey.${key}_years`)}</p>
+                      <p className="text-xs text-slate-400">{t(`about.journey.${key}_years`)}</p>
                     </div>
                   </div>
                 );
@@ -289,7 +289,7 @@ export default function About() {
                     <p className="text-sm font-medium text-slate-200">
                       {t(`about.interests.${key}`)}
                     </p>
-                    <p className="text-xs text-slate-500">
+                    <p className="text-xs text-slate-400">
                       {t(`about.interests.${key}_fact`)}
                     </p>
                   </div>
