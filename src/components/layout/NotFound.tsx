@@ -9,6 +9,14 @@ import { cn } from "../../utils/cn";
 
 const NotFound3D = lazy(() => import("./NotFound3D"));
 
+// ── Entrance animation ──
+const ENTRANCE_DURATION_S = 0.6;
+const ENTRANCE_DELAY_S = 0.3;
+const ENTRANCE_Y_PX = 20;
+
+// ── 3D scene container ──
+const SCENE_HEIGHT_CLASS = "h-[320px]";
+
 function Flat404() {
   return (
     <h1 className="text-[10rem] leading-none font-bold text-cyan-400/20">
@@ -27,7 +35,7 @@ export default function NotFound() {
       <CursorTrail />
 
       {/* 3D "404" or flat fallback */}
-      <div className="relative h-[320px] w-full max-w-xl">
+      <div className={cn("relative w-full max-w-xl", SCENE_HEIGHT_CLASS)}>
         {REDUCED_MOTION ? (
           <div className="flex h-full items-center justify-center">
             <Flat404 />
@@ -56,9 +64,9 @@ export default function NotFound() {
 
       {/* Message + back button — renders immediately */}
       <motion.div
-        initial={{ opacity: 0, y: 20 }}
+        initial={{ opacity: 0, y: ENTRANCE_Y_PX }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6, delay: 0.3, ease: EASE_OUT_EXPO }}
+        transition={{ duration: ENTRANCE_DURATION_S, delay: ENTRANCE_DELAY_S, ease: EASE_OUT_EXPO }}
         className="mt-8 px-6 text-center"
       >
         <p className="mb-8 font-mono text-lg text-slate-400">

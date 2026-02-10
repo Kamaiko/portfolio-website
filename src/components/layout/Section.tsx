@@ -6,6 +6,8 @@ import { CONTAINER_WIDTH } from "../../constants/styles";
 import { cn } from "../../utils/cn";
 
 const TITLE_PARALLAX_PX = 40;
+const SECTION_PADDING = "pt-24 pb-24 px-6";
+const PARALLAX_SCROLL_OFFSET = ["start end", "end start"] as const;
 
 interface SectionProps {
   id: string;
@@ -21,7 +23,7 @@ export default function Section({ id, title, children, className }: SectionProps
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
-    offset: ["start end", "end start"],
+    offset: [...PARALLAX_SCROLL_OFFSET],
   });
 
   // Title floats: moves 20px slower than natural scroll
@@ -32,7 +34,7 @@ export default function Section({ id, title, children, className }: SectionProps
   );
 
   return (
-    <section ref={sectionRef} id={id} className={cn("pt-24 pb-24 px-6", className)}>
+    <section ref={sectionRef} id={id} className={cn(SECTION_PADDING, className)}>
       <div className={CONTAINER_WIDTH}>
         {/* Outer: continuous parallax | Inner: one-time entrance reveal */}
         <motion.div style={skip ? undefined : { y: titleY }}>
