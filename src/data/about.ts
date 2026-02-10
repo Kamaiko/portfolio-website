@@ -24,8 +24,8 @@ export const interests = [
 
 /** Journey timeline steps with i18n keys and Lucide icons */
 export const journeySteps = [
-  { key: "step1", icon: Brain },
   { key: "step2", icon: Code, current: true },
+  { key: "step1", icon: Brain },
 ] as const;
 
 /** Syntax-highlighted code token for the typing snippet */
