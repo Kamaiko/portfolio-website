@@ -1,6 +1,6 @@
 # Claude Instructions — Halterofit Portfolio
 
-> **Updated**: 2026-02-08
+> **Updated**: 2026-02-09
 
 ## Overview
 
@@ -19,69 +19,27 @@ npm run lint      # ESLint
 npx vitest run    # Tests (jsdom)
 ```
 
-## Project Structure
+## Folder Convention
 
 ```
 src/
-├── App.tsx                          # Root — routing (playground, 404, main), Lenis wrapper
-├── main.tsx                         # Entry point
-├── index.css                        # Tailwind import + CSS keyframes + reduced-motion rules
-├── utils/cn.ts                      # Re-exports clsx → use for ALL className logic
-├── constants/
-│   ├── accessibility.ts             # REDUCED_MOTION (static matchMedia check)
-│   ├── layout.ts                    # NAV_HEIGHT, SECTION_PROXIMITY_PX, REVEAL_DURATION_S…
-│   ├── animation.ts                 # EASE_OUT_EXPO (shared entrance easing)
-│   ├── styles.ts                    # CARD_BASE, CARD_SHADOW, CARD_SHADOW_LIGHT
-│   └── visual-effects.ts            # GRADIENT.* (radial gradients) + NOISE_SVG
-├── data/                            # ALL static data lives here (never inline in components)
-│   ├── about.ts                     # stackItems, interests, journeySteps
-│   ├── city-scene.ts                # Palette, dimensions (W, H), buildings, stars
-│   ├── contact.ts                   # socialLinks[], CV_PATH
-│   ├── projects.ts                  # Project[] + project data
-│   └── skills.ts                    # row1Skills, row2Skills
-├── hooks/useIsMobile.ts             # Reactive media query hook (reactive, SSR-safe)
-├── types/lucide-react-icons.d.ts    # Module declarations for deep Lucide imports
-├── i18n/
-│   ├── index.ts                     # i18next config (default: FR, persisted to localStorage)
-│   ├── fr.json                      # French translations
-│   └── en.json                      # English — MUST mirror fr.json key structure
+├── constants/       # Named tokens (SCREAMING_SNAKE). No magic numbers.
+├── data/            # ALL static data arrays/objects. Never inline in components.
+├── hooks/           # Custom hooks (useIsMobile, etc.)
+├── i18n/            # fr.json + en.json — MUST mirror each other's key structure
 ├── components/
-│   ├── layout/                      # Page structure
-│   │   ├── Navbar.tsx               # Fixed nav + scroll spy + FR/EN toggle
-│   │   ├── Footer.tsx               # Copyright
-│   │   ├── Section.tsx              # Reusable section wrapper (title parallax)
-│   │   ├── NotFound.tsx             # 404 page (crossfade flat → 3D)
-│   │   └── NotFound3D.tsx           # 3D "404" text (drei Text3D, lazy-loaded)
-│   ├── sections/                    # Full-page content sections
-│   │   ├── Hero.tsx                 # Sticky pinned hero + blur recession + camera dive
-│   │   ├── About.tsx                # Bento grid (tagline, journey, stack, interests, code, city)
-│   │   ├── Projects.tsx             # Project card grid
-│   │   ├── Skills.tsx               # Dual marquee rows (CSS animation)
-│   │   └── Contact.tsx              # Email, CV, social links
-│   ├── ui/                          # Reusable UI components
-│   │   ├── ProjectCard.tsx          # Individual project card
-│   │   ├── ScreenshotFan.tsx        # 3-image fan hover/scroll effect
-│   │   ├── ScrollReveal.tsx         # IntersectionObserver fade-in
-│   │   ├── SpotlightCard.tsx        # Radial-gradient hover spotlight for cards
-│   │   ├── ErrorBoundary.tsx        # Class component — wraps R3F/WebGL scenes
-│   │   └── CityScene.tsx            # Animated SVG city (pure CSS, 3 scroll layers)
-│   ├── effects/                     # Visual effect layers
-│   │   ├── CursorTrail.tsx          # Dual-element cursor (dot=direct DOM, ring=FM spring)
-│   │   └── HeroParticles.tsx        # Three.js galaxy (2050 particles, lazy-loaded)
-│   └── playground/                  # Dev-only demos (?playground=true), lazy-loaded
-└── __tests__/
-    ├── setup.ts                     # jsdom polyfills (matchMedia, IntersectionObserver, ResizeObserver)
-    └── app.test.tsx                 # Smoke tests (i18n, useIsMobile, App render)
+│   ├── layout/      # Page structure (Navbar, Footer, Section, NotFound)
+│   ├── sections/    # Full-page content sections (Hero, About, Projects, Skills, Contact)
+│   ├── ui/          # Reusable UI (cards, scroll reveal, spotlight, error boundary)
+│   ├── effects/     # Visual effect layers (CursorTrail, HeroParticles)
+│   └── playground/  # Dev-only demos (?playground=true), lazy-loaded
+└── __tests__/       # Vitest + @testing-library/react (jsdom)
 ```
 
 ## Conventions (MUST follow)
 
-### Naming
-- **Components**: PascalCase files + exports (`Hero.tsx`, `CursorTrail.tsx`)
+### Naming (non-standard rules only)
 - **Constants**: SCREAMING_SNAKE (`NAV_HEIGHT`, `PARTICLE_COUNT`, `CARD_BASE`)
-- **Hooks**: `use` prefix, camelCase (`useIsMobile`, `useRadialTexture`)
-- **Data files**: camelCase arrays/objects (`stackItems`, `row1Skills`)
-- **CSS classes**: kebab-case (Tailwind utilities)
 - **i18n keys**: `section.key` pattern (`hero.title`, `about.journey.psych`)
 
 ### className
@@ -103,26 +61,12 @@ src/
 - When adding text: add to BOTH files with matching keys.
 - Use `<Trans>` for inline formatting: `<Trans i18nKey="..." components={{ hl: <Highlight /> }} />`
 
-## Animation Architecture
-
-### Layers
-| Layer | Tech | File | Reduced-motion |
-|---|---|---|---|
-| CursorTrail | Direct DOM + FM spring | `effects/CursorTrail.tsx` | Returns `null` |
-| HeroParticles | Three.js / R3F (lazy) | `effects/HeroParticles.tsx` | Returns `null` |
-| NotFound3D | drei Text3D + Float (lazy) | `layout/NotFound3D.tsx` | Flat "404" fallback |
-| ScrollReveal | Inline styles + IntersectionObserver | `ui/ScrollReveal.tsx` | FM `useReducedMotion()` |
-| CityScene | Pure CSS keyframes | `ui/CityScene.tsx` + `index.css` | CSS `@media` rules |
-| ScreenshotFan | FM variants + scroll | `ui/ScreenshotFan.tsx` | FM `useReducedMotion()` |
-| Skills marquee | CSS keyframes | `sections/Skills.tsx` + `index.css` | CSS `@media` rules |
-| Lenis smooth scroll | Library wrapper | `App.tsx` | Disabled via `REDUCED_MOTION` |
+## Animation Rules
 
 ### Reduced-motion: EVERY animation must respect `prefers-reduced-motion`.
 - JS: use `REDUCED_MOTION` from `constants/accessibility.ts` or FM's `useReducedMotion()`
 - CSS: add rules inside `@media (prefers-reduced-motion: reduce)` block in `index.css`
-
-### CityScene CSS sync
-- CSS keyframe `city-scroll` uses `var(--city-width)` — set as CSS custom property on `<svg>` from `W` constant in `city-scene.ts`.
+- R3F/Three.js components (HeroParticles, NotFound3D) return `null` when reduced-motion is on
 
 ## Three.js / R3F Rules
 
@@ -135,22 +79,28 @@ src/
 
 ## Code Splitting
 
-- Three.js chunk (~874KB) is lazy-loaded via `React.lazy()` in `Hero.tsx` and `NotFound.tsx`
-- NotFound3D chunk (~8.5KB) is lazy-loaded separately (drei Text3D)
-- Playground is lazy-loaded in `App.tsx`
+- Three.js scenes and Playground are `React.lazy()` loaded — never import eagerly
 - ErrorBoundary wraps all R3F scenes to prevent WebGL crashes from breaking the app
-- Main bundle: ~443KB (gzipped: ~143KB)
 
 ## Testing
 
-- Vitest 3 + @testing-library/react + jsdom (vitest 4.0.x has a suite context bug on Windows/Node 22)
-- Three.js mocked in tests with constructible stubs (Euler, Matrix4, Vector3, Color, CanvasTexture)
-- Setup polyfills: matchMedia, IntersectionObserver, ResizeObserver
+- Vitest **3.x only** — vitest 4.0.x has a suite context bug on Windows/Node 22
+- `@vitest/coverage-v8` must be pinned to same version as vitest
+- Three.js mocked with constructible stubs (Euler, Matrix4, Vector3, Color, CanvasTexture)
+- `afterEach(cleanup)` required in setup.ts (auto-cleanup needs `globals: true`)
+- Fake timers: use `act(() => vi.advanceTimersByTime(n))` instead of `waitFor` (hangs)
+- Module-scope constants: use `vi.hoisted()` to override before module evaluation
+
+## Repository Etiquette
+
+- Dev work on `dev` branch, deploy via `main`
+- PR into `main` for production deploys (Cloudflare Pages)
+- Conventional commits: `feat:`, `fix:`, `chore:`, `perf:`, `refactor:`
 
 ## Development Standards
 
-- TypeScript strict mode, zero `any` types, zero `@ts-ignore`
-- Zero `console.log` in production code
-- Tailwind utility classes for all styling (no CSS files beyond `index.css`)
+- Zero `any` types, zero `@ts-ignore`, zero `console.log` in production
+- No CSS files beyond `index.css` (Tailwind utilities only)
 - Named constants for ALL magic numbers (extract to `constants/`)
-- Keep dependencies minimal — no GSAP, no react-spring (FM v12 covers all needs)
+- Dependencies: no GSAP, no react-spring — Framer Motion v12 covers all needs
+- `bg-linear-to-r` is correct Tailwind v4 gradient syntax (not `bg-gradient-to-r`)

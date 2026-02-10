@@ -29,6 +29,70 @@ const CORE_STD_DEV = 1.2; // Gaussian spread (tighter = denser core)
 const CORE_BRIGHTNESS = 1.3; // Core particles 30% brighter
 const SCATTER_BRIGHTNESS = 0.7; // Scatter particles 30% dimmer
 
+/* ─── Material & color constants ─── */
+
+const PARTICLE_SIZE = 0.05;
+const STAR_SIZE = 0.09;
+const COLOR_CYAN = "#22d3ee"; // Tailwind cyan-400
+const COLOR_SLATE_100 = "#f1f5f9";
+const COLOR_WHITE = "#ffffff";
+const CYAN_PROBABILITY = 0.7; // 70% cyan, 30% white in constellation
+
+/* ─── Wrapper constants ─── */
+
+const FADE_IN_DELAY_MS = 100;
+const CAMERA_FOV = 60;
+const MOUSE_OFFSCREEN = { x: 100, y: 100 }; // sentinel: far outside NDC [-1,1]
+const VIGNETTE_MASK =
+  "radial-gradient(ellipse at center, black 50%, transparent 100%)";
+
+/* ─── Per-frame drift/twinkle animation config ─── */
+
+/** Single-axis sinusoidal drift parameters */
+interface AxisDrift {
+  readonly freq: number; // time multiplier (rad/s scaling)
+  readonly phaseScale: number; // per-particle phase offset multiplier
+  readonly amp: number; // displacement amplitude (world units)
+}
+
+/** Vertical twinkle oscillation parameters */
+interface TwinkleConfig {
+  readonly baseFreq: number; // base oscillation frequency
+  readonly modFreq: number; // per-group frequency offset
+  readonly modCount: number; // group modulo divisor
+  readonly phaseScale: number; // per-particle phase offset multiplier
+  readonly amp: number; // displacement amplitude (world units)
+}
+
+/** Combined animation config for a particle layer */
+interface LayerAnimConfig {
+  readonly drift: {
+    readonly x: AxisDrift;
+    readonly y: AxisDrift;
+    readonly z?: AxisDrift;
+  };
+  readonly twinkle: TwinkleConfig;
+}
+
+/** Constellation: Y-dominant drift, 3-axis, subtle twinkle */
+const CONSTELLATION_ANIM: LayerAnimConfig = {
+  drift: {
+    x: { freq: 0.3, phaseScale: 0.01, amp: 0.02 },
+    y: { freq: 0.25, phaseScale: 0.02, amp: 0.05 },
+    z: { freq: 0.35, phaseScale: 0.015, amp: 0.015 },
+  },
+  twinkle: { baseFreq: 0.8, modFreq: 0.3, modCount: 7, phaseScale: 1.7, amp: 0.03 },
+};
+
+/** Bright stars: gentler 2-axis drift, stronger twinkle */
+const BRIGHT_STAR_ANIM: LayerAnimConfig = {
+  drift: {
+    x: { freq: 0.2, phaseScale: 0.05, amp: 0.015 },
+    y: { freq: 0.2, phaseScale: 0.04, amp: 0.04 },
+  },
+  twinkle: { baseFreq: 0.4, modFreq: 0.25, modCount: 7, phaseScale: 2.1, amp: 0.06 },
+};
+
 type MouseRef = React.RefObject<{ x: number; y: number }>;
 type ScrollRef = React.RefObject<number>;
 
@@ -149,6 +213,44 @@ function computeRepulsion(
   };
 }
 
+/**
+ * Animate particle positions: base + drift + twinkle + mouse repulsion.
+ * X/Z axes use sin, Y axis uses cos — keeps Y-dominant drift orthogonal to XZ rotation.
+ * Pure function, mutates `arr` in place.
+ */
+function animateParticles(
+  arr: Float32Array,
+  bases: Float32Array,
+  count: number,
+  time: number,
+  mouse: Vector3,
+  anim: LayerAnimConfig,
+): void {
+  const { drift, twinkle } = anim;
+  for (let i = 0; i < count; i++) {
+    const i3 = i * 3;
+    const bx = bases[i3];
+    const by = bases[i3 + 1];
+    const bz = bases[i3 + 2];
+
+    const dx = Math.sin(time * drift.x.freq + i * drift.x.phaseScale) * drift.x.amp;
+    const dy = Math.cos(time * drift.y.freq + i * drift.y.phaseScale) * drift.y.amp;
+    const dz = drift.z
+      ? Math.sin(time * drift.z.freq + i * drift.z.phaseScale) * drift.z.amp
+      : 0;
+    const tw = Math.sin(
+      time * (twinkle.baseFreq + (i % twinkle.modCount) * twinkle.modFreq)
+        + i * twinkle.phaseScale,
+    ) * twinkle.amp;
+
+    const { rx, ry, rz } = computeRepulsion(bx, by, bz, mouse);
+
+    arr[i3] = bx + dx + rx;
+    arr[i3 + 1] = by + dy + tw + ry;
+    arr[i3 + 2] = bz + dz + rz;
+  }
+}
+
 /* ─── Main particle layer (2000 particles) ─── */
 
 function ParticleConstellation({ mouseRef }: { mouseRef: MouseRef }) {
@@ -161,8 +263,8 @@ function ParticleConstellation({ mouseRef }: { mouseRef: MouseRef }) {
     const col = new Float32Array(PARTICLE_COUNT * 3);
     const base = new Float32Array(PARTICLE_COUNT * 3);
 
-    const cyan = new Color("#22d3ee");
-    const white = new Color("#f1f5f9");
+    const cyan = new Color(COLOR_CYAN);
+    const white = new Color(COLOR_SLATE_100);
     const coreCount = Math.floor(PARTICLE_COUNT * CORE_FRACTION);
 
     for (let i = 0; i < PARTICLE_COUNT; i++) {
@@ -186,7 +288,7 @@ function ParticleConstellation({ mouseRef }: { mouseRef: MouseRef }) {
       pos[i3] = x; pos[i3 + 1] = y; pos[i3 + 2] = z;
       base[i3] = x; base[i3 + 1] = y; base[i3 + 2] = z;
 
-      const color = Math.random() < 0.7 ? cyan : white;
+      const color = Math.random() < CYAN_PROBABILITY ? cyan : white;
       col[i3] = Math.min(1, color.r * brightnessFactor);
       col[i3 + 1] = Math.min(1, color.g * brightnessFactor);
       col[i3 + 2] = Math.min(1, color.b * brightnessFactor);
@@ -199,33 +301,12 @@ function ParticleConstellation({ mouseRef }: { mouseRef: MouseRef }) {
     if (!pointsRef.current || !positionsRef.current) return;
 
     const arr = positionsRef.current.array as Float32Array;
-    const t = state.clock.elapsedTime;
     const cam = state.camera as PerspectiveCamera;
     const aspect = state.size.width / state.size.height;
     const rotY = pointsRef.current.rotation.y;
     const mouse = projectMouseToLocal(mouseRef, rotY, cam, aspect);
 
-    for (let i = 0; i < PARTICLE_COUNT; i++) {
-      const i3 = i * 3;
-      const bx = basePositions[i3];
-      const by = basePositions[i3 + 1];
-      const bz = basePositions[i3 + 2];
-
-      // Ambient float — Y dominant (orthogonal to rotation), minimal XZ
-      const driftX = Math.sin(t * 0.3 + i * 0.01) * 0.02;
-      const driftY = Math.cos(t * 0.25 + i * 0.02) * 0.05;
-      const driftZ = Math.sin(t * 0.35 + i * 0.015) * 0.015;
-
-      // Vertical twinkle — doesn't interfere with XZ rotation
-      const twinkle =
-        Math.sin(t * (0.8 + (i % 7) * 0.3) + i * 1.7) * 0.03;
-
-      const { rx, ry, rz } = computeRepulsion(bx, by, bz, mouse);
-
-      arr[i3] = bx + driftX + rx;
-      arr[i3 + 1] = by + driftY + twinkle + ry;
-      arr[i3 + 2] = bz + driftZ + rz;
-    }
+    animateParticles(arr, basePositions, PARTICLE_COUNT, state.clock.elapsedTime, mouse, CONSTELLATION_ANIM);
 
     positionsRef.current.needsUpdate = true;
     pointsRef.current.rotation.y += ROTATION_RAD_PER_S * Math.min(delta, DELTA_CAP_S);
@@ -243,11 +324,10 @@ function ParticleConstellation({ mouseRef }: { mouseRef: MouseRef }) {
       </bufferGeometry>
       <pointsMaterial
         map={texture}
-        size={0.05}
+        size={PARTICLE_SIZE}
         vertexColors
         sizeAttenuation
         transparent
-        opacity={1.0}
         blending={AdditiveBlending}
         depthWrite={false}
       />
@@ -284,32 +364,12 @@ function BrightStars({ mouseRef }: { mouseRef: MouseRef }) {
     if (!pointsRef.current || !positionsRef.current) return;
 
     const arr = positionsRef.current.array as Float32Array;
-    const t = state.clock.elapsedTime;
     const cam = state.camera as PerspectiveCamera;
     const aspect = state.size.width / state.size.height;
     const rotY = pointsRef.current.rotation.y;
     const mouse = projectMouseToLocal(mouseRef, rotY, cam, aspect);
 
-    for (let i = 0; i < STAR_COUNT; i++) {
-      const i3 = i * 3;
-      const bx = basePositions[i3];
-      const by = basePositions[i3 + 1];
-      const bz = basePositions[i3 + 2];
-
-      // Gentle float — Y dominant, minimal X
-      const driftX = Math.sin(t * 0.2 + i * 0.05) * 0.015;
-      const driftY = Math.cos(t * 0.2 + i * 0.04) * 0.04;
-
-      // Vertical twinkle — visible pulsing without fighting rotation
-      const twinkle =
-        Math.sin(t * (0.4 + (i % 7) * 0.25) + i * 2.1) * 0.06;
-
-      const { rx, ry, rz } = computeRepulsion(bx, by, bz, mouse);
-
-      arr[i3] = bx + driftX + rx;
-      arr[i3 + 1] = by + driftY + twinkle + ry;
-      arr[i3 + 2] = bz + rz;
-    }
+    animateParticles(arr, basePositions, STAR_COUNT, state.clock.elapsedTime, mouse, BRIGHT_STAR_ANIM);
 
     positionsRef.current.needsUpdate = true;
     pointsRef.current.rotation.y += ROTATION_RAD_PER_S * Math.min(delta, DELTA_CAP_S);
@@ -326,11 +386,10 @@ function BrightStars({ mouseRef }: { mouseRef: MouseRef }) {
       </bufferGeometry>
       <pointsMaterial
         map={texture}
-        size={0.09}
-        color="#ffffff"
+        size={STAR_SIZE}
+        color={COLOR_WHITE}
         sizeAttenuation
         transparent
-        opacity={1.0}
         blending={AdditiveBlending}
         depthWrite={false}
       />
@@ -358,7 +417,7 @@ function CameraDive({ scrollRef }: { scrollRef: ScrollRef }) {
 /* ─── Scene: shared mouseRef for both layers ─── */
 
 function ConstellationScene({ scrollRef }: { scrollRef?: ScrollRef }) {
-  const mouseRef = useRef({ x: 100, y: 100 });
+  const mouseRef = useRef(MOUSE_OFFSCREEN);
   const isMobile = useIsMobile();
 
   useEffect(() => {
@@ -387,7 +446,7 @@ export default function HeroParticles({ scrollRef, paused }: { scrollRef?: Scrol
   const isMobile = useIsMobile();
 
   useEffect(() => {
-    const timer = setTimeout(() => setVisible(true), 100);
+    const timer = setTimeout(() => setVisible(true), FADE_IN_DELAY_MS);
     return () => clearTimeout(timer);
   }, []);
 
@@ -398,14 +457,12 @@ export default function HeroParticles({ scrollRef, paused }: { scrollRef?: Scrol
       className="pointer-events-none absolute inset-0 transition-opacity duration-1500"
       style={{
         opacity: visible ? 1 : 0,
-        maskImage:
-          "radial-gradient(ellipse at center, black 50%, transparent 100%)",
-        WebkitMaskImage:
-          "radial-gradient(ellipse at center, black 50%, transparent 100%)",
+        maskImage: VIGNETTE_MASK,
+        WebkitMaskImage: VIGNETTE_MASK,
       }}
     >
       <Canvas
-        camera={{ position: [0, 0, CAMERA_Z_START], fov: 60 }}
+        camera={{ position: [0, 0, CAMERA_Z_START], fov: CAMERA_FOV }}
         dpr={isMobile ? 1 : [1, 1.5]}
         frameloop={paused ? "never" : "always"}
       >

@@ -20,8 +20,11 @@ const WORD_DURATION_S = 0.8;
 const LINE_DURATION_S = 0.7;
 const SUBTITLE_OFFSET_S = 0.2;
 const INDICATOR_OFFSET_S = 1;
+const NAME_TO_TITLE_GAP_S = 0.3;
+const CHEVRON_COUNT = 3;
 const CHEVRON_DURATION_S = 1.8;
 const CHEVRON_STAGGER_S = 0.25;
+const CHEVRON_STROKE = "rgba(34,211,238,0.9)";
 
 // ── Scroll choreography — progress thresholds ──
 const TEXT_FADE: [number, number] = [0.05, 0.25];
@@ -49,6 +52,13 @@ const wordVariants = {
   }),
 };
 
+/** Spotlight glow positions — radial gradient orbs behind the hero text */
+const HERO_SPOTLIGHTS = [
+  { left: "48%", top: "42%", size: "600px", gradient: GRADIENT.spotlightCyan },
+  { left: "68%", top: "58%", size: "480px", gradient: GRADIENT.spotlightBlue },
+  { left: "28%", top: "30%", size: "420px", gradient: GRADIENT.spotlightTeal },
+] as const;
+
 const lineVariants = {
   hidden: { opacity: 0, y: 20 },
   visible: (delay: number) => ({
@@ -64,7 +74,7 @@ export default function Hero() {
   const lenis = useLenis();
   const wrapperRef = useRef<HTMLDivElement>(null);
   const nameWords = t("hero.name").split(" ");
-  const nameDelay = WORD_BASE_DELAY_S + nameWords.length * WORD_STAGGER_S + WORD_BASE_DELAY_S;
+  const nameDelay = WORD_BASE_DELAY_S + nameWords.length * WORD_STAGGER_S + NAME_TO_TITLE_GAP_S;
 
   // Track scroll progress through the extended wrapper (250vh)
   // 0 = wrapper top at viewport top, 1 = wrapper bottom at viewport top
@@ -123,18 +133,19 @@ export default function Hero() {
           className="pointer-events-none absolute inset-0"
           style={skip ? undefined : { y: glowY, opacity: glowOpacity, willChange: "transform, opacity" }}
         >
-          <div
-            className="absolute left-[48%] top-[42%] h-[600px] w-[600px] -translate-x-1/2 -translate-y-1/2 rounded-full"
-            style={{ background: GRADIENT.spotlightCyan }}
-          />
-          <div
-            className="absolute left-[68%] top-[58%] h-[480px] w-[480px] -translate-x-1/2 -translate-y-1/2 rounded-full"
-            style={{ background: GRADIENT.spotlightBlue }}
-          />
-          <div
-            className="absolute left-[28%] top-[30%] h-[420px] w-[420px] -translate-x-1/2 -translate-y-1/2 rounded-full"
-            style={{ background: GRADIENT.spotlightTeal }}
-          />
+          {HERO_SPOTLIGHTS.map((spot, i) => (
+            <div
+              key={i}
+              className="absolute -translate-x-1/2 -translate-y-1/2 rounded-full"
+              style={{
+                left: spot.left,
+                top: spot.top,
+                width: spot.size,
+                height: spot.size,
+                background: spot.gradient,
+              }}
+            />
+          ))}
         </motion.div>
 
         {/* Particle constellation behind text */}
@@ -214,13 +225,9 @@ export default function Hero() {
             className="mx-auto mt-20 flex cursor-pointer flex-col items-center gap-2 p-4 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-400"
           >
             <div className="relative flex flex-col items-center gap-1.5" aria-hidden="true">
-              {[0, 1, 2].map((i) => (
-                <motion.svg
+              {Array.from({ length: CHEVRON_COUNT }, (_, i) => (
+                <motion.div
                   key={i}
-                  width="24"
-                  height="12"
-                  viewBox="0 0 24 12"
-                  fill="none"
                   animate={{
                     opacity: [0, 1, 0],
                     y: [0, 8, 16],
@@ -232,14 +239,21 @@ export default function Hero() {
                     delay: i * CHEVRON_STAGGER_S,
                   }}
                 >
-                  <path
-                    d="M1 1L12 10L23 1"
-                    stroke="rgba(34,211,238,0.9)"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </motion.svg>
+                  <svg
+                    width="24"
+                    height="12"
+                    viewBox="0 0 24 12"
+                    fill="none"
+                  >
+                    <path
+                      d="M1 1L12 10L23 1"
+                      stroke={CHEVRON_STROKE}
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </motion.div>
               ))}
             </div>
           </motion.button>
