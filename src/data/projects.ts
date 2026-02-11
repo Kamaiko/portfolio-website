@@ -32,7 +32,7 @@ export const projects: Project[] = [
     id: "chainride",
     translationKey: "projects.chainride",
     github: "https://github.com/Kamaiko/chainride",
-    tech: ["Solidity", "Ethereum", "Hardhat", "React", "Wagmi", "Tailwind CSS"],
+    tech: ["Solidity", "Ethereum", "Hardhat", "React", "Vite", "Wagmi", "Tailwind CSS"],
     screenshots: ["/images/projects/ChainRide.webp"],
   },
 ];
