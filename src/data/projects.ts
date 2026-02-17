@@ -16,7 +16,7 @@ export const projects: Project[] = [
     tech: ["React Native", "Expo", "TypeScript", "WatermelonDB", "Supabase", "NativeWind"],
     screenshots: [
       "/images/projects/ExerciceID.webp",
-      "/images/projects/Overview.webp",
+      "/images/projects/DayDetails.webp",
       "/images/projects/ExerciceCategories.webp",
     ],
     featured: true,
