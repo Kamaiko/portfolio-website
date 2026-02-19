@@ -9,7 +9,7 @@ export default defineConfig({
     include: ["src/**/*.test.{ts,tsx}"],
     coverage: {
       provider: "v8",
-      reporter: ["text", "html"],
+      reporter: ["text", "html", "json-summary"],
       include: ["src/**"],
       exclude: [
         "src/components/playground/**",
@@ -19,6 +19,11 @@ export default defineConfig({
         "src/**/*.test.{ts,tsx}",
         "src/__tests__/**",
       ],
+      thresholds: {
+        statements: 75,
+        branches: 78,
+        lines: 75,
+      },
     },
   },
 });

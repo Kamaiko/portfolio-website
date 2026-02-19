@@ -1,0 +1,58 @@
+name: CI
+
+on:
+  push:
+    branches: [dev, main]
+  pull_request:
+    branches: [main]
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    name: Lint, Test & Build
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Lint
+        run: npm run lint
+
+      - name: Test with coverage
+        run: npm test -- --coverage
+
+      - name: Coverage summary
+        if: always()
+        run: |
+          echo '## Test Coverage' >> $GITHUB_STEP_SUMMARY
+          echo '' >> $GITHUB_STEP_SUMMARY
+          if [ -f coverage/coverage-summary.json ]; then
+            node -e "
+              const c = require('./coverage/coverage-summary.json').total;
+              const fmt = (m) => m.pct + '%';
+              console.log('| Metric | Coverage |');
+              console.log('|--------|----------|');
+              console.log('| Statements | ' + fmt(c.statements) + ' |');
+              console.log('| Branches | ' + fmt(c.branches) + ' |');
+              console.log('| Functions | ' + fmt(c.functions) + ' |');
+              console.log('| Lines | ' + fmt(c.lines) + ' |');
+            " >> $GITHUB_STEP_SUMMARY
+          else
+            echo '_Coverage summary not available._' >> $GITHUB_STEP_SUMMARY
+          fi
+
+      - name: Build
+        run: npm run build
