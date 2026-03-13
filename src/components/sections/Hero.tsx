@@ -110,9 +110,14 @@ export default function Hero() {
   // Bridge FM scroll progress → R3F via ref (MotionValues don't work inside Canvas)
   const scrollRef = useRef(0);
   const [canvasPaused, setCanvasPaused] = useState(false);
+  const pausedRef = useRef(false);
   useMotionValueEvent(scrollYProgress, "change", (v) => {
     scrollRef.current = v;
-    setCanvasPaused(v > CANVAS_PAUSE_THRESHOLD);
+    const shouldPause = v > CANVAS_PAUSE_THRESHOLD;
+    if (shouldPause !== pausedRef.current) {
+      pausedRef.current = shouldPause;
+      setCanvasPaused(shouldPause);
+    }
   });
 
   const skip = !!prefersReducedMotion;

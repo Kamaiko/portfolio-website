@@ -264,7 +264,6 @@ export default function ScreenshotFan({ screenshots, projectName }: ScreenshotFa
                     src={screenshot}
                     alt={`${projectName} – ${index + 1}`}
                     className="h-full w-full object-cover"
-                    loading="lazy"
                   />
                 </div>
 
