@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/immutability -- intentional physics state mutation in useFrame */
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useRef, useMemo, useState, useCallback } from "react";
 import * as THREE from "three";

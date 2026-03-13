@@ -8,9 +8,11 @@
 ## Current Phase: Phase 1 — Fondations globales (en cours)
 
 ### What we're doing
+
 Phase 1A + 1D done: cursor trailing global + particules Hero integrees dans le portfolio de production. Architecture `effects/` creee.
 
 ### Direction
+
 - **Style**: Subtil, minimaliste, premium feel. Pas de flashy.
 - **Focus**: ~70% bento grid (About section), ~30% global improvements
 - **Inspiration**: tamalsen.dev (cursor glow), dennissnellenberg.com (transitions fluides)
@@ -19,24 +21,24 @@ Phase 1A + 1D done: cursor trailing global + particules Hero integrees dans le p
 
 ## Decisions Made
 
-| Decision | Choice | Reason |
-|---|---|---|
-| React Spring | NO — FM v12 has spring physics | No new dependency |
-| GSAP | NO — FM covers our needs | No licence commerciale, FM suffit |
-| Three.js | GARDER — particules validees pour Hero, CityScene3D a explorer | Particules = WOW factor |
-| Bloc Parcours | Garder tel quel pour l'instant | Pas de remplacement decide |
-| Code snippet content | **Fonction solve()** (`while (!done) { focus(); iterate(); }`) | Reflete le grind mindset de Patrick |
-| Chess Board 3D | PAS dans le portfolio | Garde dans le playground mais pas integre |
-| Particules Hero | **Demo 11** — glow texture, galaxie dense, tilt diagonal 10h→4h, twinkle, bright stars, fade-in 1.5s | Premium constellation |
-| Demos 14-16 Hero | Gardees dans playground, PAS candidates pour integration | Patrick prefere Demo 11 |
-| CityScene 3D | **EXPLORER** — parallax + lighting fixes appliques (Phase 0D) | Patrick re-evalue apres fix |
-| Fun facts interets | Desktop: hover reveal / Mobile: toujours visibles | `useIsMobile()` existe |
-| Curseur natif | GARDER VISIBLE | Ne pas cacher le curseur |
-| Trailing curseur | Point cyan + anneau, actifs sur TOUTE la page | Plus tight que la demo actuelle |
-| Spotlight fond | UNIQUEMENT dans les blocs/cards | Eviter le spotlight fige au scroll |
-| Playground access | URL param `?playground=true` | Zero deps, temporary |
-| Architecture effects | `src/components/effects/` | Dossier dedie aux effets visuels (layers) |
-| CityScene 3D | OUBLIER demos 17-18 | Patrick a perdu interet |
+| Decision             | Choice                                                                                               | Reason                                    |
+| -------------------- | ---------------------------------------------------------------------------------------------------- | ----------------------------------------- |
+| React Spring         | NO — FM v12 has spring physics                                                                       | No new dependency                         |
+| GSAP                 | NO — FM covers our needs                                                                             | No licence commerciale, FM suffit         |
+| Three.js             | GARDER — particules validees pour Hero, CityScene3D a explorer                                       | Particules = WOW factor                   |
+| Bloc Parcours        | Garder tel quel pour l'instant                                                                       | Pas de remplacement decide                |
+| Code snippet content | **Fonction solve()** (`while (!done) { focus(); iterate(); }`)                                       | Reflete le grind mindset de Patrick       |
+| Chess Board 3D       | PAS dans le portfolio                                                                                | Garde dans le playground mais pas integre |
+| Particules Hero      | **Demo 11** — glow texture, galaxie dense, tilt diagonal 10h→4h, twinkle, bright stars, fade-in 1.5s | Premium constellation                     |
+| Demos 14-16 Hero     | Gardees dans playground, PAS candidates pour integration                                             | Patrick prefere Demo 11                   |
+| CityScene 3D         | **EXPLORER** — parallax + lighting fixes appliques (Phase 0D)                                        | Patrick re-evalue apres fix               |
+| Fun facts interets   | Desktop: hover reveal / Mobile: toujours visibles                                                    | `useIsMobile()` existe                    |
+| Curseur natif        | GARDER VISIBLE                                                                                       | Ne pas cacher le curseur                  |
+| Trailing curseur     | Point cyan + anneau, actifs sur TOUTE la page                                                        | Plus tight que la demo actuelle           |
+| Spotlight fond       | UNIQUEMENT dans les blocs/cards                                                                      | Eviter le spotlight fige au scroll        |
+| Playground access    | URL param `?playground=true`                                                                         | Zero deps, temporary                      |
+| Architecture effects | `src/components/effects/`                                                                            | Dossier dedie aux effets visuels (layers) |
+| CityScene 3D         | OUBLIER demos 17-18                                                                                  | Patrick a perdu interet                   |
 
 ## Decisions Pending
 
@@ -57,26 +59,26 @@ Phase 1A + 1D done: cursor trailing global + particules Hero integrees dans le p
 
 ### Bloc Status
 
-| Bloc | Status | Notes |
-|---|---|---|
-| Tagline (2 cols) | Planned | Add glow pulse on highlight words |
-| Parcours (1 col) | GARDER | Laisser tel quel pour l'instant |
-| Stack favori (1 col) | Planned | Real SVG icons + stagger entry |
-| Interests (1 col) | Planned | Hover micro-animations + fun fact reveal |
-| Fun snippet (1 col) | Planned | solve() function + typing effect |
-| CityScene (3 cols) | DONE (SVG) | Explorer remplacement Three.js |
+| Bloc                 | Status     | Notes                                    |
+| -------------------- | ---------- | ---------------------------------------- |
+| Tagline (2 cols)     | Planned    | Add glow pulse on highlight words        |
+| Parcours (1 col)     | GARDER     | Laisser tel quel pour l'instant          |
+| Stack favori (1 col) | Planned    | Real SVG icons + stagger entry           |
+| Interests (1 col)    | Planned    | Hover micro-animations + fun fact reveal |
+| Fun snippet (1 col)  | Planned    | solve() function + typing effect         |
+| CityScene (3 cols)   | DONE (SVG) | Explorer remplacement Three.js           |
 
 ---
 
 ## Global Improvements — Planned
 
-| Improvement | Status | Description |
-|---|---|---|
-| Cursor trailing | **DONE** (Phase 1A) | `effects/CursorTrail.tsx` — dot 6px + ring 28px, springs tight, desktop only |
-| Card spotlight hover | Phase 1B | Inner radial gradient tracking mouse in cards |
-| Spring scroll reveals | Phase 1C | Replace CSS ease-out with FM spring physics |
-| Hero particles | **DONE** (Phase 1D) | `effects/HeroParticles.tsx` — 2050 particules (2000+50 stars), glow texture, galaxie dense, tilt diagonal, twinkle, fade-in 1.5s |
-| Grid stagger | Phase 3 | FM staggerChildren for organic reveal |
+| Improvement           | Status              | Description                                                                                                                      |
+| --------------------- | ------------------- | -------------------------------------------------------------------------------------------------------------------------------- |
+| Cursor trailing       | **DONE** (Phase 1A) | `effects/CursorTrail.tsx` — dot 6px + ring 28px, springs tight, desktop only                                                     |
+| Card spotlight hover  | Phase 1B            | Inner radial gradient tracking mouse in cards                                                                                    |
+| Spring scroll reveals | Phase 1C            | Replace CSS ease-out with FM spring physics                                                                                      |
+| Hero particles        | **DONE** (Phase 1D) | `effects/HeroParticles.tsx` — 2050 particules (2000+50 stars), glow texture, galaxie dense, tilt diagonal, twinkle, fade-in 1.5s |
+| Grid stagger          | Phase 3             | FM staggerChildren for organic reveal                                                                                            |
 
 ---
 
@@ -85,6 +87,7 @@ Phase 1A + 1D done: cursor trailing global + particules Hero integrees dans le p
 Access: `localhost:5173?playground=true`
 
 ### Framer Motion (1-9)
+
 1. Cursor Spotlight — global glow following mouse
 2. Card Spotlight Hover — inner card glow tracking mouse
 3. Spring Scroll Reveal — ease-out vs spring comparison
@@ -96,17 +99,20 @@ Access: `localhost:5173?playground=true`
 9. Creative Zone — Terminal animation
 
 ### Three.js (10-13)
+
 10. **Echiquier 3D** — board 8x8, pieces geometriques, auto-rotate, cavalier anime
 11. **Particules interactives** — 2000 points, reaction curseur (FIXED: mouse projection)
 12. **Geometrie abstraite** — wireframe icosaedre, rotation, hover effect
 13. **Vague mesh** — terrain ondulant low-poly (FIXED: Z coord bug)
 
 ### Hero Particles Variants (14-16) — NOUVEAU
+
 14. **Hero Particles — Full Viewport** — 2000 particules, disque plat, repulsion curseur
 15. **Hero Particles — Zone Centree** — 1500 particules, sphere 4r, masque radial
 16. **Hero Particles — Nebuleuse** — 2500 particules, distribution gaussienne (Box-Muller)
 
 ### CityScene 3D Variants (17-18) — NOUVEAU
+
 17. **CityScene 3D — Flat (Ortho)** — camera orthographique, meme look 2D, effets ameliores
 18. **CityScene 3D — Isometrique** — camera perspective, batiments 3D avec profondeur
 
@@ -151,6 +157,7 @@ Three.js demos are lazy-loaded (React.lazy + Suspense). Main bundle: ~460KB. Thr
 ## Phases Roadmap
 
 ### Phase 0: Setup & Playground — COMPLETE
+
 - [x] Creer `docs/PLAN.md`
 - [x] Playground FM (9 demos) — Patrick a evalue
 - [x] Playground Three.js (4 demos) — echiquier, particules, geometrie, terrain
@@ -164,12 +171,14 @@ Three.js demos are lazy-loaded (React.lazy + Suspense). Main bundle: ~460KB. Thr
 - [ ] **Patrick re-evalue CityScene 3D apres fix**
 
 ### Phase 1: Fondations globales — EN COURS
+
 - [x] 1A — Cursor trailing global → `src/components/effects/CursorTrail.tsx`
 - [ ] 1B — Card spotlight hover / SpotlightCard (spotlight seulement dans les cartes)
 - [ ] 1C — Upgrade ScrollReveal vers spring physics
 - [x] 1D — Particules Hero → `src/components/effects/HeroParticles.tsx` (lazy-loaded)
 
 ### Phase 2: Blocs du bento — un par un
+
 - [ ] 2A — Tagline: glow pulse sur les highlights
 - [ ] 2B — Bloc Parcours: garder tel quel (decision revisitee en Phase 3)
 - [ ] 2C — Stack favori: icones reelles + stagger
@@ -178,6 +187,7 @@ Three.js demos are lazy-loaded (React.lazy + Suspense). Main bundle: ~460KB. Thr
 - [ ] 2F — CityScene: remplacer SVG par Three.js (si valide au playground)
 
 ### Phase 3: Polish & decisions
+
 - [ ] Stagger global du grid
 - [ ] Evaluer reorganisation du grid
 - [ ] Responsive (mobile/tablet/desktop)
@@ -189,12 +199,12 @@ Three.js demos are lazy-loaded (React.lazy + Suspense). Main bundle: ~460KB. Thr
 
 ## Framer Motion — Current Usage (under-utilized)
 
-| File | What's used |
-|---|---|
-| Hero.tsx | motion.p/span/div/svg — word-by-word reveal, variants |
-| ScrollReveal.tsx | useInView + useReducedMotion (hooks only, CSS transitions) |
-| ScreenshotFan.tsx | motion.div, useScroll, useTransform — spring physics |
-| CityScene.tsx | useInView only — rest is pure CSS |
+| File              | What's used                                                |
+| ----------------- | ---------------------------------------------------------- |
+| Hero.tsx          | motion.p/span/div/svg — word-by-word reveal, variants      |
+| ScrollReveal.tsx  | useInView + useReducedMotion (hooks only, CSS transitions) |
+| ScreenshotFan.tsx | motion.div, useScroll, useTransform — spring physics       |
+| CityScene.tsx     | useInView only — rest is pure CSS                          |
 
 **Not using FM**: Navbar, About, Skills, Contact, Section, Footer
 
@@ -203,17 +213,20 @@ Three.js demos are lazy-loaded (React.lazy + Suspense). Main bundle: ~460KB. Thr
 ## Reference Links
 
 ### Portfolios
+
 - https://dennissnellenberg.com
 - https://maxmilkin.com
 - https://edoardolunardi.dev
 - https://tamalsen.dev
 
 ### Component Libraries
+
 - https://ui.aceternity.com/components/bento-grid
 - https://ui.aceternity.com/components
 - https://magicui.design/docs/components/bento-grid
 
 ### Portfolio Aggregators
+
 - https://www.awwwards.com/websites/portfolio/
 - https://www.wallofportfolios.in/dark-theme
 - https://pafolios.com
