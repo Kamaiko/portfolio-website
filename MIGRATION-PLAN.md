@@ -37,7 +37,7 @@ manualChunks: {
 // AFTER (Rolldown — function format)
 manualChunks(id) {
   if (id.includes("react-dom") || id.includes("react/")) return "react-vendor";
-  if (id.includes("i18next") || id.includes("react-i18next")) return "i18n";
+  if (id.includes("i18next")) return "i18n";
   if (id.includes("framer-motion")) return "framer-motion";
 }
 ```
@@ -45,7 +45,24 @@ manualChunks(id) {
 **3. `@testing-library/dom` missing**
 - After upgrading with `--legacy-peer-deps`, `@testing-library/dom` was no longer auto-installed as a transitive dependency
 - Tests failed with `Cannot find module '@testing-library/dom'`
-- **Fix**: Added as explicit dependency: `npm install @testing-library/dom --legacy-peer-deps`
+- **Fix**: Added as explicit devDependency: `npm install @testing-library/dom --legacy-peer-deps`
+
+### Post-migration audit findings (resolved)
+
+**4. `@testing-library/dom` was in `dependencies` instead of `devDependencies`**
+- It's a test-only package — should never ship to production
+- **Fix**: Moved to `devDependencies`
+
+**5. Redundant `id.includes("react-i18next")` in `manualChunks`**
+- `"react-i18next"` always contains `"i18next"`, so `id.includes("i18next")` already catches both packages
+- **Fix**: Simplified condition to just `id.includes("i18next")`
+
+**6. `rollup-plugin-visualizer` compatibility confirmed**
+- v6.0.5 declares `peerDependencies` including `rolldown: "1.x || ^1.0.0-beta"` — fully compatible with Vite 8
+- `npm run analyze` works correctly
+
+**7. `as PluginOption` type cast still valid**
+- Vite 8 did not change the `PluginOption` type — cast is correct
 
 ### Verified results
 - **Build**: 817ms, all chunks correctly split (react-vendor, i18n, framer-motion)
@@ -110,7 +127,7 @@ export default defineConfig(({ mode }) => ({
           if (id.includes("react-dom") || id.includes("react/")) {
             return "react-vendor";
           }
-          if (id.includes("i18next") || id.includes("react-i18next")) {
+          if (id.includes("i18next")) {
             return "i18n";
           }
           if (id.includes("framer-motion")) {

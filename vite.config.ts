@@ -26,7 +26,7 @@ export default defineConfig(({ mode }) => ({
           if (id.includes("react-dom") || id.includes("react/")) {
             return "react-vendor";
           }
-          if (id.includes("i18next") || id.includes("react-i18next")) {
+          if (id.includes("i18next")) {
             return "i18n";
           }
           if (id.includes("framer-motion")) {
