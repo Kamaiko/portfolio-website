@@ -46,6 +46,9 @@ export default defineConfig(({ mode }) => ({
       include: ["src/**/*.{ts,tsx}"],
       exclude: [
         "src/components/playground/**",
+        "src/components/effects/HeroParticles.tsx",
+        "src/components/layout/NotFound3D.tsx",
+        "src/main.tsx",
         "src/types/**",
         "src/constants/**",
         "src/data/**",
