@@ -8,13 +8,13 @@ React · TypeScript · Vite (Rolldown) · Vite+ · Tailwind CSS · Framer Motion
 
 ## Tooling
 
-| Tool | Role |
-|------|------|
-| `vp dev` / `vp build` | Dev server & production build (Vite+ CLI) |
-| `vp check` | Lint (Oxlint) + format (Oxfmt) + typecheck |
-| Vitest | Unit & component tests with coverage thresholds |
-| GitHub Actions | CI on push — check → test → build |
-| Cloudflare Pages | Hosting, auto-deploy from `main` |
+| Tool                  | Role                                            |
+| --------------------- | ----------------------------------------------- |
+| `vp dev` / `vp build` | Dev server & production build (Vite+ CLI)       |
+| `vp check`            | Lint (Oxlint) + format (Oxfmt) + typecheck      |
+| Vitest                | Unit & component tests with coverage thresholds |
+| GitHub Actions        | CI on push — check → test → build               |
+| Cloudflare Pages      | Hosting, auto-deploy from `main`                |
 
 ## Highlights
 
