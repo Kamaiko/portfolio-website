@@ -27,7 +27,6 @@ globalThis.IntersectionObserver = class IntersectionObserver {
   readonly root = null;
   readonly rootMargin = "0px";
   readonly thresholds = [0];
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   constructor(_cb: IntersectionObserverCallback, _opts?: IntersectionObserverInit) {}
   observe() {}
   unobserve() {}
@@ -39,7 +38,6 @@ globalThis.IntersectionObserver = class IntersectionObserver {
 
 // jsdom doesn't implement ResizeObserver — needed by Lenis smooth scroll
 globalThis.ResizeObserver = class ResizeObserver {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   constructor(_cb: ResizeObserverCallback) {}
   observe() {}
   unobserve() {}

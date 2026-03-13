@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/purity -- intentional one-time random seed in useMemo */
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useRef, useMemo, useEffect, useState } from "react";
 import { AdditiveBlending, CanvasTexture, Color, Euler, Matrix4, Vector3 } from "three";

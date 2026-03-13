@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/immutability -- intentional physics state mutation in useFrame */
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { useRef, useMemo, useState, useCallback } from "react";
 import * as THREE from "three";
@@ -29,26 +28,24 @@ const _euler = new THREE.Euler();
 
 /* ─── Character grid definitions ─── */
 
-// prettier-ignore
 const CHAR_4: number[][] = [
-  [0,0,0,1,0],
-  [0,0,1,1,0],
-  [0,1,0,1,0],
-  [1,0,0,1,0],
-  [1,1,1,1,1],
-  [0,0,0,1,0],
-  [0,0,0,1,0],
+  [0, 0, 0, 1, 0],
+  [0, 0, 1, 1, 0],
+  [0, 1, 0, 1, 0],
+  [1, 0, 0, 1, 0],
+  [1, 1, 1, 1, 1],
+  [0, 0, 0, 1, 0],
+  [0, 0, 0, 1, 0],
 ];
 
-// prettier-ignore
 const CHAR_0: number[][] = [
-  [0,1,1,1,0],
-  [1,0,0,0,1],
-  [1,0,0,0,1],
-  [1,0,0,0,1],
-  [1,0,0,0,1],
-  [1,0,0,0,1],
-  [0,1,1,1,0],
+  [0, 1, 1, 1, 0],
+  [1, 0, 0, 0, 1],
+  [1, 0, 0, 0, 1],
+  [1, 0, 0, 0, 1],
+  [1, 0, 0, 0, 1],
+  [1, 0, 0, 0, 1],
+  [0, 1, 1, 1, 0],
 ];
 
 function buildBlockPositions(): Float32Array {

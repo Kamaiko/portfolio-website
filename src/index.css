@@ -49,29 +49,54 @@ body {
    ═══════════════════════════════════════════════════════════════ */
 
 @keyframes star-twinkle {
-  0% { opacity: 0; }
-  25% { opacity: 0.9; }
-  50% { opacity: 0.25; }
-  75% { opacity: 0.9; }
-  100% { opacity: 0; }
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: 0.9;
+  }
+  50% {
+    opacity: 0.25;
+  }
+  75% {
+    opacity: 0.9;
+  }
+  100% {
+    opacity: 0;
+  }
 }
 
 @keyframes win-pulse {
   /* Very short dim rest */
-  0%, 5% { opacity: var(--min-opacity, 0.2); }
+  0%,
+  5% {
+    opacity: var(--min-opacity, 0.2);
+  }
   /* Fast rise to bright */
-  15% { opacity: var(--max-opacity, 0.85); }
+  15% {
+    opacity: var(--max-opacity, 0.85);
+  }
   /* Long bright plateau (30%) */
-  45% { opacity: var(--max-opacity, 0.85); }
+  45% {
+    opacity: var(--max-opacity, 0.85);
+  }
   /* Fade to dim */
-  60% { opacity: var(--min-opacity, 0.2); }
+  60% {
+    opacity: var(--min-opacity, 0.2);
+  }
   /* Dim rest until next cycle */
-  100% { opacity: var(--min-opacity, 0.2); }
+  100% {
+    opacity: var(--min-opacity, 0.2);
+  }
 }
 
 @keyframes win-fade-in {
-  from { opacity: 0; }
-  to { opacity: var(--min-opacity, 0.2); }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: var(--min-opacity, 0.2);
+  }
 }
 
 /* Layer & moon fade-in transitions */
@@ -114,46 +139,61 @@ body {
    ═══════════════════════════════════════════════════════════════ */
 
 @keyframes glow-flash {
-  0%   { text-shadow: 0 0 0 transparent; }
-  40%  { text-shadow: 0 0 12px rgba(34, 211, 238, 0.6),
-                      0 0 24px rgba(34, 211, 238, 0.3); }
-  100% { text-shadow: 0 0 0 transparent; }
+  0% {
+    text-shadow: 0 0 0 transparent;
+  }
+  40% {
+    text-shadow:
+      0 0 12px rgba(34, 211, 238, 0.6),
+      0 0 24px rgba(34, 211, 238, 0.3);
+  }
+  100% {
+    text-shadow: 0 0 0 transparent;
+  }
 }
 
 @keyframes keyword-punch {
-  0%   { transform: scale(1); }
-  50%  { transform: scale(1.08); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.08);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 @keyframes glow-pulse {
-  0%, 100% {
+  0%,
+  100% {
     filter: drop-shadow(0 0 4px rgba(34, 211, 238, 0.4))
-            drop-shadow(0 0 12px rgba(34, 211, 238, 0.2))
-            drop-shadow(0 0 24px rgba(34, 211, 238, 0.1));
+      drop-shadow(0 0 12px rgba(34, 211, 238, 0.2)) drop-shadow(0 0 24px rgba(34, 211, 238, 0.1));
   }
   50% {
     filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.5))
-            drop-shadow(0 0 16px rgba(34, 211, 238, 0.3))
-            drop-shadow(0 0 32px rgba(34, 211, 238, 0.15));
+      drop-shadow(0 0 16px rgba(34, 211, 238, 0.3)) drop-shadow(0 0 32px rgba(34, 211, 238, 0.15));
   }
 }
 
 /* Staggered punch + flash + breathing per keyword (synced with blur-reveal segments) */
 .tagline-glow.glow-active > span:nth-of-type(1) > .glow-pulse {
-  animation: keyword-punch 0.35s ease-out 0.4s 1 both,
-             glow-flash 1.2s ease-out 0.4s 1 both,
-             glow-pulse 4s ease-in-out 2.5s infinite both;
+  animation:
+    keyword-punch 0.35s ease-out 0.4s 1 both,
+    glow-flash 1.2s ease-out 0.4s 1 both,
+    glow-pulse 4s ease-in-out 2.5s infinite both;
 }
 .tagline-glow.glow-active > span:nth-of-type(2) > .glow-pulse {
-  animation: keyword-punch 0.35s ease-out 1s 1 both,
-             glow-flash 1.2s ease-out 1s 1 both,
-             glow-pulse 4.7s ease-in-out 2.5s infinite both;
+  animation:
+    keyword-punch 0.35s ease-out 1s 1 both,
+    glow-flash 1.2s ease-out 1s 1 both,
+    glow-pulse 4.7s ease-in-out 2.5s infinite both;
 }
 .tagline-glow.glow-active > span:nth-of-type(3) > .glow-pulse {
-  animation: keyword-punch 0.35s ease-out 1.6s 1 both,
-             glow-flash 1.2s ease-out 1.6s 1 both,
-             glow-pulse 5.2s ease-in-out 3s infinite both;
+  animation:
+    keyword-punch 0.35s ease-out 1.6s 1 both,
+    glow-flash 1.2s ease-out 1.6s 1 both,
+    glow-pulse 5.2s ease-in-out 3s infinite both;
 }
 
 /* ─── Reduced motion ─── */
@@ -181,8 +221,7 @@ body {
   .glow-pulse {
     animation: none !important;
     filter: drop-shadow(0 0 4px rgba(34, 211, 238, 0.4))
-            drop-shadow(0 0 12px rgba(34, 211, 238, 0.2))
-            drop-shadow(0 0 24px rgba(34, 211, 238, 0.1));
+      drop-shadow(0 0 12px rgba(34, 211, 238, 0.2)) drop-shadow(0 0 24px rgba(34, 211, 238, 0.1));
   }
 
   .marquee-track {
