@@ -14,6 +14,7 @@ import NotFound from "./components/layout/NotFound";
 const Playground = lazy(() => import("./components/playground/Playground"));
 import { GRADIENT, NOISE_SVG } from "./constants/visual-effects";
 import { REDUCED_MOTION } from "./constants/accessibility";
+import { useIsMobile } from "./hooks/useIsMobile";
 const isPlayground = new URLSearchParams(window.location.search).has("playground");
 const isNotFound = window.location.pathname !== "/";
 const lenisOptions = {
@@ -23,6 +24,7 @@ const lenisOptions = {
 
 export default function App() {
   const { i18n } = useTranslation();
+  const isMobile = useIsMobile();
 
   // Sync <html lang=""> and persist language choice
   useEffect(() => {
@@ -82,7 +84,7 @@ export default function App() {
     </div>
   );
 
-  if (REDUCED_MOTION) return content;
+  if (REDUCED_MOTION || isMobile) return content;
 
   return (
     <ReactLenis root options={lenisOptions}>
