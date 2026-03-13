@@ -22,10 +22,16 @@ export default defineConfig(({ mode }) => ({
   build: {
     rollupOptions: {
       output: {
-        manualChunks: {
-          "react-vendor": ["react", "react-dom"],
-          i18n: ["i18next", "react-i18next"],
-          "framer-motion": ["framer-motion"],
+        manualChunks(id) {
+          if (id.includes("react-dom") || id.includes("react/")) {
+            return "react-vendor";
+          }
+          if (id.includes("i18next") || id.includes("react-i18next")) {
+            return "i18n";
+          }
+          if (id.includes("framer-motion")) {
+            return "framer-motion";
+          }
         },
       },
     },
