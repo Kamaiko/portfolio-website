@@ -7,6 +7,7 @@ export const row1Skills = [
   "NativeWind",
   "Tailwind CSS",
   "Vite",
+  "Astro",
   "TanStack",
   "Three.js",
   "Framer Motion",
