@@ -9,7 +9,7 @@
     "greeting": "Hi, I'm",
     "name": "Patrick Patenaude",
     "title": "Web & Mobile Developer",
-    "subtitle": "Self-driven, detail-oriented, passionate about modern tools and well-crafted products."
+    "subtitle": "Full-Stack React & TypeScript focused on performance and product quality."
   },
   "about": {
     "title": "About",
@@ -25,11 +25,8 @@
     "interests_title": "Interests",
     "interests": {
       "fitness": "Fitness",
-      "fitness_fact": "Never always skip leg day",
       "chess": "Chess",
-      "chess_fact": "Blitz at 3am, no regrets",
-      "gaming": "Gaming",
-      "gaming_fact": "gg no re"
+      "gaming": "Gaming"
     }
   },
   "projects": {

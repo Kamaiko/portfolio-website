@@ -8,7 +8,7 @@ export const stackItems = [
   { name: "React", color: "bg-cyan-400" },
   { name: "React Native", color: "bg-cyan-400" },
   { name: "TypeScript", color: "bg-blue-500" },
-  { name: "Tailwind CSS", color: "bg-sky-400" },
+  { name: "Next.js", color: "bg-white" },
   { name: "Expo", color: "bg-slate-300" },
   { name: "Supabase", color: "bg-emerald-500" },
   { name: "Vite", color: "bg-violet-400" },

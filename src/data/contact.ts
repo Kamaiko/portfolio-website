@@ -32,4 +32,4 @@ export const socialLinks: SocialLink[] = [
 export const CONTACT_EMAIL = "contact@halterofit.ca";
 
 /** Path to the downloadable CV */
-export const CV_PATH = "/cv-patrick-patenaude.pdf";
+export const CV_PATH = "/CVPatrickPatenaude.pdf";

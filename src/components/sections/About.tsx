@@ -303,7 +303,6 @@ export default function About() {
                     <p className="text-sm font-medium text-slate-200">
                       {t(`about.interests.${key}`)}
                     </p>
-                    <p className="text-xs text-slate-400">{t(`about.interests.${key}_fact`)}</p>
                   </div>
                 </motion.div>
               ))}

@@ -12,7 +12,7 @@ export const projects: Project[] = [
   {
     id: "halterofit",
     translationKey: "projects.halterofit",
-    github: "https://github.com/Kamaiko/Halterofit",
+    github: "https://github.com/Kamaiko/halterofit-showcase",
     tech: ["React Native", "Expo", "TypeScript", "WatermelonDB", "Supabase", "NativeWind"],
     screenshots: [
       "/images/projects/ExerciceID.webp",
