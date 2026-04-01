@@ -58,7 +58,11 @@ export default function ProjectCard({ project }: ProjectCardProps) {
           </span>
         )}
 
-        <h3 className="mb-2 text-xl font-semibold text-white">{projectName}</h3>
+        {project.wordmark ? (
+          <img src={project.wordmark} alt={projectName} className="mb-2 h-8" />
+        ) : (
+          <h3 className="mb-2 text-xl font-semibold text-white">{projectName}</h3>
+        )}
 
         <p className="mb-4 text-sm leading-relaxed text-slate-300">
           {t(`${project.translationKey}.description`)}

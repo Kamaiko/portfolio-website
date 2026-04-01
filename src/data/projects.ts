@@ -6,6 +6,7 @@ export interface Project {
   demo?: string;
   screenshots?: string[];
   featured?: boolean;
+  wordmark?: string;
 }
 
 export const projects: Project[] = [
@@ -20,6 +21,7 @@ export const projects: Project[] = [
       "/images/projects/ExerciceCategories.webp",
     ],
     featured: true,
+    wordmark: "/images/projects/halterofit-wordmark.png",
   },
   {
     id: "blundermate",

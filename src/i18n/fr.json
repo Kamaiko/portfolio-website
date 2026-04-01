@@ -37,7 +37,7 @@
     },
     "blundermate": {
       "name": "BlunderMate",
-      "description": "Moteur d'échecs en Prolog avec interface ASCII en terminal. Évaluation de positions, génération de coups légaux et recherche minimax."
+      "description": "Moteur d'échecs IA construit en Prolog. Utilise la recherche Negamax avec élagage Alpha-Beta et des heuristiques de tables pièce-case pour l'évaluation des positions."
     },
     "chainride": {
       "name": "ChainRide",

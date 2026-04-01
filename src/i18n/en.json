@@ -37,7 +37,7 @@
     },
     "blundermate": {
       "name": "BlunderMate",
-      "description": "Chess engine in Prolog with ASCII terminal interface. Position evaluation, legal move generation and minimax search."
+      "description": "Chess AI engine built in Prolog. Uses Negamax search with Alpha-Beta pruning and piece-square table heuristics for position evaluation."
     },
     "chainride": {
       "name": "ChainRide",
