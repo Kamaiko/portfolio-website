@@ -1,13 +1,5 @@
-/** Radial gradient backgrounds for ambient glows and spotlights */
+/** Radial gradient backgrounds for spotlights and glows */
 export const GRADIENT = {
-  // App.tsx — ambient background
-  ambientCyan:
-    "radial-gradient(circle, rgba(6,182,212,0.07) 0%, rgba(6,182,212,0.02) 45%, transparent 70%)",
-  ambientBlue:
-    "radial-gradient(circle, rgba(59,130,246,0.06) 0%, rgba(59,130,246,0.018) 45%, transparent 70%)",
-  ambientTeal:
-    "radial-gradient(circle, rgba(34,211,238,0.04) 0%, rgba(34,211,238,0.012) 45%, transparent 70%)",
-
   // Hero.tsx — spotlight glows
   spotlightCyan:
     "radial-gradient(circle, rgba(6,182,212,0.07) 0%, rgba(6,182,212,0.02) 45%, transparent 70%)",

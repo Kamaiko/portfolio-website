@@ -75,7 +75,7 @@ export default function CursorTrail() {
       if (ringRef.current) ringRef.current.style.opacity = "1";
     };
 
-    window.addEventListener("mousemove", onMove);
+    window.addEventListener("mousemove", onMove, { passive: true });
     document.documentElement.addEventListener("mouseleave", onLeave);
     document.documentElement.addEventListener("mouseenter", onEnter);
     return () => {

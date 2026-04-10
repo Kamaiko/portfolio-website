@@ -1,4 +1,4 @@
-import { lazy, Suspense, useEffect } from "react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 import { ReactLenis } from "lenis/react";
 import Navbar from "./components/layout/Navbar";
@@ -11,12 +11,9 @@ import Footer from "./components/layout/Footer";
 import CursorTrail from "./components/effects/CursorTrail";
 import DotGridBackground from "./components/effects/DotGridBackground";
 import NotFound from "./components/layout/NotFound";
-
-const Playground = lazy(() => import("./components/playground/Playground"));
 import { NOISE_SVG } from "./constants/visual-effects";
 import { REDUCED_MOTION } from "./constants/accessibility";
 import { useIsMobile } from "./hooks/useIsMobile";
-const isPlayground = new URLSearchParams(window.location.search).has("playground");
 const isNotFound = window.location.pathname !== "/";
 const lenisOptions = {
   duration: 1.2,
@@ -29,18 +26,10 @@ export default function App() {
 
   // Sync <html lang=""> and persist language choice
   useEffect(() => {
-    if (!isPlayground) {
-      document.documentElement.lang = i18n.language;
-      localStorage.setItem("lng", i18n.language);
-    }
+    document.documentElement.lang = i18n.language;
+    localStorage.setItem("lng", i18n.language);
   }, [i18n.language]);
 
-  if (isPlayground)
-    return (
-      <Suspense fallback={null}>
-        <Playground />
-      </Suspense>
-    );
   if (isNotFound) return <NotFound />;
 
   const content = (

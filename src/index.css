@@ -110,23 +110,10 @@ body {
   transition: opacity 0.7s ease-out 0.8s;
 }
 
-/* Animations paused until reveal */
-.city-scene .star-twinkle,
-.city-scene .win-pulse,
-.city-scene .city-scroll-layer {
-  animation-play-state: paused !important;
-}
-
-/* Fade-in: hasFadedIn adds .faded-in → permanent opacity + start animations */
+/* Fade-in: hasFadedIn adds .faded-in → reveal city layers */
 .city-scene.faded-in .city-layer,
 .city-scene.faded-in .city-moon {
   opacity: 1;
-}
-
-.city-scene.faded-in .star-twinkle,
-.city-scene.faded-in .win-pulse,
-.city-scene.faded-in .city-scroll-layer {
-  animation-play-state: running !important;
 }
 
 /* ═══════════════════════════════════════════════════════════════
@@ -167,12 +154,16 @@ body {
 @keyframes glow-pulse {
   0%,
   100% {
-    filter: drop-shadow(0 0 4px rgba(34, 211, 238, 0.4))
-      drop-shadow(0 0 12px rgba(34, 211, 238, 0.2)) drop-shadow(0 0 24px rgba(34, 211, 238, 0.1));
+    text-shadow:
+      0 0 4px rgba(34, 211, 238, 0.4),
+      0 0 12px rgba(34, 211, 238, 0.2),
+      0 0 24px rgba(34, 211, 238, 0.1);
   }
   50% {
-    filter: drop-shadow(0 0 6px rgba(34, 211, 238, 0.5))
-      drop-shadow(0 0 16px rgba(34, 211, 238, 0.3)) drop-shadow(0 0 32px rgba(34, 211, 238, 0.15));
+    text-shadow:
+      0 0 6px rgba(34, 211, 238, 0.5),
+      0 0 16px rgba(34, 211, 238, 0.3),
+      0 0 32px rgba(34, 211, 238, 0.15);
   }
 }
 
@@ -220,8 +211,10 @@ body {
 
   .glow-pulse {
     animation: none !important;
-    filter: drop-shadow(0 0 4px rgba(34, 211, 238, 0.4))
-      drop-shadow(0 0 12px rgba(34, 211, 238, 0.2)) drop-shadow(0 0 24px rgba(34, 211, 238, 0.1));
+    text-shadow:
+      0 0 4px rgba(34, 211, 238, 0.4),
+      0 0 12px rgba(34, 211, 238, 0.2),
+      0 0 24px rgba(34, 211, 238, 0.1);
   }
 
   .marquee-track {
