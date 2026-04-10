@@ -9,10 +9,11 @@ import Skills from "./components/sections/Skills";
 import Contact from "./components/sections/Contact";
 import Footer from "./components/layout/Footer";
 import CursorTrail from "./components/effects/CursorTrail";
+import DotGridBackground from "./components/effects/DotGridBackground";
 import NotFound from "./components/layout/NotFound";
 
 const Playground = lazy(() => import("./components/playground/Playground"));
-import { GRADIENT, NOISE_SVG } from "./constants/visual-effects";
+import { NOISE_SVG } from "./constants/visual-effects";
 import { REDUCED_MOTION } from "./constants/accessibility";
 import { useIsMobile } from "./hooks/useIsMobile";
 const isPlayground = new URLSearchParams(window.location.search).has("playground");
@@ -43,24 +44,9 @@ export default function App() {
   if (isNotFound) return <NotFound />;
 
   const content = (
-    <div className="relative min-h-screen overflow-x-clip bg-slate-950 text-slate-100">
+    <div className="relative isolate min-h-screen overflow-x-clip bg-slate-950 text-slate-100">
       <CursorTrail />
-
-      {/* Ambient background glow — static radial gradients (no blur filters) */}
-      <div className="pointer-events-none absolute inset-x-0 top-0 -z-10 h-screen">
-        <div
-          className="absolute left-1/4 top-[12%] h-[600px] w-[600px] rounded-full"
-          style={{ background: GRADIENT.ambientCyan }}
-        />
-        <div
-          className="absolute right-1/4 top-[35%] h-[500px] w-[500px] rounded-full"
-          style={{ background: GRADIENT.ambientBlue }}
-        />
-        <div
-          className="absolute left-1/2 top-1/4 h-[400px] w-[400px] -translate-x-1/2 rounded-full"
-          style={{ background: GRADIENT.ambientTeal }}
-        />
-      </div>
+      <DotGridBackground />
 
       {/* Noise texture — covers full page */}
       <div

@@ -4,18 +4,13 @@ import { useInView } from "framer-motion";
 import Section from "../layout/Section";
 import ScrollReveal from "../ui/ScrollReveal";
 import { row1Skills, row2Skills } from "../../data/skills";
-import { cn } from "../../utils/cn";
-
 // ── Marquee timing ──
 const MARQUEE_DEFAULT_DURATION_S = 30;
 const MARQUEE_ROW1_DURATION_S = 35;
 const MARQUEE_ROW2_DURATION_S = 40;
 const MARQUEE_INVIEW_MARGIN = "200px";
-
-// ── Class strings ──
-const FADE_EDGE_BASE = "pointer-events-none absolute top-0 z-10 h-full w-32 md:w-48";
 const SKILL_BADGE_CLASS =
-  "inline-flex items-center whitespace-nowrap rounded-lg border border-slate-800 bg-slate-900/50 px-4 py-2.5 text-sm text-slate-300";
+  "inline-flex items-center whitespace-nowrap rounded-lg border border-slate-800 bg-slate-900 px-4 py-2.5 text-sm text-slate-300";
 
 interface MarqueeRowProps {
   skills: readonly string[];
@@ -33,11 +28,15 @@ function MarqueeRow({
   const doubled = [...skills, ...skills];
 
   return (
-    <div ref={ref} className="group relative overflow-hidden py-2">
-      {/* Fade edges */}
-      <div className={cn(FADE_EDGE_BASE, "left-0 bg-linear-to-r from-slate-950 to-transparent")} />
-      <div className={cn(FADE_EDGE_BASE, "right-0 bg-linear-to-l from-slate-950 to-transparent")} />
-
+    <div
+      ref={ref}
+      className="group relative overflow-hidden py-2"
+      style={{
+        maskImage: "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
+        WebkitMaskImage:
+          "linear-gradient(to right, transparent, black 10%, black 90%, transparent)",
+      }}
+    >
       <div
         className="marquee-track flex w-max gap-4 group-hover:[animation-play-state:paused]"
         style={{
