@@ -4,7 +4,7 @@ export const row1Skills = [
   "React",
   "React Native",
   "Expo",
-  "NativeWind",
+  "Zustand",
   "Tailwind CSS",
   "Vite",
   "Astro",
