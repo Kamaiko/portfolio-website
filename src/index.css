@@ -201,7 +201,8 @@ body {
   --spread: 0;
   position: relative;
   width: 100%;
-  height: 30rem;
+  height: 34rem;
+  padding-block: 1.5rem;
   perspective: 1200px;
 }
 
@@ -220,7 +221,7 @@ body {
 
 .screenshot-fan__stage {
   position: absolute;
-  inset: 0;
+  inset: 1.5rem 0;
   display: flex;
   align-items: center;
   justify-content: center;
