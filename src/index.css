@@ -116,6 +116,14 @@ body {
   opacity: 1;
 }
 
+/* Pause infinite animations when CityScene is offscreen
+   (compositor stops repainting ~100 windows + stars + scrolling layers) */
+.city-scene.is-paused .star-twinkle,
+.city-scene.is-paused .win-pulse,
+.city-scene.is-paused .city-scroll-layer {
+  animation-play-state: paused;
+}
+
 /* ═══════════════════════════════════════════════════════════════
    Glow flash + punch + breathing — tagline keyword effects
    Activated by .tagline-glow.glow-active on the <p> container.
@@ -151,40 +159,29 @@ body {
   }
 }
 
-@keyframes glow-pulse {
-  0%,
-  100% {
-    text-shadow:
-      0 0 4px rgba(34, 211, 238, 0.4),
-      0 0 12px rgba(34, 211, 238, 0.2),
-      0 0 24px rgba(34, 211, 238, 0.1);
-  }
-  50% {
-    text-shadow:
-      0 0 6px rgba(34, 211, 238, 0.5),
-      0 0 16px rgba(34, 211, 238, 0.3),
-      0 0 32px rgba(34, 211, 238, 0.15);
-  }
+/* Static cyan glow applied to keywords once tagline is in view */
+.tagline-glow.glow-active > span > .glow-pulse {
+  text-shadow:
+    0 0 4px rgba(34, 211, 238, 0.4),
+    0 0 12px rgba(34, 211, 238, 0.2),
+    0 0 24px rgba(34, 211, 238, 0.1);
 }
 
-/* Staggered punch + flash + breathing per keyword (synced with blur-reveal segments) */
+/* Staggered punch + flash per keyword (synced with blur-reveal segments) */
 .tagline-glow.glow-active > span:nth-of-type(1) > .glow-pulse {
   animation:
     keyword-punch 0.35s ease-out 0.4s 1 both,
-    glow-flash 1.2s ease-out 0.4s 1 both,
-    glow-pulse 4s ease-in-out 2.5s infinite both;
+    glow-flash 1.2s ease-out 0.4s 1 both;
 }
 .tagline-glow.glow-active > span:nth-of-type(2) > .glow-pulse {
   animation:
     keyword-punch 0.35s ease-out 1s 1 both,
-    glow-flash 1.2s ease-out 1s 1 both,
-    glow-pulse 4.7s ease-in-out 2.5s infinite both;
+    glow-flash 1.2s ease-out 1s 1 both;
 }
 .tagline-glow.glow-active > span:nth-of-type(3) > .glow-pulse {
   animation:
     keyword-punch 0.35s ease-out 1.6s 1 both,
-    glow-flash 1.2s ease-out 1.6s 1 both,
-    glow-pulse 5.2s ease-in-out 3s infinite both;
+    glow-flash 1.2s ease-out 1.6s 1 both;
 }
 
 /* ─── Reduced motion ─── */
@@ -209,12 +206,8 @@ body {
     animation: none !important;
   }
 
-  .glow-pulse {
+  .tagline-glow.glow-active > span > .glow-pulse {
     animation: none !important;
-    text-shadow:
-      0 0 4px rgba(34, 211, 238, 0.4),
-      0 0 12px rgba(34, 211, 238, 0.2),
-      0 0 24px rgba(34, 211, 238, 0.1);
   }
 
   .marquee-track {

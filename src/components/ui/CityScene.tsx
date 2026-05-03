@@ -373,12 +373,13 @@ interface CitySceneProps {
 export default function CityScene({ className }: CitySceneProps) {
   const ref = useRef<SVGSVGElement>(null);
   const hasFadedIn = useInView(ref, { once: true, margin: "-40px" });
+  const isInView = useInView(ref, { margin: "200px" });
 
   return (
     <svg
       ref={ref}
       viewBox={`0 0 ${W} ${H}`}
-      className={cn("city-scene", hasFadedIn && "faded-in", className)}
+      className={cn("city-scene", hasFadedIn && "faded-in", !isInView && "is-paused", className)}
       style={{ "--city-width": `${W}px` } as React.CSSProperties}
       preserveAspectRatio="xMidYMax slice"
       overflow="hidden"
