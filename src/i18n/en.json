@@ -35,6 +35,10 @@
       "name": "Halterofit",
       "description": "Mobile workout tracking application. Fast logging, 1300+ exercise library, works offline with cloud sync."
     },
+    "aquilon": {
+      "name": "Aquilon",
+      "description": "Concept demo for a luxury cabin rental platform in Charlevoix, Quebec. Pill-shaped retreat cabins nestled in nature, premium booking experience."
+    },
     "blundermate": {
       "name": "BlunderMate",
       "description": "Chess AI engine built in Prolog. Uses Negamax search with Alpha-Beta pruning and piece-square table heuristics for position evaluation."

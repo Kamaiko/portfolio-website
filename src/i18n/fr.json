@@ -35,6 +35,10 @@
       "name": "Halterofit",
       "description": "Application mobile de suivi d'entraînement musculaire. Logging rapide, bibliothèque de 1300+ exercices, fonctionne hors-ligne avec synchronisation cloud."
     },
+    "aquilon": {
+      "name": "Aquilon",
+      "description": "Démo conceptuelle de plateforme de location de refuges luxueux à Charlevoix. Cabines en forme de pill nichées dans la nature, expérience de réservation premium."
+    },
     "blundermate": {
       "name": "BlunderMate",
       "description": "Moteur d'échecs IA construit en Prolog. Utilise la recherche Negamax avec élagage Alpha-Beta et des heuristiques de tables pièce-case pour l'évaluation des positions."

@@ -3,7 +3,9 @@ import Mail from "lucide-react/dist/esm/icons/mail";
 import FileDown from "lucide-react/dist/esm/icons/file-down";
 import Section from "../layout/Section";
 import ScrollReveal from "../ui/ScrollReveal";
+import SpotlightCard from "../ui/SpotlightCard";
 import { socialLinks, CONTACT_EMAIL, CV_PATH } from "../../data/contact";
+import { CARD_BASE, CARD_SHADOW_LIGHT } from "../../constants/styles";
 import { cn } from "../../utils/cn";
 
 const BUTTON_BASE = "flex items-center gap-2 rounded-lg px-5 py-3 font-medium transition-colors";
@@ -15,8 +17,8 @@ export default function Contact() {
 
   return (
     <Section id="contact" title={t("contact.title")}>
-      <ScrollReveal>
-        <div className="max-w-lg rounded-2xl border border-slate-800 bg-slate-900/50 p-8">
+      <ScrollReveal className="max-w-lg">
+        <SpotlightCard className={cn(CARD_BASE, CARD_SHADOW_LIGHT, "p-8")}>
           <p className="mb-8 text-slate-300">{t("contact.text")}</p>
 
           <div className="flex flex-col gap-4 sm:flex-row sm:flex-wrap">
@@ -54,7 +56,7 @@ export default function Contact() {
               </a>
             ))}
           </div>
-        </div>
+        </SpotlightCard>
       </ScrollReveal>
     </Section>
   );

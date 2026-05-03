@@ -11,6 +11,7 @@ export const row1Skills = [
   "TanStack",
   "Three.js",
   "Framer Motion",
+  "GSAP",
   "HTML",
   "CSS",
 ] as const;
