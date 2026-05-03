@@ -184,6 +184,166 @@ body {
     glow-flash 1.2s ease-out 1.6s 1 both;
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   ScreenshotFan — pure CSS fan with --spread (0→1) interpolation
+   Desktop: hover triggers spread. Mobile: scroll-driven via
+   animation-timeline: view(). Replaces the Framer Motion version
+   (~18 useTransform per card) with a single registered custom property.
+   ═══════════════════════════════════════════════════════════════ */
+
+@property --spread {
+  syntax: "<number>";
+  inherits: true;
+  initial-value: 0;
+}
+
+.screenshot-fan {
+  --spread: 0;
+  position: relative;
+  width: 100%;
+  height: 24rem;
+  perspective: 1200px;
+}
+
+.screenshot-fan__glow {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 80%;
+  height: 90%;
+  pointer-events: none;
+  border-radius: 9999px;
+  background: radial-gradient(ellipse at center, rgba(34, 211, 238, 0.12) 0%, transparent 70%);
+  opacity: calc(0.4 + var(--spread) * 0.6);
+  transform: translate(-50%, -50%) scale(calc(0.9 + var(--spread) * 0.3));
+}
+
+.screenshot-fan__stage {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.screenshot-fan__phone {
+  position: absolute;
+  width: 26%;
+  max-width: 160px;
+  aspect-ratio: 9 / 19.5;
+  transform-style: preserve-3d;
+}
+
+/* Phone positions — all derived from --spread (0=rest fan, 1=spread fan).
+   Desktop rest matches the original PHONE_CONFIG values. */
+.screenshot-fan__phone--left {
+  z-index: 10;
+  transform: translateX(calc(-34% + var(--spread) * -38%))
+    translateZ(calc(-30px + var(--spread) * -10px)) rotateY(calc(-10deg + var(--spread) * -6deg))
+    scale(calc(0.88 + var(--spread) * 0.04));
+}
+
+.screenshot-fan__phone--center {
+  z-index: 20;
+  transform: translateZ(calc(10px + var(--spread) * 30px));
+}
+
+.screenshot-fan__phone--right {
+  z-index: 10;
+  transform: translateX(calc(34% + var(--spread) * 38%))
+    translateZ(calc(-30px + var(--spread) * -10px)) rotateY(calc(10deg + var(--spread) * 6deg))
+    scale(calc(0.88 + var(--spread) * 0.04));
+}
+
+.screenshot-fan__shell {
+  position: absolute;
+  inset: 0;
+  border-radius: 1.6rem;
+  border: 2px solid rgb(51 65 85 / 0.8);
+  background: rgb(15 23 42);
+}
+
+.screenshot-fan__screen {
+  position: absolute;
+  inset: 2px;
+  overflow: hidden;
+  border-radius: calc(1.6rem - 2px);
+}
+
+.screenshot-fan__screen img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.screenshot-fan__notch {
+  position: absolute;
+  left: 50%;
+  top: 2px;
+  width: 5rem;
+  height: 1rem;
+  transform: translateX(-50%);
+  border-radius: 0 0 0.75rem 0.75rem;
+  background: rgb(15 23 42);
+}
+
+.screenshot-fan__fade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  border-radius: 1.6rem;
+  opacity: calc(1 - var(--spread));
+}
+
+.screenshot-fan__fade--left {
+  background: linear-gradient(to left, transparent, transparent 50%, rgb(15 23 42 / 0.7));
+}
+
+.screenshot-fan__fade--right {
+  background: linear-gradient(to right, transparent, transparent 50%, rgb(15 23 42 / 0.7));
+}
+
+/* Desktop (devices with hover): :hover toggles --spread, transitioned smoothly */
+@media (hover: hover) {
+  .screenshot-fan {
+    transition: --spread 700ms cubic-bezier(0.34, 1.56, 0.64, 1);
+  }
+  .screenshot-fan:hover {
+    --spread: 1;
+  }
+}
+
+/* Mobile (touch / no hover): bigger phones, scroll-driven spread via view() timeline */
+@media (hover: none) {
+  .screenshot-fan__phone {
+    width: 34%;
+    max-width: 200px;
+  }
+
+  @supports (animation-timeline: view()) {
+    .screenshot-fan {
+      animation: screenshot-fan-spread linear both;
+      animation-timeline: view();
+      animation-range: cover 15% cover 50%;
+    }
+    @keyframes screenshot-fan-spread {
+      from {
+        --spread: 0;
+      }
+      to {
+        --spread: 1;
+      }
+    }
+  }
+
+  /* Fallback for browsers without scroll-timeline: show spread state immediately */
+  @supports not (animation-timeline: view()) {
+    .screenshot-fan {
+      --spread: 0.6;
+    }
+  }
+}
+
 /* ─── Reduced motion ─── */
 @media (prefers-reduced-motion: reduce) {
   .star-twinkle {
@@ -211,6 +371,12 @@ body {
   }
 
   .marquee-track {
+    animation: none !important;
+  }
+
+  .screenshot-fan {
+    --spread: 1;
+    transition: none !important;
     animation: none !important;
   }
 }
