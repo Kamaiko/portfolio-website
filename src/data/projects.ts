@@ -28,7 +28,7 @@ export const projects: Project[] = [
     translationKey: "projects.aquilon",
     github: "https://github.com/Kamaiko/refuge-website",
     demo: "https://refuge-aquilon.vercel.app/",
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion"],
+    tech: ["React", "Next.js", "TypeScript", "GSAP"],
     screenshots: ["/images/projects/hero-aquilon.avif"],
   },
   {
@@ -42,7 +42,7 @@ export const projects: Project[] = [
     id: "chainride",
     translationKey: "projects.chainride",
     github: "https://github.com/Kamaiko/chainride",
-    tech: ["Solidity", "Ethereum", "Hardhat", "React", "Vite", "Wagmi", "Tailwind CSS"],
+    tech: ["React", "Vite", "TypeScript", "Solidity", "Hardhat", "Wagmi"],
     screenshots: ["/images/projects/ChainRide.webp"],
   },
 ];
