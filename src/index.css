@@ -345,6 +345,29 @@ body {
   }
 }
 
+/* ═══════════════════════════════════════════════════════════════
+   Section title parallax — pure CSS scroll-driven
+   Replaces per-section useScroll/useTransform (5 instances → 0 JS).
+   Title moves +40px → -40px as the section traverses the viewport.
+   ═══════════════════════════════════════════════════════════════ */
+
+@supports (animation-timeline: view()) {
+  @keyframes section-title-parallax {
+    from {
+      transform: translateY(40px);
+    }
+    to {
+      transform: translateY(-40px);
+    }
+  }
+
+  .section-title-parallax {
+    animation: section-title-parallax linear both;
+    animation-timeline: view();
+    animation-range: cover 0% cover 100%;
+  }
+}
+
 /* ─── Reduced motion ─── */
 @media (prefers-reduced-motion: reduce) {
   .star-twinkle {
@@ -379,5 +402,10 @@ body {
     --spread: 1;
     transition: none !important;
     animation: none !important;
+  }
+
+  .section-title-parallax {
+    animation: none !important;
+    transform: none !important;
   }
 }

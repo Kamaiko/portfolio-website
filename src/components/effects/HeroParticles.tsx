@@ -444,18 +444,38 @@ function ConstellationScene({ scrollRef }: { scrollRef?: ScrollRef }) {
 
 export default function HeroParticles({
   scrollRef,
-  paused,
+  pausedRef,
 }: {
   scrollRef?: ScrollRef;
-  paused?: boolean;
+  pausedRef?: React.RefObject<boolean>;
 }) {
   const [visible, setVisible] = useState(false);
+  const [paused, setPaused] = useState(false);
   const isMobile = useIsMobile();
 
   useEffect(() => {
     const timer = setTimeout(() => setVisible(true), FADE_IN_DELAY_MS);
     return () => clearTimeout(timer);
   }, []);
+
+  // Sync external pause ref → local state via rAF poll
+  // Keeps Hero from re-rendering on scroll; only this component re-renders
+  // (and only when paused actually flips, twice per full hero scroll).
+  useEffect(() => {
+    if (!pausedRef) return;
+    let raf = 0;
+    let prev = pausedRef.current;
+    const tick = () => {
+      const next = pausedRef.current;
+      if (next !== prev) {
+        prev = next;
+        setPaused(next);
+      }
+      raf = requestAnimationFrame(tick);
+    };
+    raf = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(raf);
+  }, [pausedRef]);
 
   if (REDUCED_MOTION) return null;
 

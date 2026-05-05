@@ -1,4 +1,4 @@
-import { lazy, Suspense, useRef, useState } from "react";
+import { lazy, Suspense, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import {
   motion,
@@ -109,15 +109,10 @@ export default function Hero() {
 
   // Bridge FM scroll progress → R3F via ref (MotionValues don't work inside Canvas)
   const scrollRef = useRef(0);
-  const [canvasPaused, setCanvasPaused] = useState(false);
   const pausedRef = useRef(false);
   useMotionValueEvent(scrollYProgress, "change", (v) => {
     scrollRef.current = v;
-    const shouldPause = v > CANVAS_PAUSE_THRESHOLD;
-    if (shouldPause !== pausedRef.current) {
-      pausedRef.current = shouldPause;
-      setCanvasPaused(shouldPause);
-    }
+    pausedRef.current = v > CANVAS_PAUSE_THRESHOLD;
   });
 
   const skip = !!prefersReducedMotion;
@@ -168,7 +163,7 @@ export default function Hero() {
         <motion.div style={skip ? undefined : { opacity: particleOpacity, willChange: "opacity" }}>
           <ErrorBoundary fallback={null}>
             <Suspense fallback={null}>
-              <HeroParticles scrollRef={scrollRef} paused={canvasPaused} />
+              <HeroParticles scrollRef={scrollRef} pausedRef={pausedRef} />
             </Suspense>
           </ErrorBoundary>
         </motion.div>
