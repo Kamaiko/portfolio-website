@@ -46,7 +46,7 @@ We may update these Terms from time to time. Material changes will be reflected 
 
 ## 11. Governing Law
 
-These Terms are governed by the laws of the Province of Québec and the applicable laws of Canada.
+These Terms are governed by the laws of the Province of Québec and the applicable laws of Canada. If you reside in another country, the mandatory consumer-protection laws of your country of residence still apply and are not waived by these Terms.
 
 ## 12. Contact
 
