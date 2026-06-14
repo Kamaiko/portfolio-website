@@ -4,21 +4,19 @@ import tailwindcss from "@tailwindcss/vite";
 import { visualizer } from "rollup-plugin-visualizer";
 import type { PluginOption } from "vite";
 
+import { cloudflare } from "@cloudflare/vite-plugin";
+
 export default defineConfig(({ mode }) => ({
-  plugins: [
-    react(),
-    tailwindcss(),
-    ...(mode === "analyze"
-      ? [
-          visualizer({
-            open: true,
-            filename: "stats.html",
-            template: "treemap",
-            gzipSize: true,
-          }) as PluginOption,
-        ]
-      : []),
-  ],
+  plugins: [react(), tailwindcss(), ...(mode === "analyze"
+    ? [
+        visualizer({
+          open: true,
+          filename: "stats.html",
+          template: "treemap",
+          gzipSize: true,
+        }) as PluginOption,
+      ]
+    : []), cloudflare()],
   build: {
     rollupOptions: {
       output: {
