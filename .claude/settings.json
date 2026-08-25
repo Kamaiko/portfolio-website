@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(VITEST=true npx vitest run)",
+      "Bash(netstat -ano)",
+      "Bash(powershell -c \"Get-NetTCPConnection -LocalPort 5173 -ErrorAction SilentlyContinue | Select-Object OwningProcess\")"
+    ]
+  }
+}

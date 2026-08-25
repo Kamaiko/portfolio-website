@@ -15,7 +15,6 @@ stats.html
 *.local
 
 # Claude Code
-.claude
 
 # Editor directories and files
 .vscode/*
